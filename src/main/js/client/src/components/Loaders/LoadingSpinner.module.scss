@@ -1,0 +1,19 @@
+$spinnerDiameter: 15px;
+$spinnerInnerWidth: 3px;
+
+.spinner {
+  margin: 0 10px;
+  display: inline-block;
+  vertical-align: middle;
+  border: $spinnerInnerWidth solid #f3f3f3;
+  border-radius: $spinnerDiameter;
+  border-top: $spinnerInnerWidth solid #3498db;
+  width: $spinnerDiameter;
+  height: $spinnerDiameter;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

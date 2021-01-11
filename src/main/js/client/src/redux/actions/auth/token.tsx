@@ -8,7 +8,7 @@ import {
   CHECK_TOKEN_FAILURE,
 } from '../../../models/actions/auth';
 import server from '../../../apis/server';
-import { TokenConfig, thunkActionCreator } from '../util';
+import { tokenConfig, thunkActionCreator } from '../util';
 import JwtDecode from 'jwt-decode';
 import history from '../../../history';
 
@@ -42,7 +42,7 @@ export const checkTokenActionCreator = thunkActionCreator(({ dispatch }) => {
   }
 
   return server
-    .get('/auth/check', TokenConfig)
+    .get('/auth/check', tokenConfig())
     .then(() => {
       const { sub } = JwtDecode(token);
       history.push('/bookshelf');

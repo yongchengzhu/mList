@@ -4,10 +4,13 @@ import { ActionCreator } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { mListStates } from '../../models/states';
 
-export const TokenConfig: AxiosRequestConfig = {
-  headers: {
-    Authorization: `Bearer ${localStorage.getItem('mList-token')}`,
-  },
+export const tokenConfig: () => AxiosRequestConfig = () => {
+  const token = localStorage.getItem('mList-token');
+  return {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
 };
 
 interface CallbackParams<S, A extends mListActions> {

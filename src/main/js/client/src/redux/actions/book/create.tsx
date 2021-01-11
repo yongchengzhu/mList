@@ -8,7 +8,7 @@ import {
 } from '../../../models/actions/book';
 import { ActionCreator } from 'redux';
 import server from '../../../apis/server';
-import { TokenConfig, thunkActionCreator } from '../util';
+import { tokenConfig, thunkActionCreator } from '../util';
 import { booksFetchActionCreator } from './fetchAll';
 
 const bookCreateRequestAction: ActionCreator<BookCreateRequestAction> = () => ({
@@ -32,7 +32,7 @@ export const bookCreateActionCreator = thunkActionCreator(
 
     dispatch(bookCreateRequestAction());
     return server
-      .post('/book', formData, TokenConfig)
+      .post('/book', formData, tokenConfig())
       .then(() => {
         dispatch(booksFetchActionCreator());
         return dispatch(bookCreateSuccessAction());

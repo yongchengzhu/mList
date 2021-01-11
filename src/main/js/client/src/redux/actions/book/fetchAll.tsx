@@ -7,7 +7,7 @@ import {
   BooksFetchSuccessAction,
   BooksFetchFailureAction,
 } from '../../../models/actions/book';
-import { thunkActionCreator, TokenConfig } from '../util';
+import { thunkActionCreator, tokenConfig } from '../util';
 import server from '../../../apis/server';
 
 const booksFetchRequestAction: ActionCreator<BooksFetchRequestAction> = () => ({
@@ -29,7 +29,7 @@ export const booksFetchActionCreator = thunkActionCreator(({ dispatch }) => {
   dispatch(booksFetchRequestAction());
 
   return server
-    .get('/book', TokenConfig)
+    .get('/book', tokenConfig())
     .then((response) => dispatch(booksFetchSuccessAction(response.data)))
     .catch(() => dispatch(booksFetchFailureAction()));
 });

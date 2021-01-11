@@ -22,11 +22,6 @@ public class MvcConfig implements WebMvcConfigurer {
           protected Resource getResource(String resourcePath, Resource location) throws IOException {
             Resource requestedResource = location.createRelative(resourcePath);
 
-            System.out.println("resource path: " + resourcePath);
-            System.out.println("requested resource: " + requestedResource);
-            System.out.println("requested resource exists: " + requestedResource.exists());
-            System.out.println("requested resource readable: " + requestedResource.isReadable());
-
             return requestedResource.exists() && requestedResource.isReadable()
               ? requestedResource
               : new ClassPathResource("/static/index.html");

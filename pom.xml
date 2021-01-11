@@ -82,7 +82,7 @@
                   <goal>copy-resources</goal>
                 </goals>
                 <configuration>
-                  <outputDirectory>${basedir}/src/main/resources/static</outputDirectory>
+                  <outputDirectory>${basedir}/target/classes/static</outputDirectory>
                   <resources>
                     <resource>
                       <directory>src/main/js/client/build</directory>

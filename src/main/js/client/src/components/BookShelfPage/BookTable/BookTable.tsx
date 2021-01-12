@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { ContextMenuTrigger } from "react-contextmenu";
 
 import './BookTable.module.scss';
 import LoadingSpinner from '../../Loaders/LoadingSpinner';
@@ -12,13 +13,13 @@ const BookTable: FC<{}> = () => {
     if (fetchingAll) return <LoadingSpinner />;
     return books.map((book) => {
       return (
-        <tr key={book.id}>
+        <ContextMenuTrigger id="book-contextmenu" renderTag="tr" key={book.id}>
           <td>{book.title}</td>
           <td>{book.author}</td>
           <td>{book.lastChapterRead}</td>
           <td>{book.rating}</td>
           <td>{book.lastReadDate}</td>
-        </tr>
+        </ContextMenuTrigger>
       );
     });
   };

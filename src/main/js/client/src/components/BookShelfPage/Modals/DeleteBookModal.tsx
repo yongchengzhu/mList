@@ -5,10 +5,17 @@ import { bookDeleteModalCloseAction } from '../../../redux/actions/book/modal';
 
 import styles from './DeleteBookModal.module.scss';
 import { RootState } from '../../../models/states';
+import DeleteButton from '../../HOCs/DeleteButton';
+import { bookDeleteActionCreator } from '../../../redux/actions/book/delete';
+import ErrorMessage from '../../HOCs/ErrorMessage';
 
 const DeleteBookModal:React.FC<{}> = () => {
-  const dispatch = useDispatch();
+  const { 
+    deleting: loading,
+    deleteError: error
+  } = useSelector((state: RootState) => state.book);
   const book = useSelector((state: RootState) => state.context);
+  const dispatch = useDispatch();
   const contentRef: MutableRefObject<HTMLDivElement | null> = useRef(null);
 
   useEffect(() => {
@@ -28,6 +35,7 @@ const DeleteBookModal:React.FC<{}> = () => {
     <Modal root="delete-modal-root">
       <div ref={contentRef} className={styles.container}>
         <h1>Delete Book</h1>
+        <ErrorMessage error={error} />
         <div>
           Are you sure you want to delete this?
         </div>
@@ -35,7 +43,7 @@ const DeleteBookModal:React.FC<{}> = () => {
           { book.title }
         </div>
         <div>
-          <button>Delete</button>
+          <DeleteButton loading={loading} id={book.id} />
           <button>Cancel</button>
         </div>
       </div>

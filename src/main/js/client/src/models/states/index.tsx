@@ -26,6 +26,8 @@ export interface BookState {
   createError: string | null;
   fetchingAll: boolean;
   fetchAllError: string | null;
+  deleting: boolean;
+  deleteError: string | null;
   books: Book[];
 }
 

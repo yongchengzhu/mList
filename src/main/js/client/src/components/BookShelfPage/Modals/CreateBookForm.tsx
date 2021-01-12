@@ -8,7 +8,10 @@ import { RootState } from '../../../models/states';
 import ErrorMessage from '../../HOCs/ErrorMessage';
 
 const CreateBookForm: FC<InjectedFormProps> = (props) => {
-  const { creating: loading, createError: error } = useSelector((state: RootState) => state.book);
+  const { 
+    creating: loading, 
+    createError: error 
+  } = useSelector((state: RootState) => state.book);
 
   return (
     <form className={styles.form} onSubmit={props.handleSubmit}>

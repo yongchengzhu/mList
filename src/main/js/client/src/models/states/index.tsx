@@ -21,6 +21,7 @@ export interface AuthState {
 
 export interface BookState {
   showCreateModal: boolean;
+  showDeleteModal: boolean;
   creating: boolean;
   createError: string | null;
   fetchingAll: boolean;

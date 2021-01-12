@@ -10,11 +10,14 @@ import {
   BOOKS_FETCH_REQUEST,
   BOOKS_FETCH_SUCCESS,
   BOOKS_FETCH_FAILURE,
+  BOOK_DELETE_MODAL_OPEN,
+  BOOK_DELETE_MODAL_CLOSE,
 } from '../../models/actions/book';
 
 const initialState: BookState = {
   books: [],
   showCreateModal: false,
+  showDeleteModal: false,
   creating: false,
   createError: null,
   fetchingAll: false,
@@ -30,6 +33,10 @@ const bookReducer: Reducer<BookState, BookActions> = (
       return { ...state, showCreateModal: true };
     case BOOK_CREATE_MODAL_CLOSE:
       return { ...state, showCreateModal: false, createError: null };
+    case BOOK_DELETE_MODAL_OPEN:
+      return { ...state, showDeleteModal: true };
+    case BOOK_DELETE_MODAL_CLOSE:
+      return { ...state, showDeleteModal: false };
     case BOOK_CREATE_REQUEST:
       return { ...state, creating: true, createError: null };
     case BOOK_CREATE_SUCCESS:

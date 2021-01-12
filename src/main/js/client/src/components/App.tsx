@@ -14,13 +14,14 @@ import '../App.css';
 import SignupPage from './AuthPages/SignupPage/SignupPage';
 
 const App: React.FC<{}> = () => {
-  const [renderLoadingCurtain, renderCreateBookModal] = useApp();
+  const [renderLoadingCurtain, renderCreateBookModal, renderDeleteBookModal] = useApp();
 
   return (
     <Router history={history}>
       <Navbar />
       {renderLoadingCurtain()}
       {renderCreateBookModal()}
+      {renderDeleteBookModal()}
       <Switch>
         <Route path="/signin" component={SigninPage} />
         <Route path="/signup" component={SignupPage} />

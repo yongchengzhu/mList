@@ -1,14 +1,11 @@
-import React, { FC, useRef, useEffect, MutableRefObject } from 'react';
+import React, { useEffect, MutableRefObject, useRef } from 'react';
 import Modal from '../../HOCs/Modal';
 import { useDispatch } from 'react-redux';
-import { bookCreateModalCloseAction } from '../../../redux/actions/book/modal';
+import { bookDeleteModalCloseAction } from '../../../redux/actions/book/modal';
 
-import CreateBookForm from './CreateBookForm';
-import { bookCreateActionCreator } from '../../../redux/actions/book/create';
+import styles from './DeleteBookModal.module.scss';
 
-import styles from './CreateBookModal.module.scss';
-
-const CreateBookModal: FC<{}> = () => {
+const DeleteBookModal:React.FC<{}> = () => {
   const contentRef: MutableRefObject<HTMLDivElement | null> = useRef(null);
   const dispatch = useDispatch();
 
@@ -16,7 +13,7 @@ const CreateBookModal: FC<{}> = () => {
     const handleClickOutside = (e: MouseEvent) => {
       const targetNode: EventTarget | null = e.target;
       if (!contentRef.current?.contains(targetNode as Node)) {
-        dispatch(bookCreateModalCloseAction());
+        dispatch(bookDeleteModalCloseAction());
       }
     };
 
@@ -26,13 +23,19 @@ const CreateBookModal: FC<{}> = () => {
   }, [contentRef]);
 
   return (
-    <Modal root="create-modal-root">
+    <Modal root="delete-modal-root">
       <div ref={contentRef} className={styles.container}>
-        <h1>Create Book</h1>
-        <CreateBookForm onSubmit={values => dispatch(bookCreateActionCreator(values))} />
+        <h1>Delete Book</h1>
+        <div>
+          Are you sure you want to delete this?
+        </div>
+        <div>
+          <button>Delete</button>
+          <button>Cancel</button>
+        </div>
       </div>
     </Modal>
   );
 };
 
-export default CreateBookModal;
+export default DeleteBookModal;

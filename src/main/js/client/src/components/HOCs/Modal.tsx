@@ -3,7 +3,11 @@ import { createPortal } from 'react-dom';
 
 import styles from './Modal.module.scss';
 
-const Modal: FC<{}> = (props) => {
+interface ModalProps {
+  root: string,
+}
+
+const Modal: FC<ModalProps> = (props) => {
   const containerRef: MutableRefObject<Element | null> = useRef(null);
 
   const getContainerElement = () => {
@@ -15,7 +19,7 @@ const Modal: FC<{}> = (props) => {
   };
 
   useEffect(() => {
-    const root = document.querySelector('#modal-root');
+    const root = document.querySelector(`#${props.root}`);
     root?.appendChild(getContainerElement());
 
     return () => {

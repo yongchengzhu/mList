@@ -1,0 +1,14 @@
+$ABSOLUTE_HEIGHT: 500px;
+
+.container {
+  width: 350px;
+  max-height: $ABSOLUTE_HEIGHT;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.6);
+}

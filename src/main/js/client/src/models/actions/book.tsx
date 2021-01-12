@@ -14,6 +14,8 @@ export const BOOKS_FETCH_FAILURE = 'BOOK_FETCH_FAILURE';
 export const BOOK_DELETE_MODAL_OPEN = 'BOOK_DELETE_MODAL_OPEN';
 export const BOOK_DELETE_MODAL_CLOSE = 'BOOK_DELETE_MODAL_CLOSE';
 
+export const BOOK_CONTEXT_UPDATE = 'BOOK_CONTEXT_UPDATE';
+
 export interface BookCreateRequestAction {
   type: typeof BOOK_CREATE_REQUEST;
 }
@@ -56,6 +58,11 @@ export interface BookDeleteModalCloseAction {
   type: typeof BOOK_DELETE_MODAL_CLOSE;
 }
 
+export interface BookContextUpdateAction {
+  type: typeof BOOK_CONTEXT_UPDATE;
+  book: Book;
+}
+
 export type BookActions =
   | BookCreateRequestAction
   | BookCreateSuccessAction
@@ -66,4 +73,5 @@ export type BookActions =
   | BooksFetchSuccessAction
   | BooksFetchFailureAction
   | BookDeleteModalOpenAction
-  | BookDeleteModalCloseAction;
+  | BookDeleteModalCloseAction
+  | BookContextUpdateAction;

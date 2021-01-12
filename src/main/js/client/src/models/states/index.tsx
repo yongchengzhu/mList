@@ -29,7 +29,7 @@ export interface BookState {
   books: Book[];
 }
 
-export type mListStates = AuthState | BookState;
+export type mListStates = AuthState | BookState | Book;
 
 /**
  * State for rootReducer.
@@ -37,4 +37,5 @@ export type mListStates = AuthState | BookState;
 export interface RootState {
   auth: AuthState;
   book: BookState;
+  context: Book;
 }

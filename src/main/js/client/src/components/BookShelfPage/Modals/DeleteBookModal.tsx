@@ -1,13 +1,15 @@
 import React, { useEffect, MutableRefObject, useRef } from 'react';
 import Modal from '../../HOCs/Modal';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { bookDeleteModalCloseAction } from '../../../redux/actions/book/modal';
 
 import styles from './DeleteBookModal.module.scss';
+import { RootState } from '../../../models/states';
 
 const DeleteBookModal:React.FC<{}> = () => {
-  const contentRef: MutableRefObject<HTMLDivElement | null> = useRef(null);
   const dispatch = useDispatch();
+  const book = useSelector((state: RootState) => state.context);
+  const contentRef: MutableRefObject<HTMLDivElement | null> = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -28,6 +30,9 @@ const DeleteBookModal:React.FC<{}> = () => {
         <h1>Delete Book</h1>
         <div>
           Are you sure you want to delete this?
+        </div>
+        <div>
+          { book.title }
         </div>
         <div>
           <button>Delete</button>

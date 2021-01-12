@@ -3,17 +3,24 @@ import { ContextMenuTrigger } from "react-contextmenu";
 
 import './BookTable.module.scss';
 import LoadingSpinner from '../../Loaders/LoadingSpinner';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../models/states';
+import { bookContextUpdateAction } from '../../../redux/actions/book/context';
 
 const BookTable: FC<{}> = () => {
+  const dispatch = useDispatch();
   const { fetchingAll, books } = useSelector((state: RootState) => state.book);
 
   const renderTableBody = () => {
     if (fetchingAll) return <LoadingSpinner />;
     return books.map((book) => {
       return (
-        <ContextMenuTrigger id="book-contextmenu" renderTag="tr" key={book.id}>
+        <ContextMenuTrigger 
+          id="book-contextmenu" 
+          renderTag="tr" 
+          key={book.id} 
+          attributes={{ onContextMenu: () => dispatch(bookContextUpdateAction(book))}}
+        >
           <td>{book.title}</td>
           <td>{book.author}</td>
           <td>{book.lastChapterRead}</td>

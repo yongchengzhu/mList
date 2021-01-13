@@ -8,6 +8,10 @@ import {
   BOOK_DELETE_MODAL_OPEN,
   BookDeleteModalCloseAction,
   BOOK_DELETE_MODAL_CLOSE,
+  BookEditModalOpenAction,
+  BookEditModalCloseAction,
+  BOOK_EDIT_MODAL_OPEN,
+  BOOK_EDIT_MODAL_CLOSE,
 } from '../../../models/actions/book';
 
 export const bookCreateModalOpenAction: ActionCreator<BookCreateModalOpenAction> = () => ({
@@ -24,4 +28,12 @@ export const bookDeleteModalOpenAction: ActionCreator<BookDeleteModalOpenAction>
 
 export const bookDeleteModalCloseAction: ActionCreator<BookDeleteModalCloseAction> = () => ({
   type: BOOK_DELETE_MODAL_CLOSE,
+});
+
+export const bookEditModalOpenAction: ActionCreator<BookEditModalOpenAction> = () => ({
+  type: BOOK_EDIT_MODAL_OPEN,
+});
+
+export const bookEditModalCloseAction: ActionCreator<BookEditModalCloseAction> = () => ({
+  type: BOOK_EDIT_MODAL_CLOSE,
 });

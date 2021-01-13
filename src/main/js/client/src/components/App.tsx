@@ -14,7 +14,12 @@ import '../App.css';
 import SignupPage from './AuthPages/SignupPage/SignupPage';
 
 const App: React.FC<{}> = () => {
-  const [renderLoadingCurtain, renderCreateBookModal, renderDeleteBookModal] = useApp();
+  const [
+    renderLoadingCurtain, 
+    renderCreateBookModal, 
+    renderDeleteBookModal, 
+    renderEditBookModal
+  ] = useApp();
 
   return (
     <Router history={history}>
@@ -22,6 +27,7 @@ const App: React.FC<{}> = () => {
       {renderLoadingCurtain()}
       {renderCreateBookModal()}
       {renderDeleteBookModal()}
+      {renderEditBookModal()}
       <Switch>
         <Route path="/signin" component={SigninPage} />
         <Route path="/signup" component={SignupPage} />

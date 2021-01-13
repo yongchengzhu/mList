@@ -30,6 +30,9 @@ export interface BookState {
   deleteError: string | null;
   books: Book[];
   formState: Book;
+  showEditModal: boolean;
+  editError: string | null;
+  editing: boolean;
 }
 
 export type mListStates = AuthState | BookState | Book;

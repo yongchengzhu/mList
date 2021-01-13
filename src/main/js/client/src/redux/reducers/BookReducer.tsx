@@ -15,6 +15,11 @@ import {
   BOOK_DELETE_SUCCESS,
   BOOK_DELETE_REQUEST,
   BOOK_DELETE_FAILURE,
+  BOOK_EDIT_MODAL_OPEN,
+  BOOK_EDIT_MODAL_CLOSE,
+  BOOK_EDIT_REQUEST,
+  BOOK_EDIT_SUCCESS,
+  BOOK_EDIT_FAILURE,
 } from '../../models/actions/book';
 
 const initialFormState: Book = {
@@ -41,6 +46,9 @@ const initialState: BookState = {
   deleting: false,
   deleteError: null,
   formState: initialFormState,
+  showEditModal: false,
+  editError: null,
+  editing: false,
 };
 
 const bookReducer: Reducer<BookState, BookActions> = (
@@ -56,6 +64,10 @@ const bookReducer: Reducer<BookState, BookActions> = (
       return { ...state, showDeleteModal: true };
     case BOOK_DELETE_MODAL_CLOSE:
       return { ...state, showDeleteModal: false, deleteError: null };
+    case BOOK_EDIT_MODAL_OPEN:
+      return { ...state, showEditModal: true };
+    case BOOK_EDIT_MODAL_CLOSE:
+      return { ...state, showEditModal: false, editError: null };
     case BOOK_CREATE_REQUEST:
       return { ...state, creating: true, createError: null };
     case BOOK_CREATE_SUCCESS:
@@ -78,7 +90,13 @@ const bookReducer: Reducer<BookState, BookActions> = (
     case BOOK_DELETE_SUCCESS:
       return { ...state, deleting: false, showDeleteModal: false };
     case BOOK_DELETE_FAILURE:
-      return { ...state, deleting: false, deleteError: action.error }; 
+      return { ...state, deleting: false, deleteError: action.error };
+    case BOOK_EDIT_REQUEST:
+      return { ...state, editing: true, editError: null };
+    case BOOK_EDIT_SUCCESS:
+      return { ...state, editing: false, showEditModal: false };
+    case BOOK_EDIT_FAILURE:
+      return { ...state, editing: false, editError: action.error };
     default:
       return state;
   }

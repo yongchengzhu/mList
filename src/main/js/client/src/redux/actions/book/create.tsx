@@ -1,3 +1,5 @@
+import { ActionCreator } from 'redux';
+
 import {
   BOOK_CREATE_REQUEST,
   BOOK_CREATE_SUCCESS,
@@ -6,10 +8,10 @@ import {
   BookCreateSuccessAction,
   BookCreateFailureAction,
 } from '../../../models/actions/book';
-import { ActionCreator } from 'redux';
 import server from '../../../apis/server';
 import { tokenConfig, thunkActionCreator } from '../util';
 import { booksFetchActionCreator } from './fetchAll';
+import { Book } from '../../../models/states';
 
 const bookCreateRequestAction: ActionCreator<BookCreateRequestAction> = () => ({
   type: BOOK_CREATE_REQUEST,
@@ -27,7 +29,7 @@ const bookCreateFailureAction: ActionCreator<BookCreateFailureAction> = (
 });
 
 export const bookCreateActionCreator = thunkActionCreator(
-  ({ dispatch }, formData: any) => {
+  ({ dispatch }, formData: Book) => {
     console.log('book form', formData);
 
     dispatch(bookCreateRequestAction());

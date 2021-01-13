@@ -1,9 +1,9 @@
 import React from 'react';
-import { ContextMenu, MenuItem, ContextMenuTrigger } from 'react-contextmenu';
+import { ContextMenu, MenuItem } from 'react-contextmenu';
 import { useDispatch } from 'react-redux';
 
 import styles from './BookContextMenu.module.scss';
-import { bookDeleteModalOpenAction } from '../../redux/actions/book/modal';
+import { bookDeleteModalOpenAction, bookEditModalOpenAction } from '../../redux/actions/book/modal';
 
 interface Props {
   children: React.ReactNode,
@@ -15,13 +15,15 @@ const BookContextMenu:React.FC<{}> = props => {
 
   return (
     <ContextMenu id="book-contextmenu" className={styles["book-contextmenu"]}>
-      <MenuItem data={{foo: 'bar'}} className={styles["book-contextmenu-item"]}>
+      <MenuItem 
+        className={styles["book-contextmenu-item"]}
+        onClick  ={() => { dispatch(bookEditModalOpenAction()) }}
+      >
         Edit
       </MenuItem>
       <MenuItem 
-        data     ={{foo: 'bar'}} 
         className={styles["book-contextmenu-item"]} 
-        onClick  ={() => { console.log('Clicked'); dispatch(bookDeleteModalOpenAction())}}
+        onClick  ={() => { dispatch(bookDeleteModalOpenAction()) }}
       >
         Delete
       </MenuItem>

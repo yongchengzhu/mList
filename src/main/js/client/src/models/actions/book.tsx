@@ -20,6 +20,13 @@ export const BOOK_DELETE_REQUEST = 'BOOK_DELETE_REQUEST';
 export const BOOK_DELETE_SUCCESS = 'BOOK_DELETE_SUCCESS';
 export const BOOK_DELETE_FAILURE = 'BOOK_DELETE_FAILURE';
 
+export const BOOK_EDIT_MODAL_OPEN = 'BOOK_EDIT_MODAL_OPEN';
+export const BOOK_EDIT_MODAL_CLOSE = 'BOOK_EDIT_MODAL_CLOSE';
+
+export const BOOK_EDIT_REQUEST = 'BOOK_EDIT_REQUEST';
+export const BOOK_EDIT_SUCCESS = 'BOOK_EDIT_SUCCESS';
+export const BOOK_EDIT_FAILURE = 'BOOK_EDIT_FAILURE';
+
 export interface BookCreateRequestAction {
   type: typeof BOOK_CREATE_REQUEST;
 }
@@ -80,6 +87,27 @@ export interface BookDeleteFailureAction {
   error: string | null;
 }
 
+export interface BookEditModalOpenAction {
+  type: typeof BOOK_EDIT_MODAL_OPEN;
+}
+
+export interface BookEditModalCloseAction {
+  type: typeof BOOK_EDIT_MODAL_CLOSE;
+}
+
+export interface BookEditRequestAction {
+  type: typeof BOOK_EDIT_REQUEST;
+}
+
+export interface BookEditSuccessAction {
+  type: typeof BOOK_EDIT_SUCCESS;
+}
+
+export interface BookEditFailureAction {
+  type: typeof BOOK_EDIT_FAILURE;
+  error: string | null;
+}
+
 export type BookActions =
   | BookCreateRequestAction
   | BookCreateSuccessAction
@@ -94,4 +122,9 @@ export type BookActions =
   | BookContextUpdateAction
   | BookDeleteRequestAction
   | BookDeleteSuccessAction
-  | BookDeleteFailureAction;
+  | BookDeleteFailureAction
+  | BookEditModalOpenAction
+  | BookEditModalCloseAction
+  | BookEditRequestAction
+  | BookEditSuccessAction
+  | BookEditFailureAction;

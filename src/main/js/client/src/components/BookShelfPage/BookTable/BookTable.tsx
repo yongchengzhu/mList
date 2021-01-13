@@ -26,7 +26,7 @@ const BookTable: FC<{}> = () => {
           <td>{book.author}</td>
           <td>{book.lastChapterRead}</td>
           <td>{book.rating}</td>
-          <td>{moment(book.lastReadDate).fromNow()}</td>
+          <td>{moment(book.lastReadDate).utc().format("DD-MM-YYYY hh:mm:ss")}</td>
         </ContextMenuTrigger>
       );
     });

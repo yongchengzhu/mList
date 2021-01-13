@@ -5,6 +5,7 @@ import LoadingCurtain from './Loaders/LoadingCurtain';
 import { checkTokenActionCreator } from '../redux/actions/auth/token';
 import CreateBookModal from './BookShelfPage/Modals/CreateBookModal';
 import DeleteBookModal from './BookShelfPage/Modals/DeleteBookModal';
+import EditBookModal from './BookShelfPage/Modals/EditBookModal';
 
 const useApp = () => {
   const dispatch = useDispatch();
@@ -21,6 +22,10 @@ const useApp = () => {
     (state: RootState) => state.book.showDeleteModal
   );
 
+  const editingBook: boolean = useSelector(
+    (state: RootState) => state.book.showEditModal
+  );
+
   const renderLoadingCurtain = () => {
     return checking ? <LoadingCurtain /> : null;
   };
@@ -33,11 +38,20 @@ const useApp = () => {
     return deletingBook? <DeleteBookModal /> : null;
   }
 
+  const renderEditBookModal = () => {
+    return editingBook? <EditBookModal /> : null;
+  }
+
   useEffect(() => {
     dispatch(checkTokenActionCreator());
   }, []);
 
-  return [renderLoadingCurtain, renderCreateBookModal, renderDeleteBookModal];
+  return [
+    renderLoadingCurtain,
+    renderCreateBookModal,
+    renderDeleteBookModal,
+    renderEditBookModal
+  ];
 };
 
 export default useApp;

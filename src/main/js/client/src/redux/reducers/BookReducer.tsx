@@ -1,4 +1,4 @@
-import { BookState } from '../../models/states';
+import { BookState, Book } from '../../models/states';
 import { Reducer } from 'redux';
 import {
   BookActions,
@@ -17,6 +17,19 @@ import {
   BOOK_DELETE_FAILURE,
 } from '../../models/actions/book';
 
+const initialFormState: Book = {
+  id: -1,
+  title: '',
+  author: null,
+  cover: null,
+  lastChapterRead: null,
+  rating: 0,
+  lastReadDate: null,
+  nextReadDate: null,
+  comments: null,
+  status: 'Reading',
+}
+
 const initialState: BookState = {
   books: [],
   showCreateModal: false,
@@ -27,6 +40,7 @@ const initialState: BookState = {
   fetchAllError: null,
   deleting: false,
   deleteError: null,
+  formState: initialFormState,
 };
 
 const bookReducer: Reducer<BookState, BookActions> = (
@@ -45,7 +59,7 @@ const bookReducer: Reducer<BookState, BookActions> = (
     case BOOK_CREATE_REQUEST:
       return { ...state, creating: true, createError: null };
     case BOOK_CREATE_SUCCESS:
-      return { ...state, creating: false };
+      return { ...state, creating: false, showCreateModal: false };
     case BOOK_CREATE_FAILURE:
       return { ...state, creating: false, createError: action.error };
     case BOOKS_FETCH_REQUEST:

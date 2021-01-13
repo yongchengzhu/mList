@@ -3,11 +3,11 @@ import { Field, reduxForm, InjectedFormProps } from 'redux-form';
 
 import styles from './CreateBookForm.module.scss';
 import SubmitButton from '../../HOCs/SubmitButton';
-import { useSelector } from 'react-redux';
+import { useSelector, connect } from 'react-redux';
 import { RootState } from '../../../models/states';
 import ErrorMessage from '../../HOCs/ErrorMessage';
 
-const CreateBookForm: FC<InjectedFormProps> = (props) => {
+let CreateBookForm: FC<InjectedFormProps> | any = (props: { handleSubmit: ((event: React.FormEvent<HTMLFormElement>) => void) | undefined; }) => {
   const { 
     creating: loading, 
     createError: error 
@@ -58,6 +58,14 @@ const CreateBookForm: FC<InjectedFormProps> = (props) => {
   );
 };
 
-export default reduxForm({
+CreateBookForm = reduxForm({
   form: 'signin',
 })(CreateBookForm);
+
+CreateBookForm = connect(
+  (state: RootState) => ({
+    initialValues: state.book.formState
+  })
+)(CreateBookForm);
+
+export default CreateBookForm;

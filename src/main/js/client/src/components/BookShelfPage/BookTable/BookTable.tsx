@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { ContextMenuTrigger } from "react-contextmenu";
+import moment from 'moment';
 
 import './BookTable.module.scss';
 import LoadingSpinner from '../../Loaders/LoadingSpinner';
@@ -25,7 +26,7 @@ const BookTable: FC<{}> = () => {
           <td>{book.author}</td>
           <td>{book.lastChapterRead}</td>
           <td>{book.rating}</td>
-          <td>{book.lastReadDate}</td>
+          <td>{moment(book.lastReadDate).fromNow()}</td>
         </ContextMenuTrigger>
       );
     });

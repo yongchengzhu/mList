@@ -31,7 +31,7 @@ const initialFormState: Book = {
   lastReadDate: null,
   daysToWait: 0,
   comments: null,
-  status: 'Reading',
+  status: 'reading',
 }
 
 const initialState: BookState = {

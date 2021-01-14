@@ -20,8 +20,6 @@ public class Book {
 
   private String title;
 
-  private String author;
-
   private String cover;
 
   private String lastChapterRead;
@@ -47,14 +45,6 @@ public class Book {
 
   public void setTitle(String title) {
     this.title = title;
-  }
-
-  public String getAuthor() {
-    return author;
-  }
-
-  public void setAuthor(String author) {
-    this.author = author;
   }
 
   public String getCover() {
@@ -99,10 +89,9 @@ public class Book {
 
   public Book() {}
 
-  public Book(String title, String author, String cover, String lastChapterRead, Double rating, Date lastReadDate,
+  public Book(String title, String cover, String lastChapterRead, Double rating, Date lastReadDate,
       String status, Integer daysToWait, User user) {
     this.title = title;
-    this.author = author;
     this.cover = cover;
     this.lastChapterRead = lastChapterRead;
     this.rating = rating;
@@ -112,11 +101,10 @@ public class Book {
     this.user = user;
   }
 
-  public Book(Long id, String title, String author, String cover, String lastChapterRead, Double rating,
+  public Book(Long id, String title, String cover, String lastChapterRead, Double rating,
       Date lastReadDate, String status, Integer daysToWait, User user) {
     this.id = id;
     this.title = title;
-    this.author = author;
     this.cover = cover;
     this.lastChapterRead = lastChapterRead;
     this.rating = rating;

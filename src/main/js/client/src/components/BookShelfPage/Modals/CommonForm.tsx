@@ -14,9 +14,6 @@ const CommonForm: FC<Props> = props => {
       <label htmlFor="text">Title:</label>
       <Field component="input" type="text" id="title" name="title" autoFocus />
 
-      <label htmlFor="author">Author:</label>
-      <Field component="input" type="text" id="author" name="author" />
-
       <label htmlFor="cover">Cover Image:</label>
       <Field component="input" type="text" id="cover" name="cover" />
 

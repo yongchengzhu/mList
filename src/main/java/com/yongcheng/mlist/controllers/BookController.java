@@ -38,11 +38,10 @@ public class BookController {
   @ResponseStatus(HttpStatus.CREATED)
   private void createBook(@RequestBody @Valid CreateBookRequest body, Principal principal, HttpServletResponse res, UriComponentsBuilder uriBuilder) {
     Book book = new Book(
-      body.getTitle(), 
-      body.getAuthor(), 
-      body.getCover(), 
+      body.getTitle(),
+      body.getCover(),
       body.getLastChapterRead(),
-      body.getRating(), 
+      body.getRating(),
       body.getLastReadDate(),
       body.getStatus(),
       body.getDaysToWait(),
@@ -66,11 +65,10 @@ public class BookController {
     
     Book book = new Book(
       body.getId(),
-      body.getTitle(), 
-      body.getAuthor(), 
-      body.getCover(), 
+      body.getTitle(),
+      body.getCover(),
       body.getLastChapterRead(),
-      body.getRating(), 
+      body.getRating(),
       body.getLastReadDate(),
       body.getStatus(),
       body.getDaysToWait(),

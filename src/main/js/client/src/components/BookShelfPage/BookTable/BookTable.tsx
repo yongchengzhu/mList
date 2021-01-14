@@ -15,6 +15,10 @@ const BookTable: FC<{}> = () => {
   const renderTableBody = () => {
     if (fetchingAll) return <LoadingSpinner />;
     return books.map((book) => {
+      const lastReadDate = moment(book.lastReadDate).utc().format("MM/DD/YYYY");
+      const daysLeft     = moment(book.lastReadDate).utc()
+        .add(book.daysToWait, 'days').utc()
+        .diff(moment(book.lastReadDate).utc(), 'days');
       return (
         <ContextMenuTrigger 
           id="book-contextmenu" 
@@ -23,11 +27,10 @@ const BookTable: FC<{}> = () => {
           attributes={{ onContextMenu: () => dispatch(bookContextUpdateAction(book))}}
         >
           <td>{book.title}</td>
-          <td>{book.author}</td>
           <td>{book.lastChapterRead}</td>
           <td>{book.rating}</td>
-          <td>{moment(book.lastReadDate).utc().format("MM/DD/YYYY hh:mm:ss")}</td>
-          <td>{moment(book.lastReadDate).utc().add(book.daysToWait, 'days').format("MM/DD/YYYY hh:mm:ss")}</td>
+          <td>{lastReadDate}</td>
+          <td>{daysLeft}</td>
         </ContextMenuTrigger>
       );
     });
@@ -39,11 +42,10 @@ const BookTable: FC<{}> = () => {
         <thead>
           <tr>
             <th>Title</th>
-            <th>Author</th>
             <th>Last Read</th>
             <th>Rating</th>
             <th>Read Since</th>
-            <th>Save Until</th>
+            <th>Days Left</th>
           </tr>
         </thead>
         <tbody>{renderTableBody()}</tbody>

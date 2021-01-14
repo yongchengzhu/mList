@@ -15,8 +15,6 @@ public class CreateBookRequest {
   @NotBlank(message = "Title field cannot be empty.")
   private String title;
 
-  private String author;
-
   private String cover;
 
   @NotBlank(message = "Last Chapter Read field cannot be empty.")
@@ -53,14 +51,6 @@ public class CreateBookRequest {
 
   public void setTitle(String title) {
     this.title = title;
-  }
-
-  public String getAuthor() {
-    return author;
-  }
-
-  public void setAuthor(String author) {
-    this.author = author;
   }
 
   public String getCover() {

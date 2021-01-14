@@ -1,10 +1,33 @@
 table {
   table-layout: auto;
-  width: 800px;
 }
 
-td, th {
+td:nth-child(1), th:nth-child(1) {
   padding: 8px;
+  width: 450px;
+  // overflow: hidden;
+  // white-space: nowrap;
+  // text-overflow: ellipsis;
+}
+
+td:nth-child(2), th:nth-child(2) {
+  padding: 8px;
+  width: 230px;
+}
+
+td:nth-child(3), th:nth-child(3) {
+  padding: 8px;
+  text-align: center;
+}
+
+td:nth-child(4), th:nth-child(4) {
+  padding: 8px;
+  text-align: center;
+}
+
+td:nth-child(5), th:nth-child(5) {
+  padding: 8px;
+  text-align: center;
 }
 
 thead > tr {

@@ -25,7 +25,6 @@ import {
 const initialFormState: Book = {
   id: -1,
   title: '',
-  author: null,
   cover: null,
   lastChapterRead: null,
   rating: 0,

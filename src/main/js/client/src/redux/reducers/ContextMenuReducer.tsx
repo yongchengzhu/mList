@@ -5,7 +5,6 @@ import { BookActions, BOOK_CONTEXT_UPDATE } from '../../models/actions/book';
 const initialState: Book = {
   id: -1,
   title: '',
-  author: null,
   cover: null,
   lastChapterRead: null,
   rating: -1,

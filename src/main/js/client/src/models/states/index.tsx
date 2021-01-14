@@ -1,7 +1,6 @@
 export interface Book {
   id: number;
   title: string;
-  author: string | null;
   cover: string | null;
   lastChapterRead: string | null;
   rating: number;

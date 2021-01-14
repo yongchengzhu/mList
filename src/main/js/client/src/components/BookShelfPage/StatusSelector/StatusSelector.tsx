@@ -18,27 +18,52 @@ const StatusSelector: FC<{}> = () => {
         </span>
 
         <span>
-          <input type="radio" id="dropped" name="status" value="dropped" />
+          <input
+            type="radio" 
+            id="dropped" 
+            name="status" 
+            value="dropped" 
+          />
           <label htmlFor="dropped">Dropped</label>
         </span>
 
         <span>
-          <input type="radio" id="axed" name="status" value="axed" />
+          <input 
+            type="radio" 
+            id="axed" 
+            name="status" 
+            value="axed" 
+          />
           <label htmlFor="axed">Axed</label>
         </span>
 
         <span>
-          <input type="radio" id="planned" name="status" value="planned" />
+          <input 
+            type="radio" 
+            id="planned" 
+            name="status" 
+            value="planned" 
+          />
           <label htmlFor="planned">Planned</label>
         </span>
 
         <span>
-          <input type="radio" id="completed" name="status" value="completed" />
+          <input 
+            type="radio" 
+            id="completed" 
+            name="status" 
+            value="completed" 
+          />
           <label htmlFor="completed">Completed</label>
         </span>
 
         <span>
-          <input type="radio" id="all" name="status" value="all" />
+          <input 
+            type="radio" 
+            id="all" 
+            name="status" 
+            value="all" 
+          />
           <label htmlFor="all">All</label>
         </span>
       </div>

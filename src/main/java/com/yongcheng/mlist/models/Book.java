@@ -20,6 +20,8 @@ public class Book {
 
   private String title;
 
+  private String language;
+
   private String cover;
 
   private String lastChapterRead;
@@ -39,6 +41,35 @@ public class Book {
   @JoinColumn(nullable = false, name = "user_id")
   private User user;
 
+  public Book() {}
+
+  public Book(String title, String language, String cover, String lastChapterRead, Double rating, Date lastReadDate,
+              String status, Integer daysToWait, User user) {
+    this.title = title;
+    this.language = language;
+    this.cover = cover;
+    this.lastChapterRead = lastChapterRead;
+    this.rating = rating;
+    this.lastReadDate = lastReadDate;
+    this.status = status;
+    this.daysToWait = daysToWait;
+    this.user = user;
+  }
+
+  public Book(Long id, String title, String language, String cover, String lastChapterRead, Double rating,
+              Date lastReadDate, String status, Integer daysToWait, User user) {
+    this.id = id;
+    this.title = title;
+    this.language = language;
+    this.cover = cover;
+    this.lastChapterRead = lastChapterRead;
+    this.rating = rating;
+    this.lastReadDate = lastReadDate;
+    this.status = status;
+    this.daysToWait = daysToWait;
+    this.user = user;
+  }
+
   public String getTitle() {
     return title;
   }
@@ -46,6 +77,10 @@ public class Book {
   public void setTitle(String title) {
     this.title = title;
   }
+
+  public String getLanguage() { return language; }
+
+  public void setLanguage(String language) { this.language = language; }
 
   public String getCover() {
     return cover;
@@ -84,33 +119,6 @@ public class Book {
   }
 
   public void setUser(User user) {
-    this.user = user;
-  }
-
-  public Book() {}
-
-  public Book(String title, String cover, String lastChapterRead, Double rating, Date lastReadDate,
-      String status, Integer daysToWait, User user) {
-    this.title = title;
-    this.cover = cover;
-    this.lastChapterRead = lastChapterRead;
-    this.rating = rating;
-    this.lastReadDate = lastReadDate;
-    this.status = status;
-    this.daysToWait = daysToWait;
-    this.user = user;
-  }
-
-  public Book(Long id, String title, String cover, String lastChapterRead, Double rating,
-      Date lastReadDate, String status, Integer daysToWait, User user) {
-    this.id = id;
-    this.title = title;
-    this.cover = cover;
-    this.lastChapterRead = lastChapterRead;
-    this.rating = rating;
-    this.lastReadDate = lastReadDate;
-    this.status = status;
-    this.daysToWait = daysToWait;
     this.user = user;
   }
 

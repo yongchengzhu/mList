@@ -52,6 +52,13 @@ const CommonForm: FC<Props> = props => {
         name="daysToWait"
         min="0"
       />
+
+      <label>Source Language:</label>
+      <div>
+        <Field name="language" component="input" type="radio" value="cn"/>CN
+        <Field name="language" component="input" type="radio" value="kr"/>KR
+        <Field name="language" component="input" type="radio" value="jp"/>JP
+      </div>      
     </>
   );
 };

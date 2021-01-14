@@ -21,18 +21,9 @@ import {
   BOOK_EDIT_SUCCESS,
   BOOK_EDIT_FAILURE,
 } from '../../models/actions/book';
+import { initialBookState } from './common';
 
-const initialFormState: Book = {
-  id: -1,
-  title: '',
-  cover: null,
-  lastChapterRead: null,
-  rating: 0,
-  lastReadDate: null,
-  daysToWait: 0,
-  comments: null,
-  status: 'reading',
-}
+const initialFormState: Book = initialBookState;
 
 const initialState: BookState = {
   books: [],

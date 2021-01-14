@@ -15,6 +15,10 @@ public class CreateBookRequest {
   @NotBlank(message = "Title field cannot be empty.")
   private String title;
 
+  // Todos:
+  // - Add @BookLanguage
+  private String language;
+
   private String cover;
 
   @NotBlank(message = "Last Chapter Read field cannot be empty.")
@@ -52,6 +56,10 @@ public class CreateBookRequest {
   public void setTitle(String title) {
     this.title = title;
   }
+
+  public String getLanguage() { return language; }
+
+  public void setLanguage(String language) { this.language = language; }
 
   public String getCover() {
     return cover;

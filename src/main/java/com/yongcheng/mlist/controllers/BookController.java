@@ -39,6 +39,7 @@ public class BookController {
   private void createBook(@RequestBody @Valid CreateBookRequest body, Principal principal, HttpServletResponse res, UriComponentsBuilder uriBuilder) {
     Book book = new Book(
       body.getTitle(),
+      body.getLanguage(),
       body.getCover(),
       body.getLastChapterRead(),
       body.getRating(),
@@ -66,6 +67,7 @@ public class BookController {
     Book book = new Book(
       body.getId(),
       body.getTitle(),
+      body.getLanguage(),
       body.getCover(),
       body.getLastChapterRead(),
       body.getRating(),

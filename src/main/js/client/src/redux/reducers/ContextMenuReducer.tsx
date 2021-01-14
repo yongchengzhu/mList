@@ -1,18 +1,9 @@
 import { Book } from '../../models/states';
 import { Reducer } from 'redux';
 import { BookActions, BOOK_CONTEXT_UPDATE } from '../../models/actions/book';
+import { initialBookState } from './common';
 
-const initialState: Book = {
-  id: -1,
-  title: '',
-  cover: null,
-  lastChapterRead: null,
-  rating: -1,
-  lastReadDate: null,
-  daysToWait: 0,
-  comments: null,
-  status: null,
-};
+const initialState: Book = initialBookState;
 
 const contextMenuReducer: Reducer<Book, BookActions> = (
   state = initialState,

@@ -2,6 +2,7 @@ package com.yongcheng.mlist.payloads;
 
 import java.util.Date;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -24,17 +25,27 @@ public class CreateBookRequest {
   @Rating
   private Double rating;
 
+  // Todos:
+  // - Replace @JsonFormat with custom validator @TimezonelessDate
   @JsonFormat(pattern = "dd-MM-yyyy hh:mm:ss")
   private Date lastReadDate;
-
-  @JsonFormat(pattern = "dd-MM-yyyy hh:mm:ss")
-  private Date nextReadDate;
 
   @Size(max = 250, message = "Maximum comment length is 250.")
   private String comment;
 
   @Status
   private String status;
+
+  @Min(value = 0, message = "Day count cannot be less than 0.")
+  private Integer daysToWait;
+
+  public Integer getDaysToWait() {
+    return daysToWait;
+  }
+
+  public void setDaysToWait(Integer daysToWait) {
+    this.daysToWait = daysToWait;
+  }
 
   public String getTitle() {
     return title;
@@ -82,14 +93,6 @@ public class CreateBookRequest {
 
   public void setLastReadDate(Date lastReadDate) {
     this.lastReadDate = lastReadDate;
-  }
-
-  public Date getNextReadDate() {
-    return nextReadDate;
-  }
-
-  public void setNextReadDate(Date nextReadDate) {
-    this.nextReadDate = nextReadDate;
   }
 
   public String getComment() {

@@ -30,7 +30,7 @@ const initialFormState: Book = {
   lastChapterRead: null,
   rating: 0,
   lastReadDate: null,
-  nextReadDate: null,
+  daysToWait: 0,
   comments: null,
   status: 'Reading',
 }

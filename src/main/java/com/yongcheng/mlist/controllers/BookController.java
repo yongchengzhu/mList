@@ -43,9 +43,9 @@ public class BookController {
       body.getCover(), 
       body.getLastChapterRead(),
       body.getRating(), 
-      body.getLastReadDate(), 
-      body.getNextReadDate(),
+      body.getLastReadDate(),
       body.getStatus(),
+      body.getDaysToWait(),
       userService.getUser(principal.getName())
     );
 
@@ -71,9 +71,9 @@ public class BookController {
       body.getCover(), 
       body.getLastChapterRead(),
       body.getRating(), 
-      body.getLastReadDate(), 
-      body.getNextReadDate(),
+      body.getLastReadDate(),
       body.getStatus(),
+      body.getDaysToWait(),
       userService.getUser(principal.getName())
     );
 

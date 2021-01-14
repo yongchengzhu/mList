@@ -10,7 +10,7 @@ const initialState: Book = {
   lastChapterRead: null,
   rating: -1,
   lastReadDate: null,
-  nextReadDate: null,
+  daysToWait: 0,
   comments: null,
   status: null,
 };

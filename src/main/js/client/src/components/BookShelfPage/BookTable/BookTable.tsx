@@ -11,7 +11,7 @@ import { bookContextUpdateAction } from '../../../redux/actions/book/context';
 const BookTable: FC<{}> = () => {
   const dispatch = useDispatch();
   const { fetchingAll, books } = useSelector((state: RootState) => state.book);
-
+  console.log('books', books);
   const renderTableBody = () => {
     if (fetchingAll) return <LoadingSpinner />;
     return books.map((book) => {
@@ -26,7 +26,8 @@ const BookTable: FC<{}> = () => {
           <td>{book.author}</td>
           <td>{book.lastChapterRead}</td>
           <td>{book.rating}</td>
-          <td>{moment(book.lastReadDate).utc().format("DD-MM-YYYY hh:mm:ss")}</td>
+          <td>{moment(book.lastReadDate).utc().format("MM/DD/YYYY hh:mm:ss")}</td>
+          <td>{moment(book.lastReadDate).utc().add(book.daysToWait, 'days').format("MM/DD/YYYY hh:mm:ss")}</td>
         </ContextMenuTrigger>
       );
     });
@@ -42,6 +43,7 @@ const BookTable: FC<{}> = () => {
             <th>Last Read</th>
             <th>Rating</th>
             <th>Read Since</th>
+            <th>Save Until</th>
           </tr>
         </thead>
         <tbody>{renderTableBody()}</tbody>

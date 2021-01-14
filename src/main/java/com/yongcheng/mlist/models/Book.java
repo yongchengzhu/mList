@@ -30,7 +30,7 @@ public class Book {
 
   private Date lastReadDate;
 
-  private Date nextReadDate;
+  private Integer daysToWait;
 
   @Column(length = 250)
   private String comments;
@@ -89,14 +89,6 @@ public class Book {
     this.lastReadDate = lastReadDate;
   }
 
-  public Date getNextReadDate() {
-    return nextReadDate;
-  }
-
-  public void setNextReadDate(Date nextReadDate) {
-    this.nextReadDate = nextReadDate;
-  }
-
   public User getUser() {
     return user;
   }
@@ -108,20 +100,20 @@ public class Book {
   public Book() {}
 
   public Book(String title, String author, String cover, String lastChapterRead, Double rating, Date lastReadDate,
-      Date nextReadDate, String status, User user) {
+      String status, Integer daysToWait, User user) {
     this.title = title;
     this.author = author;
     this.cover = cover;
     this.lastChapterRead = lastChapterRead;
     this.rating = rating;
     this.lastReadDate = lastReadDate;
-    this.nextReadDate = nextReadDate;
     this.status = status;
+    this.daysToWait = daysToWait;
     this.user = user;
   }
 
   public Book(Long id, String title, String author, String cover, String lastChapterRead, Double rating,
-      Date lastReadDate, Date nextReadDate, String status, User user) {
+      Date lastReadDate, String status, Integer daysToWait, User user) {
     this.id = id;
     this.title = title;
     this.author = author;
@@ -129,8 +121,8 @@ public class Book {
     this.lastChapterRead = lastChapterRead;
     this.rating = rating;
     this.lastReadDate = lastReadDate;
-    this.nextReadDate = nextReadDate;
     this.status = status;
+    this.daysToWait = daysToWait;
     this.user = user;
   }
 
@@ -156,6 +148,14 @@ public class Book {
 
   public void setStatus(String status) {
     this.status = status;
+  }
+
+  public Integer getDaysToWait() {
+    return daysToWait;
+  }
+
+  public void setDaysToWait(Integer daysToWait) {
+    this.daysToWait = daysToWait;
   }
   
 }

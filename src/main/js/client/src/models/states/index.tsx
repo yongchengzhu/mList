@@ -6,7 +6,7 @@ export interface Book {
   lastChapterRead: string | null;
   rating: number;
   lastReadDate: string | null;
-  nextReadDate: string | null;
+  daysToWait: number;
   comments: string | null;
   status: string | null;
 }

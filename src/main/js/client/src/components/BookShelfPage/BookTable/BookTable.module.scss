@@ -5,9 +5,6 @@ table {
 td:nth-child(1), th:nth-child(1) {
   padding: 8px;
   width: 450px;
-  // overflow: hidden;
-  // white-space: nowrap;
-  // text-overflow: ellipsis;
 }
 
 td:nth-child(2), th:nth-child(2) {
@@ -28,6 +25,14 @@ td:nth-child(4), th:nth-child(4) {
 td:nth-child(5), th:nth-child(5) {
   padding: 8px;
   text-align: center;
+}
+
+// td:nth-child(6), th:nth-child(6) {
+//   display: none;
+// }
+
+td:nth-child(7), th:nth-child(7) {
+  display: none;
 }
 
 thead > tr {

@@ -2,11 +2,8 @@ import React, { FC } from 'react';
 
 import styles from './StatusSelector.module.scss';
 import history from '../../../history';
-import { useLocation } from 'react-router-dom';
-
-const useQuery = () => {
-  return new URLSearchParams(useLocation().search);
-}
+import { useQuery } from './common';
+import { filterTable } from '../common';
 
 const StatusSelector: FC<{}> = () => {
   let query = useQuery();
@@ -23,18 +20,17 @@ const StatusSelector: FC<{}> = () => {
     else
       deleteParam(target.name, target.value);
     historyPush();
+    filterTable(query);
   };
 
   const handleStatusFilterChange = (e: any) => {
     const target = e.target;
-    if (target.value === 'reading') {
+    if (target.value === 'reading')
       query.delete(target.name);
-    } else {
+    else
       query.set(target.name, target.value);
-    }
-    console.log('query', query.toString())
-
     historyPush();
+    filterTable(query);
   }
 
   const deleteParam = (key: string, value: string) => {

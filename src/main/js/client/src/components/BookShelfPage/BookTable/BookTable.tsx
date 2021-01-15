@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import { ContextMenuTrigger } from "react-contextmenu";
 import moment from 'moment';
 
@@ -7,10 +7,22 @@ import LoadingSpinner from '../../Loaders/LoadingSpinner';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../models/states';
 import { bookContextUpdateAction } from '../../../redux/actions/book/context';
+import { useQuery } from '../StatusSelector/common';
+import { filterTable } from '../common';
 
 const BookTable: FC<{}> = () => {
+  let query = useQuery();
   const dispatch = useDispatch();
+  const firstUpdate = useRef(true);
   const { fetchingAll, books } = useSelector((state: RootState) => state.book);
+  
+  useEffect(() => {
+    if (firstUpdate.current && document.querySelectorAll('td').length) {
+      filterTable(query);
+      firstUpdate.current = false;
+      return;
+    }
+  });
 
   const renderTableBody = () => {
     if (fetchingAll) return <LoadingSpinner />;
@@ -23,14 +35,16 @@ const BookTable: FC<{}> = () => {
         <ContextMenuTrigger 
           id="book-contextmenu" 
           renderTag="tr" 
-          key={book.id} 
-          attributes={{ onContextMenu: () => dispatch(bookContextUpdateAction(book))}}
+          key={book.id}
+          attributes={{onContextMenu: () => dispatch(bookContextUpdateAction(book))}}
         >
           <td>{book.title}</td>
           <td>{book.lastChapterRead}</td>
           <td>{book.rating}</td>
           <td>{lastReadDate}</td>
           <td>{daysLeft}</td>
+          <td>{book.status}</td>
+          <td>{book.language}</td>
         </ContextMenuTrigger>
       );
     });
@@ -103,6 +117,8 @@ const BookTable: FC<{}> = () => {
             <th onClick={() => sortTable(2)}>Rating</th>
             <th onClick={() => sortTable(3)}>Read Since</th>
             <th onClick={() => sortTable(4)}>Days Left</th>
+            <th onClick={() => sortTable(5)}>Status</th>
+            <th onClick={() => sortTable(6)}>Language</th>
           </tr>
         </thead>
         <tbody>{renderTableBody()}</tbody>

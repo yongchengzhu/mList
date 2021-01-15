@@ -1,10 +1,55 @@
 import React, { FC } from 'react';
 
 import styles from './StatusSelector.module.scss';
+import history from '../../../history';
+import { useLocation } from 'react-router-dom';
+
+const useQuery = () => {
+  return new URLSearchParams(useLocation().search);
+}
 
 const StatusSelector: FC<{}> = () => {
+  let query = useQuery();
+
+  const historyPush = () => history.push({
+    pathname: '/bookshelf',
+    search: `?${query.toString()}`
+  });
+
+  const handleSourceFilterChange = (e: any) => {
+    const target = e.target;
+    if (target.checked)
+      query.append(target.name, target.value);
+    else
+      deleteParam(target.name, target.value);
+    historyPush();
+  };
+
+  const handleStatusFilterChange = (e: any) => {
+    const target = e.target;
+    if (target.value === 'reading') {
+      query.delete(target.name);
+    } else {
+      query.set(target.name, target.value);
+    }
+    console.log('query', query.toString())
+
+    historyPush();
+  }
+
+  const deleteParam = (key: string, value: string) => {
+    const newQuery: any[string] = [];
+    query.forEach((v: string, k: string) => {
+      if (v !== value || k !== key) {
+        newQuery.push(`${k}=${v}`);
+      }
+    });
+    query = new URLSearchParams('?' + newQuery.join('&'));
+  }
+
   return (
     <aside>
+      <h3>Status Filter:</h3>
       <div className={styles['status-selector']}>
         <span>
           <input
@@ -12,6 +57,7 @@ const StatusSelector: FC<{}> = () => {
             id="reading"
             name="status"
             value="reading"
+            onChange={handleStatusFilterChange}
             defaultChecked
           />
           <label htmlFor="reading">Reading</label>
@@ -22,7 +68,8 @@ const StatusSelector: FC<{}> = () => {
             type="radio" 
             id="dropped" 
             name="status" 
-            value="dropped" 
+            value="dropped"
+            onChange={handleStatusFilterChange}
           />
           <label htmlFor="dropped">Dropped</label>
         </span>
@@ -32,7 +79,8 @@ const StatusSelector: FC<{}> = () => {
             type="radio" 
             id="axed" 
             name="status" 
-            value="axed" 
+            value="axed"
+            onChange={handleStatusFilterChange}
           />
           <label htmlFor="axed">Axed</label>
         </span>
@@ -42,7 +90,8 @@ const StatusSelector: FC<{}> = () => {
             type="radio" 
             id="planned" 
             name="status" 
-            value="planned" 
+            value="planned"
+            onChange={handleStatusFilterChange}
           />
           <label htmlFor="planned">Planned</label>
         </span>
@@ -52,7 +101,8 @@ const StatusSelector: FC<{}> = () => {
             type="radio" 
             id="completed" 
             name="status" 
-            value="completed" 
+            value="completed"
+            onChange={handleStatusFilterChange}
           />
           <label htmlFor="completed">Completed</label>
         </span>
@@ -62,10 +112,47 @@ const StatusSelector: FC<{}> = () => {
             type="radio" 
             id="all" 
             name="status" 
-            value="all" 
+            value="all"
+            onChange={handleStatusFilterChange}
           />
           <label htmlFor="all">All</label>
         </span>
+      </div>
+
+      <h3>Source Filter:</h3>
+      <div className={styles['status-selector']}>
+        <span>
+          <input
+            type="checkbox"
+            id="cn"
+            name="language"
+            value="cn"
+            onChange={handleSourceFilterChange}
+          />
+          <label htmlFor="cn">CN</label>
+        </span>
+
+        <span>
+          <input
+            type="checkbox" 
+            id="kr" 
+            name="language" 
+            value="kr"
+            onChange={handleSourceFilterChange}
+          />
+          <label htmlFor="kr">KR</label>
+        </span>
+
+        <span>
+          <input 
+            type="checkbox" 
+            id="jp" 
+            name="language" 
+            value="jp"
+            onChange={handleSourceFilterChange}
+          />
+          <label htmlFor="jp">JP</label>
+        </span>        
       </div>
     </aside>
   );

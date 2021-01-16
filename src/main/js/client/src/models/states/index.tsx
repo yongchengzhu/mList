@@ -1,6 +1,10 @@
+export type SortConfigKey = 'title' | 'lastChapterRead' | 'rating' | 'lastReadDate' | 'daysToWait' | null;
+
+export type SortConfigOrder = 'asc' | 'desc' | null;
+
 export interface SortConfig {
-  order: 'asc' | 'desc' | null;
-  key: string | null;
+  order: SortConfigOrder; 
+  key: SortConfigKey;
 }
 
 export interface Book {

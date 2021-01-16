@@ -6,7 +6,7 @@ import './BookTable.module.scss';
 import styles from './BookTable.module.scss';
 import LoadingSpinner from '../../Loaders/LoadingSpinner';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../../../models/states';
+import { RootState, SortConfigKey, SortConfigOrder } from '../../../models/states';
 import { bookContextUpdateAction } from '../../../redux/actions/book/context';
 import { setSortConfigAction } from '../../../redux/actions/book/sort';
 import { useQuery, historyPush } from '../common';
@@ -22,7 +22,7 @@ const BookTable: FC<{}> = () => {
 
   const renderTableBody = () => {
     if (fetchingAll) return <LoadingSpinner />;
-    return books.map((book) => {
+    return sortedBooks.map((book) => {
       const lastReadDate = moment(book.lastReadDate).utc().format("MM/DD/YYYY");
       const daysLeft     = moment(book.lastReadDate).utc()
         .add(book.daysToWait, 'days').utc()
@@ -51,19 +51,39 @@ const BookTable: FC<{}> = () => {
     return sortConfig.key === name ? styles[sortConfig.order] : styles.hidden;
   };
 
-  const handleSort = (key: string) => {
-    let order = 'desc';
+  const handleSort = (key: SortConfigKey) => {
+    let order: SortConfigOrder = 'desc';
     if (
       sortConfig.key === key &&
       sortConfig.order === 'desc'
     ) {
       order = 'asc';
     }
-    query.set('sortKey', key);
-    query.set('sortOrder', order);
     historyPush(query);
     dispatch(setSortConfigAction({ key, order }));
   }
+
+  const sortedBooks = React.useMemo(() => {
+    let sortableItems = [...books];
+    if (sortConfig !== null) {
+      sortableItems.sort((a, b) => {
+        if (sortConfig.key) {
+          const first = a[sortConfig.key];
+          const second = b[sortConfig.key];
+          if (first && second) {
+            if (first < second) {
+              return sortConfig.order === 'asc' ? -1 : 1;
+            }
+            if (first > second) {
+              return sortConfig.order === 'asc' ? 1 : -1;
+            }
+          }
+        }
+        return 0;
+      });
+    }
+    return sortableItems;
+  }, [books, sortConfig]);
 
   return (
     <div>
@@ -73,17 +93,17 @@ const BookTable: FC<{}> = () => {
             <th onClick={() => handleSort('title')}>
               <span className={getClassName('title')}>Title</span>
             </th>
-            <th onClick={() => handleSort('last_read')}>
-              <span className={getClassName('last_read')}>Last Read</span>
+            <th onClick={() => handleSort('lastChapterRead')}>
+              <span className={getClassName('lastChapterRead')}>Last Read</span>
             </th>
             <th onClick={() => handleSort('rating')}>
               <span className={getClassName('rating')}>Rating</span>
             </th>
-            <th onClick={() => handleSort('read_since')}>
-              <span className={getClassName('read_since')}>Read Since</span>
+            <th onClick={() => handleSort('lastReadDate')}>
+              <span className={getClassName('lastReadDate')}>Read Since</span>
             </th>
-            <th onClick={() => handleSort('days_left')}>
-              <span className={getClassName('days_left')}>Days Left</span>
+            <th onClick={() => handleSort('daysToWait')}>
+              <span className={getClassName('daysToWait')}>Days Left</span>
             </th>
           </tr>
         </thead>

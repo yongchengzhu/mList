@@ -21,6 +21,7 @@ import {
   BOOK_EDIT_SUCCESS,
   BOOK_EDIT_FAILURE,
   SORT_CONFIG_SET,
+  FILTER_CONFIG_SET,
 } from '../../models/actions/book';
 import { initialBookState } from './common';
 
@@ -41,6 +42,7 @@ const initialState: BookState = {
   editError: null,
   editing: false,
   sortConfig: { order: null, key: null },
+  filterConfig: { status: 'reading', source: new Set() },
 };
 
 const bookReducer: Reducer<BookState, BookActions> = (
@@ -105,6 +107,8 @@ const bookReducer: Reducer<BookState, BookActions> = (
       return { ...state, editing: false, editError: action.error };
     case SORT_CONFIG_SET:
       return { ...state, sortConfig: action.sortConfig }
+    case FILTER_CONFIG_SET:
+      return { ...state, filterConfig: action.filterConfig }
     default:
       return state;
   }

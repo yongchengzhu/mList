@@ -6,7 +6,7 @@ import './BookTable.module.scss';
 import styles from './BookTable.module.scss';
 import LoadingSpinner from '../../Loaders/LoadingSpinner';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState, SortConfigKey, SortConfigOrder } from '../../../models/states';
+import { RootState, SortConfigKey, SortConfigOrder, Source } from '../../../models/states';
 import { bookContextUpdateAction } from '../../../redux/actions/book/context';
 import { setSortConfigAction } from '../../../redux/actions/book/sort';
 import { useQuery, historyPush } from '../common';
@@ -17,7 +17,8 @@ const BookTable: FC<{}> = () => {
   const { 
     fetchingAll, 
     books, 
-    sortConfig 
+    sortConfig,
+    filterConfig,
   } = useSelector((state: RootState) => state.book);
 
   const renderTableBody = () => {
@@ -64,9 +65,9 @@ const BookTable: FC<{}> = () => {
   }
 
   const sortedBooks = React.useMemo(() => {
-    let sortableItems = [...books];
+    let result = [...books];
     if (sortConfig !== null) {
-      sortableItems.sort((a, b) => {
+      result.sort((a, b) => {
         if (sortConfig.key) {
           const first = a[sortConfig.key];
           const second = b[sortConfig.key];
@@ -81,9 +82,15 @@ const BookTable: FC<{}> = () => {
         }
         return 0;
       });
+
+
+      result = result.filter(book => {
+        return (!filterConfig.source.size || filterConfig.source.has(book.language))
+         && ((filterConfig.status === 'all' || filterConfig.status === book.status));
+      });
     }
-    return sortableItems;
-  }, [books, sortConfig]);
+    return result;
+  }, [books, sortConfig, filterConfig]);
 
   return (
     <div>

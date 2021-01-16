@@ -2,16 +2,34 @@ import React, { FC } from 'react';
 
 import styles from './StatusSelector.module.scss';
 import { useQuery, historyPush } from '../common';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../models/states';
+import { setFilterConfigAction } from '../../../redux/actions/book/filter';
 
 const StatusSelector: FC<{}> = () => {
+  const dispatch = useDispatch();
+  const { 
+    filterConfig
+  } = useSelector((state: RootState) => state.book);
   let query = useQuery();
-
+  
   const handleSourceFilterChange = (e: any) => {
     const target = e.target;
-    if (target.checked)
+    if (target.checked) {
       query.append(target.name, target.value);
-    else
+      dispatch(setFilterConfigAction({ 
+        ...filterConfig, 
+        source: filterConfig.source.add(target.value) 
+      }));
+    }
+    else {
       deleteParam(target.name, target.value);
+      filterConfig.source.delete(target.value);
+      dispatch(setFilterConfigAction({ 
+        ...filterConfig, 
+        source: filterConfig.source
+      }));
+    }
     historyPush(query);
   };
 
@@ -23,6 +41,7 @@ const StatusSelector: FC<{}> = () => {
       query.set(target.name, target.value);
     }
     historyPush(query);
+    dispatch(setFilterConfigAction({ ...filterConfig, status: target.value }));
   }
 
   const deleteParam = (key: string, value: string) => {

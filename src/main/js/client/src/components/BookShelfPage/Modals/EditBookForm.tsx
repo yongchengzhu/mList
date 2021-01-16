@@ -6,6 +6,8 @@ import { RootState } from '../../../models/states';
 import styles from './EditBookForm.module.scss';
 import SubmitButton from '../../HOCs/SubmitButton';
 import CommonForm from './CommonForm';
+import { getCell } from '../../../redux/actions/book/common';
+import { TITLE, ID, LANGUAGE, LAST_READ, STATUS, COVER_IMAGE, RATING, LAST_READ_DATE, DAYS_TO_WAIT } from '../common';
 
 let EditBookForm: FC<InjectedFormProps> | any = (props: { handleSubmit: ((event: React.FormEvent<HTMLFormElement>) => void) | undefined; }) => {
   const { 
@@ -34,7 +36,18 @@ EditBookForm = reduxForm({
 
 EditBookForm = connect(
   (state: RootState) => ({
-    initialValues: state.context
+    initialValues: {
+      id             : getCell(state.context.row, ID).innerHTML,
+      title          : getCell(state.context.row, TITLE).innerHTML,
+      language       : getCell(state.context.row, LANGUAGE).innerHTML,
+      cover          : getCell(state.context.row, COVER_IMAGE).innerHTML,
+      lastChapterRead: getCell(state.context.row, LAST_READ).innerHTML,
+      rating         : getCell(state.context.row, RATING).innerHTML,
+      lastReadDate   : getCell(state.context.row, LAST_READ_DATE).innerHTML,
+      daysToWait     : getCell(state.context.row, DAYS_TO_WAIT).innerHTML,
+      comments       : null,
+      status         : getCell(state.context.row, STATUS).innerHTML,
+    }
   })
 )(EditBookForm);
 

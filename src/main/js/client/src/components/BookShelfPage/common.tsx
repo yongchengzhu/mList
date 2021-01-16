@@ -1,3 +1,28 @@
+import moment from 'moment';
+
+// Column Indices
+export const TITLE          = 0;
+export const LAST_READ      = 1;
+export const RATING         = 2;
+export const READ_SINCE     = 3;
+export const DAYS_LEFT      = 4;
+export const STATUS         = 5;
+export const LANGUAGE       = 6;
+export const ID             = 7;
+export const COVER_IMAGE    = 8;
+export const LAST_READ_DATE = 9;
+export const DAYS_TO_WAIT   = 10;
+
+export const getFormattedLastReadDate = (lastReadDate: string | null) => {
+  return moment(lastReadDate).utc().format("MM/DD/YYYY");
+};
+
+export const getDaysLeft = (lastReadDate: string | null, daysToWait: number) => {
+  return moment(lastReadDate).utc()
+    .add(daysToWait, 'days').utc()
+    .diff(moment(lastReadDate).utc(), 'days');
+}
+
 const getLanguages = (query: URLSearchParams) => {
   const result: Set<string> = new Set();
   query.forEach((v: string, k: string) => {

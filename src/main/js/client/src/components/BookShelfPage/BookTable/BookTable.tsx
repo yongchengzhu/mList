@@ -1,18 +1,15 @@
 import React, { FC, useEffect, useRef } from 'react';
-import { ContextMenuTrigger } from "react-contextmenu";
-import moment from 'moment';
 
 import './BookTable.module.scss';
 import LoadingSpinner from '../../Loaders/LoadingSpinner';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../models/states';
-import { bookContextUpdateAction } from '../../../redux/actions/book/context';
 import { useQuery } from '../StatusSelector/common';
-import { filterTable } from '../common';
+import { filterTable, getFormattedLastReadDate, getDaysLeft } from '../common';
+import ContextMenuTriggerWrapper from './ContextMenuTriggerWrapper';
 
 const BookTable: FC<{}> = () => {
   let query = useQuery();
-  const dispatch = useDispatch();
   const firstUpdate = useRef(true);
   const { fetchingAll, books } = useSelector((state: RootState) => state.book);
   
@@ -27,16 +24,11 @@ const BookTable: FC<{}> = () => {
   const renderTableBody = () => {
     if (fetchingAll) return <LoadingSpinner />;
     return books.map((book) => {
-      const lastReadDate = moment(book.lastReadDate).utc().format("MM/DD/YYYY");
-      const daysLeft     = moment(book.lastReadDate).utc()
-        .add(book.daysToWait, 'days').utc()
-        .diff(moment(book.lastReadDate).utc(), 'days');
+      const lastReadDate = getFormattedLastReadDate(book.lastReadDate);
+      const daysLeft     = getDaysLeft(book.lastReadDate, book.daysToWait);
       return (
-        <ContextMenuTrigger 
-          id="book-contextmenu" 
-          renderTag="tr" 
-          key={book.id}
-          attributes={{onContextMenu: () => dispatch(bookContextUpdateAction(book))}}
+        <ContextMenuTriggerWrapper
+          book={book}
         >
           <td>{book.title}</td>
           <td>{book.lastChapterRead}</td>
@@ -45,7 +37,11 @@ const BookTable: FC<{}> = () => {
           <td>{daysLeft}</td>
           <td>{book.status}</td>
           <td>{book.language}</td>
-        </ContextMenuTrigger>
+          <td>{book.id}</td>
+          <td>{book.cover}</td>
+          <td>{book.lastReadDate}</td>
+          <td>{book.daysToWait}</td>
+        </ContextMenuTriggerWrapper>
       );
     });
   };
@@ -118,7 +114,12 @@ const BookTable: FC<{}> = () => {
             <th onClick={() => sortTable(3)}>Read Since</th>
             <th onClick={() => sortTable(4)}>Days Left</th>
             <th onClick={() => sortTable(5)}>Status</th>
+            {/* Rest are hidden */}
             <th onClick={() => sortTable(6)}>Language</th>
+            <th onClick={() => sortTable(7)}>Id</th>
+            <th onClick={() => sortTable(8)}>Cover Image</th>
+            <th onClick={() => sortTable(9)}>Last Read Date</th>
+            <th onClick={() => sortTable(10)}>Days To Wait</th>
           </tr>
         </thead>
         <tbody>{renderTableBody()}</tbody>

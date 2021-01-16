@@ -10,8 +10,8 @@ import {
 } from '../../../models/actions/book';
 import server from '../../../apis/server';
 import { tokenConfig, thunkActionCreator } from '../util';
-import { booksFetchActionCreator } from './fetchAll';
 import { Book } from '../../../models/states';
+import { insertRow } from './common';
 
 const bookCreateRequestAction: ActionCreator<BookCreateRequestAction> = () => ({
   type: BOOK_CREATE_REQUEST,
@@ -29,14 +29,13 @@ const bookCreateFailureAction: ActionCreator<BookCreateFailureAction> = (
 });
 
 export const bookCreateActionCreator = thunkActionCreator(
-  ({ dispatch }, formData: Book) => {
-    console.log('book form', formData);
-
+  ({ dispatch }, formData: Book, cb: () => void) => {
     dispatch(bookCreateRequestAction());
     return server
       .post('/book', formData, tokenConfig())
-      .then(() => {
-        dispatch(booksFetchActionCreator());
+      .then((response) => {
+        insertRow(response.data, dispatch)
+        cb();
         return dispatch(bookCreateSuccessAction());
       })
       .catch((error) =>

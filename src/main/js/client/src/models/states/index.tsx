@@ -11,6 +11,10 @@ export interface Book {
   status: string | null;
 }
 
+export interface ContextMenuState extends Book {
+  row: number;
+}
+
 export interface AuthState {
   isLoggedIn: boolean;
   loading: boolean;
@@ -43,5 +47,5 @@ export type mListStates = AuthState | BookState | Book;
 export interface RootState {
   auth: AuthState;
   book: BookState;
-  context: Book;
+  context: ContextMenuState;
 }

@@ -8,11 +8,14 @@ import CreateBookForm from './CreateBookForm';
 import { Book } from '../../../models/states';
 import { bookCreateActionCreator } from '../../../redux/actions/book/create';
 import { bookCreateModalCloseAction } from '../../../redux/actions/book/modal';
+import { useQuery } from '../StatusSelector/common';
+import { filterTable } from '../common';
 
 
 const CreateBookModal: FC<{}> = () => {
-  const contentRef: MutableRefObject<HTMLDivElement | null> = useRef(null);
+  let query = useQuery();
   const dispatch = useDispatch();
+  const contentRef: MutableRefObject<HTMLDivElement | null> = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -33,7 +36,7 @@ const CreateBookModal: FC<{}> = () => {
         <h1>Create Book</h1>
         <CreateBookForm onSubmit={(values: Book) => {
           values.lastReadDate = moment().format('DD-MM-YYYY HH:mm:ss');
-          dispatch(bookCreateActionCreator(values));
+          dispatch(bookCreateActionCreator(values, () => filterTable(query)));
         }} />
       </div>
     </Modal>

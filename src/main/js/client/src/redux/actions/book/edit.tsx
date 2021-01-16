@@ -3,8 +3,8 @@ import { ActionCreator } from 'redux';
 import { BookEditRequestAction, BOOK_EDIT_REQUEST, BookEditSuccessAction, BOOK_EDIT_SUCCESS, BookEditFailureAction, BOOK_EDIT_FAILURE } from '../../../models/actions/book';
 import { thunkActionCreator, tokenConfig } from '../util';
 import server from '../../../apis/server';
-import { booksFetchActionCreator } from './fetchAll';
 import { Book } from '../../../models/states';
+import { modifyRow } from './common';
 
 const bookEditRequestAction: ActionCreator<BookEditRequestAction> = () => ({
   type: BOOK_EDIT_REQUEST,
@@ -22,14 +22,14 @@ const bookEditFailureAction: ActionCreator<BookEditFailureAction> = (
 });
 
 export const bookEditActionCreator = thunkActionCreator(
-  ({ dispatch }, formData: Book) => {
-    console.log('book form', formData);
-
+  ({ dispatch }, formData: Book, cb: () => void, row: number) => {
+    console.log('edit form', formData);
     dispatch(bookEditRequestAction());
     return server
       .put(`/book/${formData.id}`, formData, tokenConfig())
-      .then(() => {
-        dispatch(booksFetchActionCreator());
+      .then((response) => {
+        modifyRow(response.data, row)
+        cb();
         return dispatch(bookEditSuccessAction());
       })
       .catch((error) =>

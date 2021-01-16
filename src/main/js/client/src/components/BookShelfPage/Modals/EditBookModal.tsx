@@ -1,17 +1,21 @@
 import React, { FC, MutableRefObject, useRef, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 
 import Modal from '../../HOCs/Modal';
 import { bookEditModalCloseAction } from '../../../redux/actions/book/modal';
 import styles from './EditBookModal.module.scss';
 import EditBookForm from './EditBookForm';
-import { Book } from '../../../models/states';
+import { Book, RootState } from '../../../models/states';
 import { bookEditActionCreator } from '../../../redux/actions/book/edit';
+import { filterTable } from '../common';
+import { useQuery } from '../StatusSelector/common';
 
 const EditBookModal: FC<{}> = () => {
-  const contentRef: MutableRefObject<HTMLDivElement | null> = useRef(null);
+  let query = useQuery();
   const dispatch = useDispatch();
+  const contentRef: MutableRefObject<HTMLDivElement | null> = useRef(null);
+  const row = useSelector((state: RootState) => state.context.row);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -36,7 +40,7 @@ const EditBookModal: FC<{}> = () => {
           } else {
             values.lastReadDate = moment().format('DD-MM-YYYY HH:mm:ss');
           }
-          dispatch(bookEditActionCreator(values));
+          dispatch(bookEditActionCreator(values, () => filterTable(query), row));
         }} />
       </div>
     </Modal>

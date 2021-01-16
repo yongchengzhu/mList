@@ -9,14 +9,14 @@ import {
 import { ActionCreator } from 'redux';
 import { thunkActionCreator, tokenConfig } from '../util';
 import server from '../../../apis/server';
-import { booksFetchActionCreator } from './fetchAll';
 
 const bookDeleteRequestAction: ActionCreator<BookDeleteRequestAction> = () => ({
   type: BOOK_DELETE_REQUEST,
 });
 
-const bookDeleteSuccessAction: ActionCreator<BookDeleteSuccessAction> = () => ({
+const bookDeleteSuccessAction: ActionCreator<BookDeleteSuccessAction> = (id: number) => ({
   type: BOOK_DELETE_SUCCESS,
+  id: id,
 });
 
 const bookDeleteFailureAction: ActionCreator<BookDeleteFailureAction> = (
@@ -32,8 +32,7 @@ export const bookDeleteActionCreator = thunkActionCreator(
     return server
       .delete(`/book/${id}`, tokenConfig())
       .then(() => {
-        dispatch(booksFetchActionCreator());
-        return dispatch(bookDeleteSuccessAction());
+        return dispatch(bookDeleteSuccessAction(id));
       })
       .catch((error) =>
         dispatch(

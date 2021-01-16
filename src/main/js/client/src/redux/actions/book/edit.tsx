@@ -10,8 +10,9 @@ const bookEditRequestAction: ActionCreator<BookEditRequestAction> = () => ({
   type: BOOK_EDIT_REQUEST,
 });
 
-const bookEditSuccessAction: ActionCreator<BookEditSuccessAction> = () => ({
+const bookEditSuccessAction: ActionCreator<BookEditSuccessAction> = (book: Book) => ({
   type: BOOK_EDIT_SUCCESS,
+  book: book,
 });
 
 const bookEditFailureAction: ActionCreator<BookEditFailureAction> = (
@@ -23,14 +24,11 @@ const bookEditFailureAction: ActionCreator<BookEditFailureAction> = (
 
 export const bookEditActionCreator = thunkActionCreator(
   ({ dispatch }, formData: Book) => {
-    console.log('book form', formData);
-
     dispatch(bookEditRequestAction());
     return server
       .put(`/book/${formData.id}`, formData, tokenConfig())
-      .then(() => {
-        dispatch(booksFetchActionCreator());
-        return dispatch(bookEditSuccessAction());
+      .then(({ data }) => {
+        return dispatch(bookEditSuccessAction(data));
       })
       .catch((error) =>
         dispatch(

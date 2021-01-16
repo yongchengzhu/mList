@@ -33,6 +33,7 @@ export interface BookCreateRequestAction {
 
 export interface BookCreateSuccessAction {
   type: typeof BOOK_CREATE_SUCCESS;
+  book: Book;
 }
 
 export interface BookCreateFailureAction {
@@ -80,6 +81,7 @@ export interface BookDeleteRequestAction {
 
 export interface BookDeleteSuccessAction {
   type: typeof BOOK_DELETE_SUCCESS;
+  id: number;
 }
 
 export interface BookDeleteFailureAction {
@@ -101,6 +103,7 @@ export interface BookEditRequestAction {
 
 export interface BookEditSuccessAction {
   type: typeof BOOK_EDIT_SUCCESS;
+  book: Book;
 }
 
 export interface BookEditFailureAction {

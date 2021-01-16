@@ -10,15 +10,15 @@ import {
 } from '../../../models/actions/book';
 import server from '../../../apis/server';
 import { tokenConfig, thunkActionCreator } from '../util';
-import { booksFetchActionCreator } from './fetchAll';
 import { Book } from '../../../models/states';
 
 const bookCreateRequestAction: ActionCreator<BookCreateRequestAction> = () => ({
   type: BOOK_CREATE_REQUEST,
 });
 
-const bookCreateSuccessAction: ActionCreator<BookCreateSuccessAction> = () => ({
+const bookCreateSuccessAction: ActionCreator<BookCreateSuccessAction> = (book: Book) => ({
   type: BOOK_CREATE_SUCCESS,
+  book: book,
 });
 
 const bookCreateFailureAction: ActionCreator<BookCreateFailureAction> = (
@@ -30,14 +30,11 @@ const bookCreateFailureAction: ActionCreator<BookCreateFailureAction> = (
 
 export const bookCreateActionCreator = thunkActionCreator(
   ({ dispatch }, formData: Book) => {
-    console.log('book form', formData);
-
     dispatch(bookCreateRequestAction());
     return server
       .post('/book', formData, tokenConfig())
-      .then(() => {
-        dispatch(booksFetchActionCreator());
-        return dispatch(bookCreateSuccessAction());
+      .then(({ data }) => {
+        return dispatch(bookCreateSuccessAction(data));
       })
       .catch((error) =>
         dispatch(

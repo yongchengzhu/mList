@@ -61,7 +61,12 @@ const bookReducer: Reducer<BookState, BookActions> = (
     case BOOK_CREATE_REQUEST:
       return { ...state, creating: true, createError: null };
     case BOOK_CREATE_SUCCESS:
-      return { ...state, creating: false, showCreateModal: false };
+      return { 
+        ...state, 
+        creating: false, 
+        showCreateModal: false, 
+        books: [...state.books, action.book] 
+      };
     case BOOK_CREATE_FAILURE:
       return { ...state, creating: false, createError: action.error };
     case BOOKS_FETCH_REQUEST:
@@ -78,13 +83,22 @@ const bookReducer: Reducer<BookState, BookActions> = (
     case BOOK_DELETE_REQUEST:
       return { ...state, deleting: true };
     case BOOK_DELETE_SUCCESS:
-      return { ...state, deleting: false, showDeleteModal: false };
+      const filteredBooks = state.books.filter(book => book.id !== action.id);
+      return { ...state, deleting: false, showDeleteModal: false, books: filteredBooks };
     case BOOK_DELETE_FAILURE:
       return { ...state, deleting: false, deleteError: action.error };
     case BOOK_EDIT_REQUEST:
       return { ...state, editing: true, editError: null };
     case BOOK_EDIT_SUCCESS:
-      return { ...state, editing: false, showEditModal: false };
+      let books = [];
+      for (let book of state.books) {
+        if (book.id === action.book.id) {
+          books.push(action.book);
+        } else {
+          books.push(book);
+        }
+      }
+      return { ...state, editing: false, showEditModal: false, books: books };
     case BOOK_EDIT_FAILURE:
       return { ...state, editing: false, editError: action.error };
     default:

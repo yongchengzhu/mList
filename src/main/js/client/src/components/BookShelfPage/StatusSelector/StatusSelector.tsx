@@ -32,8 +32,6 @@ const StatusSelector: FC<{}> = () => {
     } else {
       query.set(target.name, target.value);
     }
-    console.log('query', query.toString())
-
     historyPush();
   }
 

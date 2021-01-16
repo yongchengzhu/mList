@@ -36,7 +36,7 @@ public class BookController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  private void createBook(@RequestBody @Valid CreateBookRequest body, Principal principal, HttpServletResponse res, UriComponentsBuilder uriBuilder) {
+  private Book createBook(@RequestBody @Valid CreateBookRequest body, Principal principal, HttpServletResponse res, UriComponentsBuilder uriBuilder) {
     Book book = new Book(
       body.getTitle(),
       body.getLanguage(),
@@ -54,11 +54,13 @@ public class BookController {
     bookService.save(book);
 
     res.addHeader("Location", baseURL + "/api/book" + book.getId());
+
+    return book;
   }
 
   @PutMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
-  private void updateBook(
+  private Book updateBook(
     @RequestBody @Valid UpdateBookRequest body, @PathVariable Long id, Principal principal) {
     // Todos:
     // - Check if body.getId() == id.
@@ -78,6 +80,8 @@ public class BookController {
     );
 
     bookService.update(book);
+
+    return book;
   }
 
   @DeleteMapping("/{id}")

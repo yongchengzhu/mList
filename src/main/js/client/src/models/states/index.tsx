@@ -3,13 +3,11 @@ export type SortConfigKey =
   | 'lastChapterRead'
   | 'rating'
   | 'lastReadDate'
-  | 'daysToWait'
-  | null;
+  | 'daysToWait';
 
 export type SortConfigOrder = 
   | 'asc'
-  | 'desc' 
-  | null;
+  | 'desc'
 
 export type FilterConfigStatus = 
   | 'reading' 
@@ -37,6 +35,8 @@ export interface FilterConfig {
   source: FilterConfigSource;
 }
 
+export type SortFilterConfig = SortConfig & FilterConfig;
+
 export interface Book {
   id             : number;
   title          : string;
@@ -59,21 +59,20 @@ export interface AuthState {
 }
 
 export interface BookState {
-  showCreateModal: boolean;
-  showDeleteModal: boolean;
-  creating       : boolean;
-  createError    : string | null;
-  fetchingAll    : boolean;
-  fetchAllError  : string | null;
-  deleting       : boolean;
-  deleteError    : string | null;
-  books          : Book[];
-  formState      : Book;
-  showEditModal  : boolean;
-  editError      : string | null;
-  editing        : boolean;
-  sortConfig     : SortConfig;
-  filterConfig   : FilterConfig;
+  showCreateModal : boolean;
+  showDeleteModal : boolean;
+  creating        : boolean;
+  createError     : string | null;
+  fetchingAll     : boolean;
+  fetchAllError   : string | null;
+  deleting        : boolean;
+  deleteError     : string | null;
+  books           : Book[];
+  formState       : Book;
+  showEditModal   : boolean;
+  editError       : string | null;
+  editing         : boolean;
+  sortFilterConfig: SortFilterConfig;
 }
 
 export type mListStates = 

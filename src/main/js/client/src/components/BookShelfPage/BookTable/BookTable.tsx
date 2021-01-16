@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { ContextMenuTrigger } from "react-contextmenu";
 import moment from 'moment';
 
@@ -6,20 +6,55 @@ import './BookTable.module.scss';
 import styles from './BookTable.module.scss';
 import LoadingSpinner from '../../Loaders/LoadingSpinner';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState, SortConfigKey, SortConfigOrder, Source } from '../../../models/states';
+import { RootState, SortConfigKey, SortConfigOrder, Source, SortConfig, FilterConfig, SortFilterConfig, FilterConfigStatus } from '../../../models/states';
 import { bookContextUpdateAction } from '../../../redux/actions/book/context';
 import { setSortConfigAction } from '../../../redux/actions/book/sort';
 import { useQuery, historyPush } from '../common';
+import { initalSortFilterConfigState } from '../../../redux/reducers/common';
+
+
 
 const BookTable: FC<{}> = () => {
   let query = useQuery();
   const dispatch = useDispatch();
   const { 
     fetchingAll, 
-    books, 
-    sortConfig,
-    filterConfig,
+    books,
+    sortFilterConfig
   } = useSelector((state: RootState) => state.book);
+
+  useEffect(() => {
+    const queryConfig: SortFilterConfig = initalSortFilterConfigState;
+
+    query.forEach((value, key) => {
+      switch(key) {
+        case 'sortKey':
+          queryConfig.key = value as SortConfigKey;
+          return;
+        case 'sortOrder':
+          queryConfig.order = value as SortConfigOrder;
+          return;
+        case 'language':
+          queryConfig.source.add(value as Source);
+          return;
+        case 'status':
+          queryConfig.status = value as FilterConfigStatus;
+          return;
+      }
+    });
+
+    dispatch(setSortConfigAction(queryConfig));
+  }, []);
+
+  const sortConfig: SortConfig = { 
+    order: sortFilterConfig.order, 
+    key: sortFilterConfig.key 
+  };
+
+  const filterConfig: FilterConfig = { 
+    status: sortFilterConfig.status, 
+    source: sortFilterConfig.source 
+  };
 
   const renderTableBody = () => {
     if (fetchingAll) return <LoadingSpinner />;
@@ -54,11 +89,14 @@ const BookTable: FC<{}> = () => {
 
   const handleSort = (key: SortConfigKey) => {
     let order: SortConfigOrder = 'desc';
-    if (
-      sortConfig.key === key &&
-      sortConfig.order === 'desc'
-    ) {
+    if (sortConfig.key === key && sortConfig.order === 'desc')
       order = 'asc';
+    if (key === 'daysToWait' && order === 'desc') {
+      query.delete('sortKey');
+      query.delete('sortOrder');
+    } else {
+      query.set('sortKey', key);
+      query.set('sortOrder', order);
     }
     historyPush(query);
     dispatch(setSortConfigAction({ key, order }));

@@ -23,7 +23,7 @@ import {
   SORT_CONFIG_SET,
   FILTER_CONFIG_SET,
 } from '../../models/actions/book';
-import { initialBookState } from './common';
+import { initialBookState, initalSortFilterConfigState } from './common';
 
 const initialFormState: Book = initialBookState;
 
@@ -41,8 +41,7 @@ const initialState: BookState = {
   showEditModal: false,
   editError: null,
   editing: false,
-  sortConfig: { order: null, key: null },
-  filterConfig: { status: 'reading', source: new Set() },
+  sortFilterConfig: initalSortFilterConfigState,
 };
 
 const bookReducer: Reducer<BookState, BookActions> = (
@@ -88,7 +87,12 @@ const bookReducer: Reducer<BookState, BookActions> = (
       return { ...state, deleting: true };
     case BOOK_DELETE_SUCCESS:
       const filteredBooks = state.books.filter(book => book.id !== action.id);
-      return { ...state, deleting: false, showDeleteModal: false, books: filteredBooks };
+      return { 
+        ...state, 
+        deleting: false, 
+        showDeleteModal: false, 
+        books: filteredBooks 
+      };
     case BOOK_DELETE_FAILURE:
       return { ...state, deleting: false, deleteError: action.error };
     case BOOK_EDIT_REQUEST:
@@ -106,9 +110,15 @@ const bookReducer: Reducer<BookState, BookActions> = (
     case BOOK_EDIT_FAILURE:
       return { ...state, editing: false, editError: action.error };
     case SORT_CONFIG_SET:
-      return { ...state, sortConfig: action.sortConfig }
+      return { 
+        ...state, 
+        sortFilterConfig: { ...state.sortFilterConfig, ...action.sortConfig } 
+      }
     case FILTER_CONFIG_SET:
-      return { ...state, filterConfig: action.filterConfig }
+      return { 
+        ...state, 
+        sortFilterConfig: { ...state.sortFilterConfig, ...action.filterConfig } 
+      }
     default:
       return state;
   }

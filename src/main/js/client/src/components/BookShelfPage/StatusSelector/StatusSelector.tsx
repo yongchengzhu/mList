@@ -3,15 +3,20 @@ import React, { FC } from 'react';
 import styles from './StatusSelector.module.scss';
 import { useQuery, historyPush } from '../common';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../models/states';
+import { RootState, FilterConfig } from '../../../models/states';
 import { setFilterConfigAction } from '../../../redux/actions/book/filter';
 
 const StatusSelector: FC<{}> = () => {
   const dispatch = useDispatch();
-  const { 
-    filterConfig
+  const {
+    sortFilterConfig
   } = useSelector((state: RootState) => state.book);
   let query = useQuery();
+
+  const filterConfig: FilterConfig = { 
+    status: sortFilterConfig.status, 
+    source: sortFilterConfig.source 
+  };
   
   const handleSourceFilterChange = (e: any) => {
     const target = e.target;
@@ -65,7 +70,7 @@ const StatusSelector: FC<{}> = () => {
             name="status"
             value="reading"
             onChange={handleStatusFilterChange}
-            defaultChecked
+            checked={"reading" === filterConfig.status}
           />
           <label htmlFor="reading">Reading</label>
         </span>
@@ -77,6 +82,7 @@ const StatusSelector: FC<{}> = () => {
             name="status" 
             value="dropped"
             onChange={handleStatusFilterChange}
+            checked={"dropped" === filterConfig.status}
           />
           <label htmlFor="dropped">Dropped</label>
         </span>
@@ -88,6 +94,7 @@ const StatusSelector: FC<{}> = () => {
             name="status" 
             value="axed"
             onChange={handleStatusFilterChange}
+            checked={"axed" === filterConfig.status}
           />
           <label htmlFor="axed">Axed</label>
         </span>
@@ -99,6 +106,7 @@ const StatusSelector: FC<{}> = () => {
             name="status" 
             value="planned"
             onChange={handleStatusFilterChange}
+            checked={"planned" === filterConfig.status}
           />
           <label htmlFor="planned">Planned</label>
         </span>
@@ -110,6 +118,7 @@ const StatusSelector: FC<{}> = () => {
             name="status" 
             value="completed"
             onChange={handleStatusFilterChange}
+            checked={"completed" === filterConfig.status}
           />
           <label htmlFor="completed">Completed</label>
         </span>
@@ -121,6 +130,7 @@ const StatusSelector: FC<{}> = () => {
             name="status" 
             value="all"
             onChange={handleStatusFilterChange}
+            checked={"all" === filterConfig.status}
           />
           <label htmlFor="all">All</label>
         </span>
@@ -135,6 +145,7 @@ const StatusSelector: FC<{}> = () => {
             name="language"
             value="cn"
             onChange={handleSourceFilterChange}
+            checked={filterConfig.source.has("cn")}
           />
           <label htmlFor="cn">CN</label>
         </span>
@@ -146,6 +157,7 @@ const StatusSelector: FC<{}> = () => {
             name="language" 
             value="kr"
             onChange={handleSourceFilterChange}
+            checked={filterConfig.source.has("kr")}
           />
           <label htmlFor="kr">KR</label>
         </span>
@@ -157,6 +169,7 @@ const StatusSelector: FC<{}> = () => {
             name="language" 
             value="jp"
             onChange={handleSourceFilterChange}
+            checked={filterConfig.source.has("jp")}
           />
           <label htmlFor="jp">JP</label>
         </span>        

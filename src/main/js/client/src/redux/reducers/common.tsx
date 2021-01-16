@@ -1,4 +1,4 @@
-import { Book } from '../../models/states';
+import { Book, SortFilterConfig } from '../../models/states';
 
 export const initialBookState: Book = {
   id: -1,
@@ -11,4 +11,11 @@ export const initialBookState: Book = {
   daysToWait: 0,
   comments: null,
   status: 'reading',
+};
+
+export const initalSortFilterConfigState: SortFilterConfig = {
+  order: 'desc', 
+  key: 'daysToWait', 
+  status: 'reading', 
+  source: new Set()
 };

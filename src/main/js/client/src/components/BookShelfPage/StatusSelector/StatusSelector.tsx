@@ -1,20 +1,10 @@
 import React, { FC } from 'react';
 
 import styles from './StatusSelector.module.scss';
-import history from '../../../history';
-import { useLocation } from 'react-router-dom';
-
-const useQuery = () => {
-  return new URLSearchParams(useLocation().search);
-}
+import { useQuery, historyPush } from '../common';
 
 const StatusSelector: FC<{}> = () => {
   let query = useQuery();
-
-  const historyPush = () => history.push({
-    pathname: '/bookshelf',
-    search: `?${query.toString()}`
-  });
 
   const handleSourceFilterChange = (e: any) => {
     const target = e.target;
@@ -22,7 +12,7 @@ const StatusSelector: FC<{}> = () => {
       query.append(target.name, target.value);
     else
       deleteParam(target.name, target.value);
-    historyPush();
+    historyPush(query);
   };
 
   const handleStatusFilterChange = (e: any) => {
@@ -32,7 +22,7 @@ const StatusSelector: FC<{}> = () => {
     } else {
       query.set(target.name, target.value);
     }
-    historyPush();
+    historyPush(query);
   }
 
   const deleteParam = (key: string, value: string) => {

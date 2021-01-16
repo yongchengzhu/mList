@@ -3,14 +3,22 @@ import { ContextMenuTrigger } from "react-contextmenu";
 import moment from 'moment';
 
 import './BookTable.module.scss';
+import styles from './BookTable.module.scss';
 import LoadingSpinner from '../../Loaders/LoadingSpinner';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../models/states';
 import { bookContextUpdateAction } from '../../../redux/actions/book/context';
+import { setSortConfigAction } from '../../../redux/actions/book/sort';
+import { useQuery, historyPush } from '../common';
 
 const BookTable: FC<{}> = () => {
+  let query = useQuery();
   const dispatch = useDispatch();
-  const { fetchingAll, books } = useSelector((state: RootState) => state.book);
+  const { 
+    fetchingAll, 
+    books, 
+    sortConfig 
+  } = useSelector((state: RootState) => state.book);
 
   const renderTableBody = () => {
     if (fetchingAll) return <LoadingSpinner />;
@@ -36,61 +44,25 @@ const BookTable: FC<{}> = () => {
     });
   };
 
-  // copy-pasta from w3school ('ω^＼)
-  function sortTable(n: number) {
-    let table: any, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-    table = document.getElementById("book-table");
-    if (!table) return;
-    switching = true;
-    //Set the sorting direction to ascending:
-    dir = "asc"; 
-    /*Make a loop that will continue until
-    no switching has been done:*/
-    while (switching) {
-      //start by saying: no switching is done:
-      switching = false;
-      rows = table.rows;
-      /*Loop through all table rows (except the
-      first, which contains table headers):*/
-      for (i = 1; i < (rows.length - 1); i++) {
-        //start by saying there should be no switching:
-        shouldSwitch = false;
-        /*Get the two elements you want to compare,
-        one from current row and one from the next:*/
-        x = rows[i].getElementsByTagName("TD")[n];
-        y = rows[i + 1].getElementsByTagName("TD")[n];
-        /*check if the two rows should switch place,
-        based on the direction, asc or desc:*/
-        if (dir == "asc") {
-          if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-            //if so, mark as a switch and break the loop:
-            shouldSwitch= true;
-            break;
-          }
-        } else if (dir == "desc") {
-          if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-            //if so, mark as a switch and break the loop:
-            shouldSwitch = true;
-            break;
-          }
-        }
-      }
-      if (shouldSwitch) {
-        /*If a switch has been marked, make the switch
-        and mark that a switch has been done:*/
-        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-        switching = true;
-        //Each time a switch is done, increase this count by 1:
-        switchcount ++;      
-      } else {
-        /*If no switching has been done AND the direction is "asc",
-        set the direction to "desc" and run the while loop again.*/
-        if (switchcount == 0 && dir == "asc") {
-          dir = "desc";
-          switching = true;
-        }
-      }
+  const getClassName = (name: string) => {
+    if (!sortConfig.order) {
+      return styles.hidden;
     }
+    return sortConfig.key === name ? styles[sortConfig.order] : styles.hidden;
+  };
+
+  const handleSort = (key: string) => {
+    let order = 'desc';
+    if (
+      sortConfig.key === key &&
+      sortConfig.order === 'desc'
+    ) {
+      order = 'asc';
+    }
+    query.set('sortKey', key);
+    query.set('sortOrder', order);
+    historyPush(query);
+    dispatch(setSortConfigAction({ key, order }));
   }
 
   return (
@@ -98,11 +70,21 @@ const BookTable: FC<{}> = () => {
       <table id="book-table">
         <thead>
           <tr>
-            <th onClick={() => sortTable(0)}>Title</th>
-            <th onClick={() => sortTable(1)}>Last Read</th>
-            <th onClick={() => sortTable(2)}>Rating</th>
-            <th onClick={() => sortTable(3)}>Read Since</th>
-            <th onClick={() => sortTable(4)}>Days Left</th>
+            <th onClick={() => handleSort('title')}>
+              <span className={getClassName('title')}>Title</span>
+            </th>
+            <th onClick={() => handleSort('last_read')}>
+              <span className={getClassName('last_read')}>Last Read</span>
+            </th>
+            <th onClick={() => handleSort('rating')}>
+              <span className={getClassName('rating')}>Rating</span>
+            </th>
+            <th onClick={() => handleSort('read_since')}>
+              <span className={getClassName('read_since')}>Read Since</span>
+            </th>
+            <th onClick={() => handleSort('days_left')}>
+              <span className={getClassName('days_left')}>Days Left</span>
+            </th>
           </tr>
         </thead>
         <tbody>{renderTableBody()}</tbody>

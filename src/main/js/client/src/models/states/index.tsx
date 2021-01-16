@@ -1,3 +1,8 @@
+export interface SortConfig {
+  order: 'asc' | 'desc' | null;
+  key: string | null;
+}
+
 export interface Book {
   id: number;
   title: string;
@@ -33,6 +38,7 @@ export interface BookState {
   showEditModal: boolean;
   editError: string | null;
   editing: boolean;
+  sortConfig: SortConfig;
 }
 
 export type mListStates = AuthState | BookState | Book;

@@ -38,3 +38,22 @@ thead > tr {
 tbody tr:hover {
   background: lightgray;
 }
+
+.desc {}
+
+.asc {}
+
+.hidden {}
+
+.desc::after {
+  content: '▿';
+}
+
+.asc::after {
+  content: '▵';
+}
+
+.hidden::after {
+  content: '▵';
+  color: transparent;
+}

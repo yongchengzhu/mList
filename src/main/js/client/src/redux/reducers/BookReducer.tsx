@@ -20,6 +20,7 @@ import {
   BOOK_EDIT_REQUEST,
   BOOK_EDIT_SUCCESS,
   BOOK_EDIT_FAILURE,
+  SORT_CONFIG_SET,
 } from '../../models/actions/book';
 import { initialBookState } from './common';
 
@@ -39,6 +40,7 @@ const initialState: BookState = {
   showEditModal: false,
   editError: null,
   editing: false,
+  sortConfig: { order: null, key: null },
 };
 
 const bookReducer: Reducer<BookState, BookActions> = (
@@ -61,7 +63,7 @@ const bookReducer: Reducer<BookState, BookActions> = (
     case BOOK_CREATE_REQUEST:
       return { ...state, creating: true, createError: null };
     case BOOK_CREATE_SUCCESS:
-      return { 
+      return {
         ...state, 
         creating: false, 
         showCreateModal: false, 
@@ -101,6 +103,8 @@ const bookReducer: Reducer<BookState, BookActions> = (
       return { ...state, editing: false, showEditModal: false, books: books };
     case BOOK_EDIT_FAILURE:
       return { ...state, editing: false, editError: action.error };
+    case SORT_CONFIG_SET:
+      return { ...state, sortConfig: action.sortConfig }
     default:
       return state;
   }

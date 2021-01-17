@@ -4,17 +4,18 @@ import { useDispatch } from 'react-redux';
 
 import SignupForm from './SignupForm';
 import { signupActionCreator } from '../../../redux/actions/auth/signup';
+import logo from '../../../assets/logo1.png';
+import styles from '../AuthPages.module.scss';
 
 const SignupPage: React.FC<{}> = () => {
   const dispatch = useDispatch();
 
   return (
-    <main>
-      <h1>Signup</h1>
+    <main className={styles.main}>
+      <img src={logo} />
       <SignupForm
         onSubmit={(values) => dispatch(signupActionCreator(values))}
       />
-      <Link to="signin">Already have an account?</Link>
     </main>
   );
 };

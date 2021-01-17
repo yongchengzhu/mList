@@ -33,7 +33,7 @@ public class AuthService {
       } catch (LockedException ex) {
         throw new LockedException("Your account is locked.", ex);
       } catch (BadCredentialsException ex) {
-        throw new BadCredentialsException("Bad credentials: wrong username/email or password.", ex);
+        throw new BadCredentialsException("Wrong username/email or password.", ex);
       }
 
       UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(emailOrUsername);

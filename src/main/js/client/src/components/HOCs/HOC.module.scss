@@ -9,3 +9,14 @@
   justify-content: center;
   background: rgba(0,0,0,0.4);
 }
+
+.hiddenAlert {
+  height: 48px;
+}
+
+.progress{
+  display: flex;
+  height: 40px;
+  flex-direction: column;
+  justify-content: center;
+}

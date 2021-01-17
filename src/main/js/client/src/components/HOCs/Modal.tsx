@@ -1,7 +1,7 @@
 import { FC, useRef, MutableRefObject, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
-import styles from './Modal.module.scss';
+import styles from './HOC.module.scss';
 
 interface ModalProps {
   root: string,

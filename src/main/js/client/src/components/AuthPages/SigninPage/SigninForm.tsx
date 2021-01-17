@@ -1,28 +1,55 @@
 import React, { FC } from 'react';
 import { InjectedFormProps, reduxForm, Field } from 'redux-form';
-import SubmitButton from '../../HOCs/SubmitButton';
 import { useSelector } from 'react-redux';
+import { Button } from '@material-ui/core';
+
+import SubmitButton from '../../HOCs/SubmitButton';
 import { RootState } from '../../../models/states';
 import ErrorMessage from '../../HOCs/ErrorMessage';
+import history from '../../../history';
+import styles from '../AuthPages.module.scss';
+import { useAuthStyles } from './useAuthStyles';
+import { renderTextField, required } from '../common';
 
 const SigninForm: FC<InjectedFormProps> = (props) => {
+  const classes = useAuthStyles();
   const { loading, error } = useSelector((state: RootState) => state.auth);
 
   return (
-    <form onSubmit={props.handleSubmit}>
+    <form className={styles.form} onSubmit={props.handleSubmit}>
+      <div className={styles.title}>Welcome back to mList</div>
       <ErrorMessage error={error} />
-      
-      <label htmlFor="emailOrUsername">Email / Username:</label>
-      <Field
-        component="input"
-        type="text"
-        id="emailOrUsername"
-        name="emailOrUsername"
-        autoFocus
-      />
-      <label htmlFor="password">Password:</label>
-      <Field component="input" type="password" id="password" name="password" />
+      <div className={styles.fields}>
+        <Field
+          component={renderTextField}
+          type="text"
+          id="emailOrUsername"
+          name="emailOrUsername"
+          className={classes.textField}
+          label="Email / Username:"
+          validate={[required]}
+          autoFocus
+        />
+        <Field 
+          component={renderTextField} 
+          type="password" 
+          id="password" 
+          name="password"
+          className={classes.textField}
+          validate={[required]}
+          label="Password:"
+        />
+      </div>
       <SubmitButton loading={loading} />
+      <div className={styles.links}>
+        <div className={styles.sub}>Don't have an account?</div>
+        <Button 
+          className={classes.button} 
+          onClick={() => history.push('/signup')}
+        >
+          Sign Up
+        </Button>
+      </div>
     </form>
   );
 };

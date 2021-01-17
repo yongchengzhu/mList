@@ -43,14 +43,17 @@ export const signinActionCreator = thunkActionCreator(
         history.push('/bookshelf');
         return dispatch(signinCompleteAction(sub));
       })
-      .catch((error) =>
-        dispatch(
+      .catch((error) => {
+        const serverError = error.response.data
+          ? 'Whoops, looks like something went wrong!'
+          : undefined;
+        return dispatch(
           signinFailureAction(
             error.response.data.message ||
-              JSON.stringify(error.response.data) ||
+              serverError ||
               'Signin failed. Please try again later.'
           )
         )
-      );
+      });
   }
 );

@@ -1,3 +1,17 @@
 #cover-image-tooltip {
   padding: 0;
 }
+
+body {
+  margin: 0;
+  font-family: 'Roboto';
+}
+
+#root {
+  min-height: 100vh;
+  height: 100vh;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}

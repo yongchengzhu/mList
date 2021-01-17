@@ -1,6 +1,7 @@
 import React, { FC, useEffect } from 'react';
 import { ContextMenuTrigger } from "react-contextmenu";
 import moment from 'moment';
+import ReactTooltip from "react-tooltip";
 
 import './BookTable.module.scss';
 import styles from './BookTable.module.scss';
@@ -12,7 +13,10 @@ import { setSortConfigAction } from '../../../redux/actions/book/sort';
 import { useQuery, historyPush } from '../common';
 import { initalSortFilterConfigState } from '../../../redux/reducers/common';
 
-
+interface CustomAttributes extends React.HTMLAttributes<HTMLElement> {
+  datatip: string;
+  datafor: string;
+}
 
 const BookTable: FC<{}> = () => {
   let query = useQuery();
@@ -63,18 +67,32 @@ const BookTable: FC<{}> = () => {
       const daysLeft     = moment(book.lastReadDate).utc()
         .add(book.daysToWait, 'days').utc()
         .diff(moment(book.lastReadDate).utc(), 'days');
+      const customAttributes: CustomAttributes = {
+        datatip: "data-tip",
+        datafor: "data-for",
+      }
+
       return (
         <ContextMenuTrigger 
           id="book-contextmenu" 
-          renderTag="tr" 
-          key={book.id} 
-          attributes={{ onContextMenu: () => dispatch(bookContextUpdateAction(book))}}
+          renderTag="tr"
+          key={book.id}
+          attributes={{ 
+            onContextMenu: () => dispatch(bookContextUpdateAction(book)),
+            [customAttributes.datatip]: "",
+            [customAttributes.datafor]: "cover-image-tooltip",
+          }}
         >
           <td>{book.title}</td>
           <td>{book.lastChapterRead}</td>
           <td>{book.rating}</td>
           <td>{lastReadDate}</td>
           <td>{daysLeft}</td>
+          <>
+            <ReactTooltip id="cover-image-tooltip" place="left" type="light" effect="solid">
+              <img src={book.cover || ""} width="100" height="150" />
+            </ReactTooltip>
+          </>
         </ContextMenuTrigger>
       );
     });

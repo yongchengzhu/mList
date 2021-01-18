@@ -1,8 +1,9 @@
 .status-selector {
   display: inline-flex;
   flex-direction: column;
-  width: 100%;
-  align-items: flex-end;
+  width: 175px;
+  // width: 100%;
+  // align-items: flex-end;
 }
 
 .aside {
@@ -15,7 +16,10 @@
   position: fixed;
   height: inherit;
   width: inherit;
-  background: inherit;
+  background: #303030;
+  border-radius: 0 25px 25px 0px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  // background: inherit;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -24,7 +28,7 @@
 
 .container {
   width: 175px;
-  padding: 25px 0;
+  padding: 30px 0;
 }
 
 .logoContainer {
@@ -48,7 +52,6 @@ input[name="status"] + label {
   border-radius: 8px 0 0 8px;
   width: 125px;
   display: flex;
-  justify-content: space-between;
 }
 
 input[name="status"] + label:hover {
@@ -57,8 +60,7 @@ input[name="status"] + label:hover {
 }
 
 input[name="status"]:checked + label {
-  background: #303030;
-  // color: #f73378;
+  color: #f73378;
 }
 
 .exitContainer {
@@ -75,4 +77,8 @@ input[name="status"]:checked + label {
 
 .signout:hover {
   color: #f73378;
+}
+
+.dummySpan {
+  margin-right: 34px;
 }

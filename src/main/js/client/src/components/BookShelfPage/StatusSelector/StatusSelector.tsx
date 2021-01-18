@@ -21,29 +21,9 @@ import { signoutAction } from '../../../redux/actions/auth/signout';
 import { bookCreateModalOpenAction } from '../../../redux/actions/book/modal';
 
 const useStyles = makeStyles({
-  button: {
-    '&:hover': {
-      'color': 'white',
-      'background-color': '#f73378',
-    },
-    'margin': '15px 0',
-    'border-radius': 0,
-    'background-color': '#fff',
-    'height': '45px',
-    'width': '100%',
-    'box-shadow': '0px 11px 15px -7px rgba(0,0,0,0.2), 0px 24px 38px 3px rgba(0,0,0,0.14), 0px 9px 46px 8px rgba(0,0,0,0.12)',
-    '& span': {
-      'display': 'flex',
-      'justify-content': 'space-between',
-    },
-  },
-  alignBottom: {
-    'vertical-align': 'bottom',
-    'margin-right': '5px',
-  },
   alignCenter: {
     'vertical-align': 'middle',
-    'margin-right': '5px',
+    'margin-right': '10px',
   }
 });
 
@@ -109,14 +89,6 @@ const StatusSelector: FC<{}> = () => {
             <img src={logo} width="115" height="115" />
             <div className={styles.logoTitle}>mList</div>
           </div>
-          <Button 
-            onClick={() => dispatch(bookCreateModalOpenAction())}
-            variant="contained" 
-            endIcon={<AddIcon />} 
-            className={classes.button}>
-            Add Book
-          </Button>
-
         </div>
         <div className={styles['status-selector']}>
           <span>
@@ -129,7 +101,7 @@ const StatusSelector: FC<{}> = () => {
               checked={"reading" === filterConfig.status}
             />
             <label htmlFor="reading">
-              <BookmarkBorderIcon className={classes.alignBottom} />
+              <BookmarkBorderIcon className={classes.alignCenter} />
               Reading
             </label>
           </span>
@@ -144,7 +116,7 @@ const StatusSelector: FC<{}> = () => {
               checked={"dropped" === filterConfig.status}
             />
             <label htmlFor="dropped">
-              <DeleteOutlineIcon className={classes.alignBottom} />
+              <DeleteOutlineIcon className={classes.alignCenter} />
               Dropped
             </label>
           </span>
@@ -159,7 +131,7 @@ const StatusSelector: FC<{}> = () => {
               checked={"axed" === filterConfig.status}
             />
             <label htmlFor="axed">
-              <RemoveIcon className={classes.alignBottom} />
+              <RemoveIcon className={classes.alignCenter} />
               Axed
             </label>
           </span>
@@ -174,7 +146,7 @@ const StatusSelector: FC<{}> = () => {
               checked={"planned" === filterConfig.status}
             />
             <label htmlFor="planned">
-              <CalendarTodayIcon className={classes.alignBottom} />
+              <CalendarTodayIcon className={classes.alignCenter} />
               Planned
             </label>
           </span>
@@ -189,7 +161,7 @@ const StatusSelector: FC<{}> = () => {
               checked={"completed" === filterConfig.status}
             />
             <label htmlFor="completed">
-              <DoneIcon className={classes.alignBottom} />
+              <DoneIcon className={classes.alignCenter} />
               Completed
             </label>
           </span>
@@ -204,7 +176,7 @@ const StatusSelector: FC<{}> = () => {
               checked={"all" === filterConfig.status}
             />
             <label htmlFor="all">
-              <span />
+              <span className={styles.dummySpan} />
               All
             </label>
           </span>
@@ -218,7 +190,7 @@ const StatusSelector: FC<{}> = () => {
               localStorage.removeItem('mList-token');
               dispatch(signoutAction());
             }}>
-            <ExitToAppIcon className={classes.alignBottom} /> 
+            <ExitToAppIcon className={classes.alignCenter} /> 
             Log Out
           </div>
         </div>

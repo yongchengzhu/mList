@@ -2,6 +2,7 @@ import React, { FC, useEffect } from 'react';
 import { ContextMenuTrigger } from "react-contextmenu";
 import moment from 'moment';
 import ReactTooltip from "react-tooltip";
+import AddIcon from '@material-ui/icons/Add';
 
 import './BookTable.module.scss';
 import styles from './BookTable.module.scss';
@@ -12,14 +13,35 @@ import { bookContextUpdateAction } from '../../../redux/actions/book/context';
 import { setSortConfigAction } from '../../../redux/actions/book/sort';
 import { useQuery, historyPush } from '../common';
 import { initalSortFilterConfigState } from '../../../redux/reducers/common';
+import { Button, makeStyles } from '@material-ui/core';
+import { bookCreateModalOpenAction } from '../../../redux/actions/book/modal';
 
 interface CustomAttributes extends React.HTMLAttributes<HTMLElement> {
   datatip: string;
   datafor: string;
 }
 
+const useStyles = makeStyles({
+  button: {
+    '&:hover': {
+      'color': 'white',
+      'background-color': '#f73378',
+    },
+    'margin': '15px 0',
+    'border-radius': 0,
+    'background-color': '#fff',
+    'height': '45px',
+    'box-shadow': '0px 11px 15px -7px rgba(0,0,0,0.2), 0px 24px 38px 3px rgba(0,0,0,0.14), 0px 9px 46px 8px rgba(0,0,0,0.12)',
+    '& span': {
+      'display': 'flex',
+      'justify-content': 'space-between',
+    },
+  },
+});
+
 const BookTable: FC<{}> = () => {
   let query = useQuery();
+  const classes = useStyles();
   const dispatch = useDispatch();
   const { 
     fetchingAll, 
@@ -164,6 +186,15 @@ const BookTable: FC<{}> = () => {
   return (
     <div className={styles.container}>
       <div className={styles.title}>Book Shelf</div>
+      <div className={styles.subContainer}>
+        <Button 
+          onClick={() => dispatch(bookCreateModalOpenAction())}
+          variant="contained" 
+          endIcon={<AddIcon />} 
+          className={classes.button}>
+          Add Book
+        </Button>
+      </div>
       <table id="book-table">
         <thead>
           <tr>

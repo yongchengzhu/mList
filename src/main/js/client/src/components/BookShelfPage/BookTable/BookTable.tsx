@@ -150,6 +150,7 @@ const BookTable: FC<{}> = () => {
 
   return (
     <div className={styles.container}>
+      <div className={styles.title}>Book Shelf</div>
       <table id="book-table">
         <thead>
           <tr>

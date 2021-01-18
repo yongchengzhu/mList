@@ -65,7 +65,7 @@ const SignupForm: FC<InjectedFormProps> = (props) => {
           className={classes.button} 
           onClick={() => history.push('/signin')}
         >
-          Sign Up
+          Sign In
         </Button>
       </div>
     </form>

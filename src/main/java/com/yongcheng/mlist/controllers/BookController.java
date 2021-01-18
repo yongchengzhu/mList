@@ -1,11 +1,14 @@
 package com.yongcheng.mlist.controllers;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import com.yongcheng.mlist.models.Book;
+import com.yongcheng.mlist.models.User;
 import com.yongcheng.mlist.payloads.CreateBookRequest;
 import com.yongcheng.mlist.payloads.UpdateBookRequest;
 import com.yongcheng.mlist.sevices.BookService;
@@ -92,8 +95,9 @@ public class BookController {
 
   @GetMapping
   @ResponseStatus(HttpStatus.OK)
-  public Iterable<Book> findAllBooks() {
-    return bookService.findAll();
+  public Iterable<Book> findAllBooks(Principal principal) {
+    User user = userService.getUser((principal.getName()));
+    return bookService.findAll(user);
   }
 
   @GetMapping("/{id}")

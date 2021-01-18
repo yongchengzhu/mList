@@ -3,6 +3,7 @@ package com.yongcheng.mlist.sevices;
 import javax.transaction.Transactional;
 
 import com.yongcheng.mlist.models.Book;
+import com.yongcheng.mlist.models.User;
 import com.yongcheng.mlist.repositories.BookRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,8 @@ public class BookService {
     bookRepository.deleteById(id);
   }
 
-  public Iterable<Book> findAll() {
-    return bookRepository.findAll();
+  public Iterable<Book> findAll(User user) {
+    return bookRepository.findAllByUser(user);
   }
 
   public Book findOne(Long id) {

@@ -40,25 +40,25 @@ const StatusSelector: FC<{}> = () => {
     source: sortFilterConfig.source 
   };
   
-  const handleSourceFilterChange = (e: any) => {
-    const target = e.target;
-    if (target.checked) {
-      query.append(target.name, target.value);
-      dispatch(setFilterConfigAction({ 
-        ...filterConfig, 
-        source: filterConfig.source.add(target.value) 
-      }));
-    }
-    else {
-      deleteParam(target.name, target.value);
-      filterConfig.source.delete(target.value);
-      dispatch(setFilterConfigAction({ 
-        ...filterConfig, 
-        source: filterConfig.source
-      }));
-    }
-    historyPush(query);
-  };
+  // const handleSourceFilterChange = (e: any) => {
+  //   const target = e.target;
+  //   if (target.checked) {
+  //     query.append(target.name, target.value);
+  //     dispatch(setFilterConfigAction({ 
+  //       ...filterConfig, 
+  //       source: filterConfig.source.add(target.value) 
+  //     }));
+  //   }
+  //   else {
+  //     deleteParam(target.name, target.value);
+  //     filterConfig.source.delete(target.value);
+  //     dispatch(setFilterConfigAction({ 
+  //       ...filterConfig, 
+  //       source: filterConfig.source
+  //     }));
+  //   }
+  //   historyPush(query);
+  // };
 
   const handleStatusFilterChange = (e: any) => {
     const target = e.target;
@@ -71,15 +71,15 @@ const StatusSelector: FC<{}> = () => {
     dispatch(setFilterConfigAction({ ...filterConfig, status: target.value }));
   }
 
-  const deleteParam = (key: string, value: string) => {
-    const newQuery: any[string] = [];
-    query.forEach((v: string, k: string) => {
-      if (v !== value || k !== key) {
-        newQuery.push(`${k}=${v}`);
-      }
-    });
-    query = new URLSearchParams('?' + newQuery.join('&'));
-  }
+  // const deleteParam = (key: string, value: string) => {
+  //   const newQuery: any[string] = [];
+  //   query.forEach((v: string, k: string) => {
+  //     if (v !== value || k !== key) {
+  //       newQuery.push(`${k}=${v}`);
+  //     }
+  //   });
+  //   query = new URLSearchParams('?' + newQuery.join('&'));
+  // }
 
   return (
     <aside className={styles.aside}>

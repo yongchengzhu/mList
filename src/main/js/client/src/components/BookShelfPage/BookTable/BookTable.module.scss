@@ -4,12 +4,11 @@
   border-radius: 25px 0 0 25px;
   background: #212024;
   flex: 1;
-  padding-right: 10px;
 }
 
 table {
   border-collapse: collapse;
-  margin-left: auto;
+  margin: auto;
   table-layout: auto;
   font-size: 0.85em;
   background: #303030;
@@ -85,3 +84,76 @@ tbody tr:hover {
 .subContainer {
   text-align: right;
 }
+
+.dummyTable {
+  background: none;
+  box-shadow: none;
+}
+
+.dummyHeader {
+  display: flex;
+  justify-content: space-between;
+  padding: 0!important;
+  width: 805.5px!important;
+}
+
+// begin: Dropdown
+.dropbtn {
+  background-color: transparent;
+  color: white;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  align-self: flex-end;
+  margin-bottom: 15px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: rgba(48, 48, 48, 0.88);
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  top: 0;
+  left: -10px;
+}
+
+.dropdown-content > div label {
+  color: #fff;
+  padding: 7px 0;
+  display: flex;
+}
+
+.dropdown-content > div label:hover {
+  background-color: rgba(247, 51, 120, 0.77);
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropbtn {
+}
+
+.status-selector {
+  display: inline-flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.status-selector > label input, label {
+  // align-self: center;
+}
+
+.status-selector > label input {
+  align-self: center;
+  margin: 0 12px;
+}
+
+// end: Dropdown

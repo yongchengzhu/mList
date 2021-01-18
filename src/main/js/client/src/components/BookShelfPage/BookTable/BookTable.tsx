@@ -3,6 +3,7 @@ import { ContextMenuTrigger } from "react-contextmenu";
 import moment from 'moment';
 import ReactTooltip from "react-tooltip";
 import AddIcon from '@material-ui/icons/Add';
+import FilterListIcon from '@material-ui/icons/FilterList';
 
 import './BookTable.module.scss';
 import styles from './BookTable.module.scss';
@@ -13,15 +14,16 @@ import { bookContextUpdateAction } from '../../../redux/actions/book/context';
 import { setSortConfigAction } from '../../../redux/actions/book/sort';
 import { useQuery, historyPush } from '../common';
 import { initalSortFilterConfigState } from '../../../redux/reducers/common';
-import { Button, makeStyles } from '@material-ui/core';
+import { Button, makeStyles, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
 import { bookCreateModalOpenAction } from '../../../redux/actions/book/modal';
+import { setFilterConfigAction } from '../../../redux/actions/book/filter';
 
 interface CustomAttributes extends React.HTMLAttributes<HTMLElement> {
   datatip: string;
   datafor: string;
 }
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   button: {
     '&:hover': {
       'color': 'white',
@@ -30,14 +32,17 @@ const useStyles = makeStyles({
     'margin': '15px 0',
     'border-radius': 0,
     'background-color': '#fff',
-    'height': '45px',
     'box-shadow': '0px 11px 15px -7px rgba(0,0,0,0.2), 0px 24px 38px 3px rgba(0,0,0,0.14), 0px 9px 46px 8px rgba(0,0,0,0.12)',
     '& span': {
       'display': 'flex',
       'justify-content': 'space-between',
     },
   },
-});
+  alignBottom: {
+    verticalAlign: 'bottom',
+    marginRight: '3px',
+  }
+}));
 
 const BookTable: FC<{}> = () => {
   let query = useQuery();
@@ -71,6 +76,16 @@ const BookTable: FC<{}> = () => {
 
     dispatch(setSortConfigAction(queryConfig));
   }, []);
+
+  const deleteParam = (key: string, value: string) => {
+    const newQuery: any[string] = [];
+    query.forEach((v: string, k: string) => {
+      if (v !== value || k !== key) {
+        newQuery.push(`${k}=${v}`);
+      }
+    });
+    query = new URLSearchParams('?' + newQuery.join('&'));
+  }
 
   const calculateDaysLeft = (book: Book) => {
     return moment(book.lastReadDate)
@@ -147,6 +162,26 @@ const BookTable: FC<{}> = () => {
     dispatch(setSortConfigAction({ key, order }));
   }
 
+  const handleSourceFilterChange = (e: any) => {
+    const target = e.target;
+    if (target.checked) {
+      query.append(target.name, target.value);
+      dispatch(setFilterConfigAction({ 
+        ...filterConfig, 
+        source: filterConfig.source.add(target.value) 
+      }));
+    }
+    else {
+      deleteParam(target.name, target.value);
+      filterConfig.source.delete(target.value);
+      dispatch(setFilterConfigAction({ 
+        ...filterConfig, 
+        source: filterConfig.source
+      }));
+    }
+    historyPush(query);
+  };
+
   const sortedBooks = React.useMemo(() => {
     let result = [...books];
     if (sortConfig !== null) {
@@ -186,15 +221,69 @@ const BookTable: FC<{}> = () => {
   return (
     <div className={styles.container}>
       <div className={styles.title}>Book Shelf</div>
-      <div className={styles.subContainer}>
-        <Button 
-          onClick={() => dispatch(bookCreateModalOpenAction())}
-          variant="contained" 
-          endIcon={<AddIcon />} 
-          className={classes.button}>
-          Add Book
-        </Button>
-      </div>
+      <table className={styles.dummyTable}>
+      {/* <div className={styles.subContainer}> */}
+        <thead>
+          <tr>
+            <th className={styles.dummyHeader}>
+            <div className={styles.dropdown}>
+              <button className={styles.dropbtn}>
+                <FilterListIcon className={classes.alignBottom} />
+                Filter
+              </button>
+              {/* Dropdown */}
+              <div className={styles["dropdown-content"]}>
+                <div className={styles['status-selector']}>
+                  <label htmlFor="cn">
+                    <input
+                      type="checkbox"
+                      id="cn"
+                      name="language"
+                      value="cn"
+                      onChange={handleSourceFilterChange}
+                      checked={filterConfig.source.has("cn")}
+                    />
+                    <label htmlFor="cn">Manhua</label>
+                  </label>
+
+                  <label htmlFor="kr">
+                    <input
+                      type="checkbox" 
+                      id="kr" 
+                      name="language" 
+                      value="kr"
+                      onChange={handleSourceFilterChange}
+                      checked={filterConfig.source.has("kr")}
+                    />
+                    <label htmlFor="kr">Manwha</label>
+                  </label>
+
+                  <label htmlFor="jp">
+                    <input 
+                      type="checkbox" 
+                      id="jp" 
+                      name="language" 
+                      value="jp"
+                      onChange={handleSourceFilterChange}
+                      checked={filterConfig.source.has("jp")}
+                    />
+                    <label htmlFor="jp">Manga</label>
+                  </label>       
+                </div>
+              </div>
+            </div>
+              <Button 
+                onClick={() => dispatch(bookCreateModalOpenAction())}
+                variant="contained" 
+                endIcon={<AddIcon />} 
+                className={classes.button}>
+                Add Book
+              </Button>
+            </th>
+          </tr>
+        </thead>
+      {/* </div> */}
+      </table>
       <table id="book-table">
         <thead>
           <tr>

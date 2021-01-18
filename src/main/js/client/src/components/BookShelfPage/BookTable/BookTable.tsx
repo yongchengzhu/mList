@@ -7,7 +7,7 @@ import './BookTable.module.scss';
 import styles from './BookTable.module.scss';
 import LoadingSpinner from '../../Loaders/LoadingSpinner';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState, SortConfigKey, SortConfigOrder, Source, SortConfig, FilterConfig, SortFilterConfig, FilterConfigStatus } from '../../../models/states';
+import { RootState, SortConfigKey, SortConfigOrder, Source, SortConfig, FilterConfig, SortFilterConfig, FilterConfigStatus, Book } from '../../../models/states';
 import { bookContextUpdateAction } from '../../../redux/actions/book/context';
 import { setSortConfigAction } from '../../../redux/actions/book/sort';
 import { useQuery, historyPush } from '../common';
@@ -50,6 +50,12 @@ const BookTable: FC<{}> = () => {
     dispatch(setSortConfigAction(queryConfig));
   }, []);
 
+  const calculateDaysLeft = (book: Book) => {
+    return moment(book.lastReadDate)
+            .add(book.daysToWait, 'days')
+            .diff(moment(), 'days');
+  }
+
   const sortConfig: SortConfig = { 
     order: sortFilterConfig.order, 
     key: sortFilterConfig.key 
@@ -63,10 +69,9 @@ const BookTable: FC<{}> = () => {
   const renderTableBody = () => {
     if (fetchingAll) return <LoadingSpinner />;
     return sortedBooks.map((book) => {
-      const lastReadDate = moment(book.lastReadDate).utc().format("MM/DD/YYYY");
-      const daysLeft     = moment(book.lastReadDate).utc()
-        .add(book.daysToWait, 'days').utc()
-        .diff(moment().utc(), 'days');
+      const lastReadDate = moment(book.lastReadDate).format('MM-DD-YYYY');
+      // LastReadDate + DaysToWait - TodaysDate
+      const daysLeft = calculateDaysLeft(book)
       const customAttributes: CustomAttributes = {
         datatip: "data-tip",
         datafor: "data-for",
@@ -125,9 +130,16 @@ const BookTable: FC<{}> = () => {
     if (sortConfig !== null) {
       result.sort((a, b) => {
         if (sortConfig.key) {
-          const first = a[sortConfig.key];
-          const second = b[sortConfig.key];
-          if (first && second) {
+          let first = a[sortConfig.key];
+          let second = b[sortConfig.key];
+
+          // convert daysToWait -> daysLeft
+          if (sortConfig.key === 'daysToWait') {
+            first = calculateDaysLeft(a);
+            second = calculateDaysLeft(b);
+          }
+
+          if (first !== null && second !== null) {
             if (first < second) {
               return sortConfig.order === 'asc' ? -1 : 1;
             }
@@ -136,6 +148,7 @@ const BookTable: FC<{}> = () => {
             }
           }
         }
+
         return 0;
       });
 

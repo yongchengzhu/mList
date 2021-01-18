@@ -32,7 +32,7 @@ const CreateBookModal: FC<{}> = () => {
       <div ref={contentRef} className={styles.container}>
         <h1>Create Book</h1>
         <CreateBookForm onSubmit={(values: Book) => {
-          values.lastReadDate = moment().format('DD-MM-YYYY HH:mm:ss');
+          values.lastReadDate = moment().utc().format('DD-MM-YYYY HH:mm:ss');
           dispatch(bookCreateActionCreator(values));
         }} />
       </div>

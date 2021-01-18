@@ -34,7 +34,7 @@ const EditBookModal: FC<{}> = () => {
           if (!values['is-read']) {
             values.lastReadDate = moment(values.lastReadDate).utc().format('DD-MM-YYYY HH:mm:ss');
           } else {
-            values.lastReadDate = moment().format('DD-MM-YYYY HH:mm:ss');
+            values.lastReadDate = moment().utc().format('DD-MM-YYYY HH:mm:ss');
           }
           dispatch(bookEditActionCreator(values));
         }} />

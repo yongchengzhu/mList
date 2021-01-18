@@ -80,7 +80,7 @@ const BookTable: FC<{}> = () => {
           attributes={{ 
             onContextMenu: () => dispatch(bookContextUpdateAction(book)),
             [customAttributes.datatip]: "",
-            [customAttributes.datafor]: "cover-image-tooltip",
+            [customAttributes.datafor]: `${book.id}`,
           }}
         >
           <td>{book.title}</td>
@@ -89,8 +89,8 @@ const BookTable: FC<{}> = () => {
           <td>{lastReadDate}</td>
           <td>{daysLeft}</td>
           <>
-            <ReactTooltip id="cover-image-tooltip" place="left" type="light" effect="solid">
-              <img src={book.cover || ""} width="100" height="150" />
+            <ReactTooltip id={`${book.id}`} place="left" type="light" effect="solid">
+              <img src={book.cover || ""} width="200" height="270" />
             </ReactTooltip>
           </>
         </ContextMenuTrigger>

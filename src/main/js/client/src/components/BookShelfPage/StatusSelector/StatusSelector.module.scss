@@ -1,5 +1,78 @@
 .status-selector {
   display: inline-flex;
   flex-direction: column;
-  width: 100px;
+  width: 100%;
+  align-items: flex-end;
+}
+
+.aside {
+  width: 285px;
+  height: 100vh;
+  color: #fff;
+}
+
+.fixedContainer {
+  position: fixed;
+  height: inherit;
+  width: inherit;
+  background: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: auto;
+}
+
+.container {
+  width: 175px;
+  padding: 25px 0;
+}
+
+.logoContainer {
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.logoTitle {
+  font-family: Englebert;
+  font-size: 2em;
+}
+
+input[name="status"] {
+  display: none;
+}
+
+input[name="status"] + label {
+  font-size: 1.2em;
+  font-weight: 500;
+  padding: 15px 15px;
+  border-radius: 8px 0 0 8px;
+  width: 125px;
+  display: flex;
+  justify-content: space-between;
+}
+
+input[name="status"] + label:hover {
+  background: #303030;
+  color: #f73378;
+}
+
+input[name="status"]:checked + label {
+  background: #303030;
+  // color: #f73378;
+}
+
+.exitContainer {
+  align-self: flex-start;
+  padding-left: 25px;
+  width: 100%;
+  margin-top: 50px;
+  margin-bottom: 25px;
+}
+
+.signout {
+  cursor: pointer;
+}
+
+.signout:hover {
+  color: #f73378;
 }

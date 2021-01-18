@@ -15,10 +15,7 @@ const BookShelfPage: FC<{}> = () => {
   }, []);
 
   return (
-    <main onContextMenu={e => e.preventDefault()}>
-      <header>
-        <h1>My Bookshelf</h1>
-      </header>
+    <main className={styles.main} onContextMenu={e => e.preventDefault()}>
       <section className={styles['status-table-container']}>
         <StatusSelector />
         <BookTable />

@@ -23,7 +23,7 @@ const App: React.FC<{}> = () => {
 
   return (
     <Router history={history}>
-      <Navbar />
+      {/* <Navbar /> */}
       {renderLoadingCurtain()}
       {renderCreateBookModal()}
       {renderDeleteBookModal()}

@@ -1,4 +1,10 @@
 .status-table-container {
   display: flex;
   justify-content: space-between;
+  height: 100%;
+  background: #212024;
+}
+
+.main {
+  height: 100vh;
 }

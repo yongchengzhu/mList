@@ -66,7 +66,7 @@ const BookTable: FC<{}> = () => {
       const lastReadDate = moment(book.lastReadDate).utc().format("MM/DD/YYYY");
       const daysLeft     = moment(book.lastReadDate).utc()
         .add(book.daysToWait, 'days').utc()
-        .diff(moment(book.lastReadDate).utc(), 'days');
+        .diff(moment().utc(), 'days');
       const customAttributes: CustomAttributes = {
         datatip: "data-tip",
         datafor: "data-for",
@@ -149,7 +149,7 @@ const BookTable: FC<{}> = () => {
   }, [books, sortConfig, filterConfig]);
 
   return (
-    <div>
+    <div className={styles.container}>
       <table id="book-table">
         <thead>
           <tr>

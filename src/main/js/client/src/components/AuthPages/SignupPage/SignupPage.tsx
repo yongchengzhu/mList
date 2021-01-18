@@ -12,7 +12,7 @@ const SignupPage: React.FC<{}> = () => {
 
   return (
     <main className={styles.main}>
-      <img src={logo} />
+      <img className={styles.logo} src={logo} />
       <SignupForm
         onSubmit={(values) => dispatch(signupActionCreator(values))}
       />

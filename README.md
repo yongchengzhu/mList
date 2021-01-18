@@ -2,7 +2,7 @@
 
 
 
-### Run
+## Run
 
 1. Add system variables to accommodate  `application.properties`.
 2. Run `mvn clean package -DskipTests` with option `-Pprod` to repackage frontend otherwise omit this option.
@@ -10,9 +10,11 @@
 
 
 
-### **PostgreSQL Backup**
+## **PostgreSQL Backup**
 
 **Required:** Local PostgreSQL version must match Heroku's.
+
+
 
 **Export:**
 
@@ -20,11 +22,19 @@
 heroku pg:backups:capture
 
 heroku pg:backups:download
+```
 
+
+
+**Import:**
+
+Local
+
+```
 pg_restore --verbose --clean --no-acl --no-owner -h localhost -P 5432 -U postgres -d mList latest.dump
 ```
 
-**Import:**
+Heroku
 
 ```
 aws s3 cp latest.dump s3://<bucket-name>

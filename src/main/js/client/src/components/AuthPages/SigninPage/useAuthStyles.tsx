@@ -48,7 +48,7 @@ export const useAuthStyles = makeStyles({
   },
   formControlLabel: {
     margin: 0,
-    verticalAlign: 'bottom',
+    verticalAlign: 'bottom!important',
     '& .MuiTypography-body1': {
       color: '#79787b',
       fontSize: '0.9em',

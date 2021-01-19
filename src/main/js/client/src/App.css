@@ -23,22 +23,18 @@ body {
 }
 
 .switch-toggle.switch-candy {
-  margin-top: 8px;
-  margin-bottom: 6px;
+  margin: 15px 0;
   background-color: transparent;
   border-radius: 0;
   box-shadow: none;
 }
 
 .switch-candy a {
-  /* height: 32px!important;
-  width: 32px!important; */
   border-radius:32px;
   border: none;
   background-image: none;
   background: #f73378;
   box-shadow: none;
-  /* margin-left: 59.05px; */
 }
 
 .switch-candy label {

@@ -15,6 +15,7 @@ const useStyles = makeStyles({
     // 'background-color': '#fff',
     'height': '40px',
     'width': '120px',
+    color: '#fff',
   }
 });
 
@@ -33,8 +34,7 @@ let CreateBookForm: FC<InjectedFormProps> | any = (props: { handleSubmit: ((even
         <SubmitButton loading={loading} className={styles.button}>Add Book</SubmitButton>
         <Button
           onClick={() => dispatch(bookCreateModalCloseAction())}
-          className={classes.button} 
-          variant="contained"
+          className={classes.button}
         >
           Cancel
         </Button>

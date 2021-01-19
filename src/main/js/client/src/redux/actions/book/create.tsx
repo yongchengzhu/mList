@@ -36,14 +36,17 @@ export const bookCreateActionCreator = thunkActionCreator(
       .then(({ data }) => {
         return dispatch(bookCreateSuccessAction(data));
       })
-      .catch((error) =>
-        dispatch(
+      .catch((error) => {
+        const serverError = error.response.data
+          ? 'Whoops, looks like something went wrong!'
+          : undefined;
+        return dispatch(
           bookCreateFailureAction(
             error.response.data.message ||
-              JSON.stringify(error.response.data) ||
+              serverError ||
               'Book creation failed. Please try again later.'
           )
         )
-      );
+      });
   }
 );

@@ -1,65 +1,93 @@
 import React, { FC } from 'react';
 import ErrorMessage from '../../HOCs/ErrorMessage';
+
+import styles from './CommonForm.module.scss';
 import { Field } from 'redux-form';
+import { renderTextField, required, rating, renderSelect } from '../../AuthPages/common';
+import { useAuthStyles } from '../../AuthPages/SigninPage/useAuthStyles';
 
 interface Props {
   error: string | null;
 }
 
 const CommonForm: FC<Props> = props => {
+  const classes = useAuthStyles();
+
   return (
-    <>
+    <div className={styles.container}>
+      <div className={styles.title}>Add Book</div>
       <ErrorMessage error={props.error} />
 
-      <label htmlFor="text">Title:</label>
-      <Field component="input" type="text" id="title" name="title" autoFocus />
-
-      <label htmlFor="cover">Cover Image:</label>
-      <Field component="input" type="text" id="cover" name="cover" />
-
-      <label htmlFor="last-chapter-read">Last Chapter Read:</label>
       <Field
-        component="input"
+        component={renderTextField}
+        type="text"
+        id="title"
+        name="title"
+        className={classes.textField}
+        label="Title"
+        validate={[required]}
+        autoFocus
+      />
+
+      <Field
+        component={renderTextField}
+        type="text"
+        id="cover"
+        name="cover"
+        className={classes.textField}
+        label="Cover Image Link"
+        validate={[required]}
+      />
+
+      <Field
+        component={renderTextField}
         type="text"
         id="last-chapter-read"
         name="lastChapterRead"
+        className={classes.textField}
+        label="Last Chapter Read"
+        validate={[required]}
       />
 
-      <label htmlFor="rating">Rating:</label>
-      <Field
-        component="input"
-        type="number"
-        id="rating"
-        name="rating"
-        min="1"
-        max="5"
-      />
+      <div className={styles.flexContainer}>
+        <Field 
+          defaultValue="reading" 
+          component={renderSelect} 
+          id="status" 
+          name="status"
+          className={classes.formControl}
+        />
 
-      <label htmlFor="status">Status:</label>
-      <Field defaultValue="reading" component="select" id="status" name="status">
-        <option value="reading">Reading</option>
-        <option value="completed">Completed</option>
-        <option value="dropped">Dropped</option>
-        <option value="axed">Axed</option>
-        <option value="planned">Planned</option>
-      </Field>
+        <Field
+          component={renderTextField}
+          type="number"
+          id="rating"
+          name="rating"
+          className={`${classes.textField} ${styles.rating}`}
+          label="Rating"
+          validate={[required, rating]}
+        />
+      </div>
 
-      <label htmlFor="days-to-wait">Days To Wait:</label>
       <Field
-        component="input"
+        component={renderTextField}
         type="number"
         id="days-to-wait"
         name="daysToWait"
-        min="0"
+        className={classes.textField}
+        label="Days To Wait"
       />
 
-      <label>Source Language:</label>
-      <div>
-        <Field name="language" component="input" type="radio" value="cn"/>CN
-        <Field name="language" component="input" type="radio" value="kr"/>KR
-        <Field name="language" component="input" type="radio" value="jp"/>JP
+      <div className="switch-toggle switch-candy">
+        <Field id="cn-radio" name="language" component="input" type="radio" value="cn"/>
+        <label htmlFor="cn-radio">CN</label>
+        <Field id="kr-radio" name="language" component="input" type="radio" value="kr"/>
+        <label htmlFor="kr-radio">KR</label>
+        <Field id="jp-radio" name="language" component="input" type="radio" value="jp"/>
+        <label htmlFor="jp-radio">JP</label>
+        <a />
       </div>      
-    </>
+    </div>
   );
 };
 

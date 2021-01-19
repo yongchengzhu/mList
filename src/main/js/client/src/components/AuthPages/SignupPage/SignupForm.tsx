@@ -58,7 +58,7 @@ const SignupForm: FC<InjectedFormProps> = (props) => {
           validate={[required, passwordsMatch]}
         />
       </div>
-      <SubmitButton loading={loading} />
+      <SubmitButton loading={loading}>Sign Up</SubmitButton>
       <div className={styles.links}>
         <div className={styles.sub}>Already have an account?</div>
         <Button 

@@ -5,6 +5,7 @@ import styles from './HOC.module.scss';
 
 interface Props {
   loading: boolean;
+  className?: any;
 }
 
 const useStyles = makeStyles({
@@ -27,9 +28,9 @@ const SubmitButton: FC<Props> = (props) => {
         <Button
           type="submit"
           variant="contained" 
-          className={classes.button}
+          className={`${classes.button} ${props.className}`}
         >
-          Sign In
+          {props.children}
         </Button>);
     }
   };

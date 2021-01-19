@@ -40,7 +40,7 @@ const SigninForm: FC<InjectedFormProps> = (props) => {
           label="Password:"
         />
       </div>
-      <SubmitButton loading={loading} />
+      <SubmitButton loading={loading}>Sign In</SubmitButton>
       <div className={styles.links}>
         <div className={styles.sub}>Don't have an account?</div>
         <Button 

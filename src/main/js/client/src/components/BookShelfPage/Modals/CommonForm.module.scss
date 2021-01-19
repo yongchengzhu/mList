@@ -1,0 +1,21 @@
+.container {
+  padding: 0 20px;
+  padding-top: 20px;
+}
+
+.title {
+  font-family: Englebert;
+  font-size: 2.2em;
+}
+
+.rating {
+  width: 276px!important;
+  margin-top: 8px!important;
+  // margin-left: 15px!important;
+}
+
+.flexContainer {
+  margin: 4px 0;
+  display: flex;
+  justify-content: space-between;
+}

@@ -21,3 +21,32 @@ body {
   background: #212024!important;
   box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
 }
+
+.switch-toggle.switch-candy {
+  margin-top: 8px;
+  margin-bottom: 6px;
+  background-color: transparent;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.switch-candy a {
+  /* height: 32px!important;
+  width: 32px!important; */
+  border-radius:32px;
+  border: none;
+  background-image: none;
+  background: #f73378;
+  box-shadow: none;
+  /* margin-left: 59.05px; */
+}
+
+.switch-candy label {
+  color: gray!important;
+}
+
+.switch-candy input:checked + label {
+  color: #fff!important;
+  text-shadow: none;
+  outline: none;
+}

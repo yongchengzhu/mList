@@ -4,7 +4,7 @@ import moment from 'moment';
 
 import Modal from '../../HOCs/Modal';
 import { bookEditModalCloseAction } from '../../../redux/actions/book/modal';
-import styles from './EditBookModal.module.scss';
+import styles from './CreateEditBookModal.module.scss';
 import EditBookForm from './EditBookForm';
 import { Book } from '../../../models/states';
 import { bookEditActionCreator } from '../../../redux/actions/book/edit';
@@ -29,7 +29,6 @@ const EditBookModal: FC<{}> = () => {
   return (
     <Modal root="edit-modal-root">
       <div ref={contentRef} className={styles.container}>
-        <h1>Edit Book</h1>
         <EditBookForm onSubmit={(values: Book | any) => {
           if (!values['is-read']) {
             values.lastReadDate = moment(values.lastReadDate).utc().format('DD-MM-YYYY HH:mm:ss');

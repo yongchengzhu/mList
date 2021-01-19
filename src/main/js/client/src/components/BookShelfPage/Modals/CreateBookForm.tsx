@@ -1,23 +1,14 @@
 import React, { FC } from 'react';
-import { Field, reduxForm, InjectedFormProps } from 'redux-form';
+import { reduxForm, InjectedFormProps } from 'redux-form';
 
-import styles from './CreateBookForm.module.scss';
+import styles from './CreateEditForm.module.scss';
 import SubmitButton from '../../HOCs/SubmitButton';
 import { useSelector, connect, useDispatch } from 'react-redux';
 import { RootState } from '../../../models/states';
 import CommonForm from './CommonForm';
-import { Button, makeStyles } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import { bookCreateModalCloseAction } from '../../../redux/actions/book/modal';
-
-const useStyles = makeStyles({
-  button: {
-    'border-radius': 0,
-    // 'background-color': '#fff',
-    'height': '40px',
-    'width': '120px',
-    color: '#fff',
-  }
-});
+import { useStyles } from './common';
 
 let CreateBookForm: FC<InjectedFormProps> | any = (props: { handleSubmit: ((event: React.FormEvent<HTMLFormElement>) => void) | undefined; }) => {
   const classes = useStyles();
@@ -29,7 +20,7 @@ let CreateBookForm: FC<InjectedFormProps> | any = (props: { handleSubmit: ((even
 
   return (
     <form className={styles.form} onSubmit={props.handleSubmit}>
-      <CommonForm error={error} />
+      <CommonForm error={error}>Add Book</CommonForm>
       <div className={styles.modalFooter}>
         <SubmitButton loading={loading} className={styles.button}>Add Book</SubmitButton>
         <Button

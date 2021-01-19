@@ -3,19 +3,38 @@ import ErrorMessage from '../../HOCs/ErrorMessage';
 
 import styles from './CommonForm.module.scss';
 import { Field } from 'redux-form';
-import { renderTextField, required, rating, renderSelect } from '../../AuthPages/common';
+import { renderTextField, required, rating, renderSelect, renderToggleSwitch } from '../../AuthPages/common';
 import { useAuthStyles } from '../../AuthPages/SigninPage/useAuthStyles';
+import { FormControlLabel, Switch, withStyles } from '@material-ui/core';
 
 interface Props {
   error: string | null;
+  children: any;
+  edit?: boolean;
 }
+
+const PurpleSwitch = withStyles({
+  switchBase: {
+    color: '#f73378',
+    '&$checked': {
+      color: '#f73378',
+    },
+    '&$checked + $track': {
+      backgroundColor: '#f73378',
+    },
+  },
+  checked: {},
+  track: {
+    backgroundColor: '#9f9f9f',
+  },
+})(Switch);
 
 const CommonForm: FC<Props> = props => {
   const classes = useAuthStyles();
 
   return (
     <div className={styles.container}>
-      <div className={styles.title}>Add Book</div>
+      <div className={styles.title}>{props.children}</div>
       <ErrorMessage error={props.error} />
 
       <Field
@@ -44,10 +63,26 @@ const CommonForm: FC<Props> = props => {
         type="text"
         id="last-chapter-read"
         name="lastChapterRead"
-        className={classes.textField}
+        className={!props.edit? classes.textField : classes.editLastChapter}
         label="Last Chapter Read"
         validate={[required]}
       />
+      {
+        props.edit && (
+          <Field 
+            name="is-read" 
+            id="is-read" 
+            component={renderToggleSwitch} 
+            type="checkbox"
+            className={classes.formControlLabel}
+          />
+          // <FormControlLabel
+          //   className={classes.formControlLabel}
+          //   control={<PurpleSwitch />}
+          //   label="Update Date"
+          // />
+        )
+      }
 
       <div className={styles.flexContainer}>
         <Field 

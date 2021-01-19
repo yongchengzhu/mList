@@ -1,6 +1,31 @@
 import TextField from '@material-ui/core/TextField';
 import React from 'react';
-import { FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
+import { FormControl, InputLabel, Select, MenuItem, FormControlLabel, withStyles, Switch } from '@material-ui/core';
+
+const PurpleSwitch = withStyles({
+  switchBase: {
+    color: '#f73378',
+    '&$checked': {
+      color: '#f73378',
+    },
+    '&$checked + $track': {
+      backgroundColor: '#f73378',
+    },
+  },
+  checked: {},
+  track: {
+    backgroundColor: '#9f9f9f',
+  },
+})(Switch);
+
+export const renderToggleSwitch = (props: any) => {
+  return <FormControlLabel
+    { ...props.input }
+    className={props.className}
+    control={<PurpleSwitch />}
+    label="Update Date"
+  />
+}
 
 export const renderTextField = (props: any) => {
   return <TextField 

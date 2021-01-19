@@ -45,5 +45,35 @@ export const useAuthStyles = makeStyles({
     '& div:hover:not(.Mui-disabled):before': {
       'border-bottom': '2px solid #fff',
     },
+  },
+  formControlLabel: {
+    margin: 0,
+    verticalAlign: 'bottom',
+    '& .MuiTypography-body1': {
+      color: '#79787b',
+      fontSize: '0.9em',
+    }
+  },
+  editLastChapter: {
+    width: '260px',
+    'margin-top': '5px',
+    '& label': {
+      color: '#79787b',
+    },
+    '& label.Mui-focused': {
+      color: '#79787b',
+    },
+    '& input': {
+      color: '#fff',
+    },
+    '& div:before': {
+      'border-bottom': '1px solid #79787b',
+    },
+    '& div:after': {
+      'border-bottom': '2px solid #fff',
+    },
+    '& div:hover:not(.Mui-disabled):before': {
+      'border-bottom': '2px solid #fff',
+    },
   }
 });

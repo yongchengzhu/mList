@@ -125,8 +125,10 @@ const BookTable: FC<{}> = () => {
           key={book.id}
           attributes={{
             onClick: () => {
-              dispatch(bookEditModalOpenAction())
-              dispatch(bookContextUpdateAction(book))
+              if (!window.getSelection()?.toString()) {
+                dispatch(bookEditModalOpenAction())
+                dispatch(bookContextUpdateAction(book))
+              }
             },
             // onContextMenu: () => dispatch(bookContextUpdateAction(book)),
             [customAttributes.datatip]: "",

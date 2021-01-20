@@ -89,7 +89,7 @@ const BookTable: FC<{}> = () => {
 
   const calculateDaysLeft = (book: Book) => {
     return moment(book.lastReadDate)
-            .add(book.daysToWait, 'days')
+            .add(book.daysToWait + 1, 'days')
             .diff(moment(), 'days');
   }
 

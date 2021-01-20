@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import { ContextMenuTrigger } from "react-contextmenu";
 import moment from 'moment';
 import ReactTooltip from "react-tooltip";
@@ -14,7 +14,7 @@ import { bookContextUpdateAction } from '../../../redux/actions/book/context';
 import { setSortConfigAction } from '../../../redux/actions/book/sort';
 import { useQuery, historyPush } from '../common';
 import { initalSortFilterConfigState } from '../../../redux/reducers/common';
-import { Button, makeStyles, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
+import { Button, makeStyles } from '@material-ui/core';
 import { bookCreateModalOpenAction, bookEditModalOpenAction } from '../../../redux/actions/book/modal';
 import { setFilterConfigAction } from '../../../redux/actions/book/filter';
 
@@ -108,11 +108,14 @@ const BookTable: FC<{}> = () => {
     return sortedBooks.map((book) => {
       const lastReadDate = moment(book.lastReadDate).format('MM-DD-YYYY');
       // LastReadDate + DaysToWait - TodaysDate
-      const daysLeft = calculateDaysLeft(book)
+      let daysLeft = calculateDaysLeft(book)
       const customAttributes: CustomAttributes = {
         datatip: "data-tip",
         datafor: "data-for",
       }
+
+      if (daysLeft < 0)
+        daysLeft = 0;
 
       return (
         <ContextMenuTrigger 
@@ -136,7 +139,12 @@ const BookTable: FC<{}> = () => {
           <td>{lastReadDate}</td>
           <td>{daysLeft}</td>
           <>
-            <ReactTooltip id={`${book.id}`} place="left" type="light" effect="solid">
+            <ReactTooltip 
+              id={`${book.id}`} 
+              place="left" 
+              type="light" 
+              effect="solid"
+            >
               <img src={book.cover || ""} width="200" height="270" />
             </ReactTooltip>
           </>

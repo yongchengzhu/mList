@@ -75,5 +75,5 @@ export const useAuthStyles = makeStyles({
     '& div:hover:not(.Mui-disabled):before': {
       'border-bottom': '2px solid #fff',
     },
-  }
+  },
 });

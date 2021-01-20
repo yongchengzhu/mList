@@ -19,6 +19,10 @@ tbody{
   color: #e5e5e6;
 }
 
+tr {
+  cursor: pointer;
+}
+
 td:nth-child(1), th:nth-child(1) {
   padding: 8px;
   width: 325px;

@@ -15,7 +15,7 @@ import { setSortConfigAction } from '../../../redux/actions/book/sort';
 import { useQuery, historyPush } from '../common';
 import { initalSortFilterConfigState } from '../../../redux/reducers/common';
 import { Button, makeStyles, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
-import { bookCreateModalOpenAction } from '../../../redux/actions/book/modal';
+import { bookCreateModalOpenAction, bookEditModalOpenAction } from '../../../redux/actions/book/modal';
 import { setFilterConfigAction } from '../../../redux/actions/book/filter';
 
 interface CustomAttributes extends React.HTMLAttributes<HTMLElement> {
@@ -116,11 +116,16 @@ const BookTable: FC<{}> = () => {
 
       return (
         <ContextMenuTrigger 
-          id="book-contextmenu" 
+          id="book-contextmenu"
+          disable
           renderTag="tr"
           key={book.id}
-          attributes={{ 
-            onContextMenu: () => dispatch(bookContextUpdateAction(book)),
+          attributes={{
+            onClick: () => {
+              dispatch(bookEditModalOpenAction())
+              dispatch(bookContextUpdateAction(book))
+            },
+            // onContextMenu: () => dispatch(bookContextUpdateAction(book)),
             [customAttributes.datatip]: "",
             [customAttributes.datafor]: `${book.id}`,
           }}

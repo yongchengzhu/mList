@@ -3,13 +3,17 @@ import Modal from '../../HOCs/Modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { bookDeleteModalCloseAction } from '../../../redux/actions/book/modal';
 
-import styles from './DeleteBookModal.module.scss';
+import modalStyles from './CreateEditDeleteBookModal.module.scss';
+import formStyles from './CreateEditDeleteForm.module.scss';
+import commonStyles from './CommonForm.module.scss';
 import { RootState } from '../../../models/states';
 import DeleteButton from '../../HOCs/DeleteButton';
-import { bookDeleteActionCreator } from '../../../redux/actions/book/delete';
 import ErrorMessage from '../../HOCs/ErrorMessage';
+import { Button } from '@material-ui/core';
+import { useFormStyles } from './common';
 
 const DeleteBookModal:React.FC<{}> = () => {
+  const classes = useFormStyles();
   const { 
     deleting: loading,
     deleteError: error
@@ -20,6 +24,7 @@ const DeleteBookModal:React.FC<{}> = () => {
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
+      e.stopPropagation();
       const targetNode: EventTarget | null = e.target;
       if (!contentRef.current?.contains(targetNode as Node)) {
         dispatch(bookDeleteModalCloseAction());
@@ -33,18 +38,22 @@ const DeleteBookModal:React.FC<{}> = () => {
 
   return (
     <Modal root="delete-modal-root">
-      <div ref={contentRef} className={styles.container}>
-        <h1>Delete Book</h1>
-        <ErrorMessage error={error} />
-        <div>
-          Are you sure you want to delete this?
+      <div ref={contentRef} className={`${modalStyles.container} delete-modal`}>
+        <div className={commonStyles.container}>
+          <div className={commonStyles.title}>Delete Book</div>
+          <ErrorMessage error={error} />
+          <div>
+            <p>Are you sure you want to delete <span className={commonStyles.bookTitle}>{book.title}</span> from your bookself?</p>
+          </div>
         </div>
-        <div>
-          { book.title }
-        </div>
-        <div>
+        <div className={formStyles.modalFooter}>
           <DeleteButton loading={loading} id={book.id} />
-          <button>Cancel</button>
+          <Button
+            onClick={() => dispatch(bookDeleteModalCloseAction())}
+            className={classes.button}
+          >
+            Cancel
+          </Button>
         </div>
       </div>
     </Modal>

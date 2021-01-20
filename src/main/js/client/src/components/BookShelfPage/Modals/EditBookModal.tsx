@@ -4,7 +4,7 @@ import moment from 'moment';
 
 import Modal from '../../HOCs/Modal';
 import { bookEditModalCloseAction } from '../../../redux/actions/book/modal';
-import styles from './CreateEditBookModal.module.scss';
+import styles from './CreateEditDeleteBookModal.module.scss';
 import EditBookForm from './EditBookForm';
 import { Book } from '../../../models/states';
 import { bookEditActionCreator } from '../../../redux/actions/book/edit';
@@ -16,7 +16,9 @@ const EditBookModal: FC<{}> = () => {
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       const targetNode: EventTarget | null = e.target;
-      if (!contentRef.current?.contains(targetNode as Node)) {
+      const deleteModal = document.querySelector('.delete-modal');
+
+      if (!contentRef.current?.contains(targetNode as Node) && !deleteModal) {
         dispatch(bookEditModalCloseAction());
       }
     };

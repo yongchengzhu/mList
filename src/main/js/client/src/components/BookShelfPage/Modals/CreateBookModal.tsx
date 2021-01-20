@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import moment from 'moment';
 
 import Modal from '../../HOCs/Modal';
-import styles from './CreateEditBookModal.module.scss';
+import styles from './CreateEditDeleteBookModal.module.scss';
 import CreateBookForm from './CreateBookForm';
 import { Book } from '../../../models/states';
 import { bookCreateActionCreator } from '../../../redux/actions/book/create';

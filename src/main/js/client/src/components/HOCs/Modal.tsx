@@ -14,6 +14,9 @@ const Modal: FC<ModalProps> = (props) => {
     if (!containerRef.current) {
       containerRef.current = document.createElement('div');
       containerRef.current.setAttribute('class', styles.modal);
+      if (props.root === 'delete-modal-root') {
+        containerRef.current.setAttribute('style', 'z-index: 1;')
+      }
     }
     return containerRef.current;
   };

@@ -1,23 +1,16 @@
 import React, { FC } from 'react';
-import { Button, makeStyles, LinearProgress } from '@material-ui/core';
+import { Button, LinearProgress } from '@material-ui/core';
 
 import styles from './HOC.module.scss';
+import { useHOCStyles } from './common';
 
 interface Props {
   loading: boolean;
   className?: any;
 }
 
-const useStyles = makeStyles({
-  button: {
-    'border-radius': 0,
-    'background-color': '#fff',
-    'height': '40px',
-  }
-});
-
 const SubmitButton: FC<Props> = (props) => {
-  const classes = useStyles();
+  const classes = useHOCStyles();
   const renderSubmitButton = () => {
     switch (props.loading) {
       case true:

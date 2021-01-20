@@ -34,21 +34,16 @@ export const renderTextField = (props: any) => {
     label={props.label}
     className={props.className}
     error={props.meta.touched && props.meta.error}
-    // helperText={props.meta.error}
   />
 }
 
 export const renderSelect = (props: any) => {
-  console.log(props.children);
   return (
     <FormControl variant="filled" className={props.className}>
       <InputLabel id="demo-simple-select-filled-label">Status</InputLabel>
       <Select
         { ...props.input }
         labelId="demo-simple-select-filled-label"
-        // id="demo-simple-select-filled"
-        // value={props.defaultValue}
-        // onChange={handleChange}
       >
         <MenuItem value="reading">Reading</MenuItem>
         <MenuItem value="completed">Completed</MenuItem>

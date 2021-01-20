@@ -5,7 +5,9 @@ import styles from './CommonForm.module.scss';
 import { Field } from 'redux-form';
 import { renderTextField, required, rating, renderSelect, renderToggleSwitch } from '../../AuthPages/common';
 import { useAuthStyles } from '../../AuthPages/SigninPage/useAuthStyles';
-import { FormControlLabel, Switch, withStyles } from '@material-ui/core';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import { useDispatch } from 'react-redux';
+import { bookDeleteModalOpenAction } from '../../../redux/actions/book/modal';
 
 interface Props {
   error: string | null;
@@ -13,28 +15,22 @@ interface Props {
   edit?: boolean;
 }
 
-const PurpleSwitch = withStyles({
-  switchBase: {
-    color: '#f73378',
-    '&$checked': {
-      color: '#f73378',
-    },
-    '&$checked + $track': {
-      backgroundColor: '#f73378',
-    },
-  },
-  checked: {},
-  track: {
-    backgroundColor: '#9f9f9f',
-  },
-})(Switch);
-
 const CommonForm: FC<Props> = props => {
   const classes = useAuthStyles();
+  const dispatch = useDispatch();
 
   return (
     <div className={styles.container}>
-      <div className={styles.title}>{props.children}</div>
+      <div className={styles.header}>
+        <div className={styles.title}>{props.children}</div>
+        {props.edit && (
+            <DeleteOutlineIcon 
+              className={styles.deleteIcon}
+              onClick  ={() => { dispatch(bookDeleteModalOpenAction()) }}
+            />
+          )
+        }
+      </div>
       <ErrorMessage error={props.error} />
 
       <Field

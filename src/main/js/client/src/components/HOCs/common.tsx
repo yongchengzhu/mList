@@ -1,10 +1,9 @@
 import { makeStyles } from '@material-ui/core';
 
-export const useFormStyles = makeStyles({
+export const useHOCStyles = makeStyles({
   button: {
     'border-radius': 0,
+    'background-color': '#fff',
     'height': '40px',
-    'width': '120px',
-    color: '#fff',
   }
 });

@@ -9,6 +9,7 @@ import {
 import { ActionCreator } from 'redux';
 import { thunkActionCreator, tokenConfig } from '../util';
 import server from '../../../apis/server';
+import { bookEditModalCloseAction } from './modal';
 
 const bookDeleteRequestAction: ActionCreator<BookDeleteRequestAction> = () => ({
   type: BOOK_DELETE_REQUEST,
@@ -32,6 +33,7 @@ export const bookDeleteActionCreator = thunkActionCreator(
     return server
       .delete(`/book/${id}`, tokenConfig())
       .then(() => {
+        dispatch(bookEditModalCloseAction());
         return dispatch(bookDeleteSuccessAction(id));
       })
       .catch((error) =>

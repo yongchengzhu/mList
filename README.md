@@ -31,7 +31,7 @@ heroku pg:backups:download
 Local
 
 ```
-pg_restore --verbose --clean --no-acl --no-owner -h localhost -P 5432 -U postgres -d mList latest.dump
+pg_restore --host "localhost" --port "5432" --username "postgres" --dbname "mlist" --verbose "latest.dump"
 ```
 
 Heroku

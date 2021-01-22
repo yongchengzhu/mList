@@ -17,6 +17,7 @@ import { setFilterConfigAction } from '../../../redux/actions/book/filter';
 import logo from '../../../assets/logo1.png';
 import history from '../../../history'
 import { signoutAction } from '../../../redux/actions/auth/signout';
+import { setSortConfigAction } from '../../../redux/actions/book/sort';
 
 const useStyles = makeStyles({
   alignCenter: {
@@ -56,7 +57,10 @@ const StatusSelector: FC<{}> = () => {
           <div className={styles.logoContainer}>
             <img 
               className={styles.logo}
-              onClick={() => history.push('/bookshelf')}
+              onClick={() => {
+                history.push('/bookshelf');
+                dispatch(setSortConfigAction({ key: 'daysToWait', order: 'asc' }))
+              }}
               src={logo} 
               width="115" 
               height="115" 

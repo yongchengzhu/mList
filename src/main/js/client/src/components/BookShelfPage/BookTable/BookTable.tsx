@@ -166,7 +166,7 @@ const BookTable: FC<{}> = () => {
     let order: SortConfigOrder = 'desc';
     if (sortConfig.key === key && sortConfig.order === 'desc')
       order = 'asc';
-    if (key === 'daysToWait' && order === 'desc') {
+    if (key === 'daysToWait' && order === 'asc') {
       query.delete('sortKey');
       query.delete('sortOrder');
     } else {

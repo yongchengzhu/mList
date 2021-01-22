@@ -1,24 +1,22 @@
 // @ts-nocheck
 import React, { FC } from 'react';
-import { Button, makeStyles } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
+import { makeStyles } from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
+import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import RemoveIcon from '@material-ui/icons/Remove';
+import DoneIcon from '@material-ui/icons/Done';
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 import './StatusSelector.module.scss';
 import styles from './StatusSelector.module.scss';
 import { useQuery, historyPush } from '../common';
-import { useDispatch, useSelector } from 'react-redux';
 import { RootState, FilterConfig } from '../../../models/states';
 import { setFilterConfigAction } from '../../../redux/actions/book/filter';
 import logo from '../../../assets/logo1.png';
-import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-import RemoveIcon from '@material-ui/icons/Remove';
-import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
-import DoneIcon from '@material-ui/icons/Done';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import history from '../../../history'
 import { signoutAction } from '../../../redux/actions/auth/signout';
-import { bookCreateModalOpenAction } from '../../../redux/actions/book/modal';
 
 const useStyles = makeStyles({
   alignCenter: {
@@ -39,26 +37,6 @@ const StatusSelector: FC<{}> = () => {
     status: sortFilterConfig.status, 
     source: sortFilterConfig.source 
   };
-  
-  // const handleSourceFilterChange = (e: any) => {
-  //   const target = e.target;
-  //   if (target.checked) {
-  //     query.append(target.name, target.value);
-  //     dispatch(setFilterConfigAction({ 
-  //       ...filterConfig, 
-  //       source: filterConfig.source.add(target.value) 
-  //     }));
-  //   }
-  //   else {
-  //     deleteParam(target.name, target.value);
-  //     filterConfig.source.delete(target.value);
-  //     dispatch(setFilterConfigAction({ 
-  //       ...filterConfig, 
-  //       source: filterConfig.source
-  //     }));
-  //   }
-  //   historyPush(query);
-  // };
 
   const handleStatusFilterChange = (e: any) => {
     const target = e.target;
@@ -71,22 +49,18 @@ const StatusSelector: FC<{}> = () => {
     dispatch(setFilterConfigAction({ ...filterConfig, status: target.value }));
   }
 
-  // const deleteParam = (key: string, value: string) => {
-  //   const newQuery: any[string] = [];
-  //   query.forEach((v: string, k: string) => {
-  //     if (v !== value || k !== key) {
-  //       newQuery.push(`${k}=${v}`);
-  //     }
-  //   });
-  //   query = new URLSearchParams('?' + newQuery.join('&'));
-  // }
-
   return (
     <aside className={styles.aside}>
       <div className={styles.fixedContainer}>
         <div className={styles.container}>
           <div className={styles.logoContainer}>
-            <img src={logo} width="115" height="115" />
+            <img 
+              className={styles.logo}
+              onClick={() => history.push('/bookshelf')}
+              src={logo} 
+              width="115" 
+              height="115" 
+            />
             <div className={styles.logoTitle}>mList</div>
           </div>
         </div>
@@ -194,45 +168,6 @@ const StatusSelector: FC<{}> = () => {
             Log Out
           </div>
         </div>
-
-        {/* <h3>Source Filter:</h3>
-        <div className={styles['status-selector']}>
-          <span>
-            <input
-              type="checkbox"
-              id="cn"
-              name="language"
-              value="cn"
-              onChange={handleSourceFilterChange}
-              checked={filterConfig.source.has("cn")}
-            />
-            <label htmlFor="cn">CN</label>
-          </span>
-
-          <span>
-            <input
-              type="checkbox" 
-              id="kr" 
-              name="language" 
-              value="kr"
-              onChange={handleSourceFilterChange}
-              checked={filterConfig.source.has("kr")}
-            />
-            <label htmlFor="kr">KR</label>
-          </span>
-
-          <span>
-            <input 
-              type="checkbox" 
-              id="jp" 
-              name="language" 
-              value="jp"
-              onChange={handleSourceFilterChange}
-              checked={filterConfig.source.has("jp")}
-            />
-            <label htmlFor="jp">JP</label>
-          </span>       
-        </div> */}
       </div>
     </aside>
   );

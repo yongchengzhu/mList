@@ -299,7 +299,7 @@ const BookTable: FC<{}> = () => {
         </thead>
       {/* </div> */}
       </table>
-      <table id="book-table">
+      <table className={styles.bookTable}>
         <thead>
           <tr>
             <th onClick={() => handleSort('title')}>

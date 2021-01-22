@@ -22,7 +22,7 @@ tbody{
   color: #e5e5e6;
 }
 
-tr {
+.bookTable thead tr, .bookTable tbody tr {
   cursor: pointer;
 }
 

@@ -16,7 +16,7 @@ import javax.validation.Payload;
 public @interface Rating {
 
   String message() default 
-    "Rating must be either: 0.5, 1.0, 1.5, 2.0, ..., 5.0";
+    "Rating must be either: 0, 0.5, 1.0, 1.5, 2.0, ..., 5.0";
   
   Class<?>[] groups() default{};
 

@@ -61,7 +61,6 @@ const CommonForm: FC<Props> = props => {
         name="lastChapterRead"
         className={!props.edit? classes.textField : classes.editLastChapter}
         label="Last Chapter Read"
-        validate={[required]}
       />
       {
         props.edit && (
@@ -72,11 +71,6 @@ const CommonForm: FC<Props> = props => {
             type="checkbox"
             className={classes.formControlLabel}
           />
-          // <FormControlLabel
-          //   className={classes.formControlLabel}
-          //   control={<PurpleSwitch />}
-          //   label="Update Date"
-          // />
         )
       }
 

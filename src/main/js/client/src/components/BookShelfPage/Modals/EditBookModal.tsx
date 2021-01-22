@@ -17,8 +17,10 @@ const EditBookModal: FC<{}> = () => {
     const handleClickOutside = (e: MouseEvent) => {
       const targetNode: EventTarget | null = e.target;
       const deleteModal = document.querySelector('.delete-modal');
+      const isSelect = document.querySelector('.MuiList-root');
 
-      if (!contentRef.current?.contains(targetNode as Node) && !deleteModal) {
+      if (!contentRef.current?.contains(targetNode as Node) 
+        && !deleteModal && !isSelect) {
         dispatch(bookEditModalCloseAction());
       }
     };

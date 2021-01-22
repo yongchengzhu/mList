@@ -21,7 +21,6 @@ public class CreateBookRequest {
 
   private String cover;
 
-  @NotBlank(message = "Last Chapter Read field cannot be empty.")
   private String lastChapterRead;
 
   @Rating

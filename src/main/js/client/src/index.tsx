@@ -6,8 +6,18 @@ import thunk from 'redux-thunk';
 
 import App from './components/App';
 import rootReducer from './redux/reducers';
+import { initialAuthState } from './redux/reducers/AuthReducer';
 
-const store: Store = createStore(rootReducer, applyMiddleware(thunk));
+const store: Store = createStore(
+  rootReducer,
+  {
+    auth: { 
+      ...initialAuthState, 
+      isLoggedIn: localStorage.getItem('mList-token')? true : false 
+    }
+  },
+  applyMiddleware(thunk),
+);
 
 ReactDOM.render(
   <Provider store={store}>

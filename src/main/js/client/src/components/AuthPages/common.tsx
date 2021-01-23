@@ -28,7 +28,6 @@ export const renderToggleSwitch = (props: any) => {
 }
 
 export const renderTextField = (props: any) => {
-  console.log(props.input)
   return <TextField 
     { ...props.input }
     type={props.type}

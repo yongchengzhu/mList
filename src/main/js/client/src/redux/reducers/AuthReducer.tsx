@@ -15,13 +15,15 @@ import {
   CHECK_TOKEN_FAILURE,
 } from '../../models/actions/auth';
 
-const initialState: AuthState = {
+export const initialAuthState = {
   loading: false,
   checking: false,
   isLoggedIn: false,
   error: null,
   username: null,
 };
+
+const initialState: AuthState = initialAuthState;
 
 const authReducer: Reducer<AuthState, AuthActions> = (
   state = initialState,

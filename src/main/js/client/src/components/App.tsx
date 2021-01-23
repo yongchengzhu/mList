@@ -12,6 +12,7 @@ import useApp from './useApp';
 
 import '../App.css';
 import SignupPage from './AuthPages/SignupPage/SignupPage';
+import PrivateRoute from './HOCs/PrivateRoute';
 
 const App: React.FC<{}> = () => {
   const [
@@ -33,7 +34,10 @@ const App: React.FC<{}> = () => {
         <Route path="/signup" component={SignupPage} />
         <Route path="/confirm-request" component={ConfirmRequestPage} />
         <Route path="/email-confirmation" component={TokenConfirmPage} />
-        <Route path="/bookshelf" component={BookShelfPage} />
+        {/* <Route path="/bookshelf" component={BookShelfPage} /> */}
+        <PrivateRoute path="/bookshelf">
+          <BookShelfPage />
+        </PrivateRoute>
         <RootRoute path="/" default="/bookshelf" redirectTo="/signin" />
       </Switch>
     </Router>

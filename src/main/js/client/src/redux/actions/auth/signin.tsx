@@ -18,7 +18,7 @@ const signinRequestAction: ActionCreator<SigninRequestAction> = () => ({
 });
 
 const signinCompleteAction: ActionCreator<SigninCompleteAction> = (
-  sub: string
+  sub: string, redirect: () => void
 ) => ({
   type: SIGNIN_COMPLETE,
   username: sub,
@@ -40,7 +40,7 @@ export const signinActionCreator = thunkActionCreator(
         const { token } = response.data;
         const { sub } = JwtDecode(token);
         localStorage.setItem('mList-token', token);
-        history.push('/bookshelf');
+        // history.push('/bookshelf');
         return dispatch(signinCompleteAction(sub));
       })
       .catch((error) => {

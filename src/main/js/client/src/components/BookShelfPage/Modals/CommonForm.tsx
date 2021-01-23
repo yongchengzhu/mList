@@ -90,7 +90,7 @@ const CommonForm: FC<Props> = props => {
           name="rating"
           className={`${classes.textField} ${styles.rating}`}
           label="Rating"
-          validate={[required, rating]}
+          validate={[rating]}
         />
       </div>
 

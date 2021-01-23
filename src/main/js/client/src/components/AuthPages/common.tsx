@@ -28,6 +28,7 @@ export const renderToggleSwitch = (props: any) => {
 }
 
 export const renderTextField = (props: any) => {
+  console.log(props.input)
   return <TextField 
     { ...props.input }
     type={props.type}
@@ -57,7 +58,7 @@ export const renderSelect = (props: any) => {
 
 export const required = (value: any) => value ? undefined : 'Cannot be empty';
 
-export const rating = (value: any) => value >= 0 && value <= 5? undefined : 'Rating must be between 0 and 5';
+export const rating = (value: any) => value >= 0 && value <= 5 && value !== ''? undefined : 'Rating must be between 0 and 5';
 
 export const passwordsMatch = (value: any, allValues: any) => 
   value !== allValues.password ? 'Passwords don\'t match' : undefined;

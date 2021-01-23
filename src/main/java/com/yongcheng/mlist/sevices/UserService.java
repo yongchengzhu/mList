@@ -5,6 +5,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import com.yongcheng.mlist.exceptions.UserAlreadyExistException;
+import com.yongcheng.mlist.exceptions.UsernameAlreadyExistException;
 import com.yongcheng.mlist.models.User;
 import com.yongcheng.mlist.repositories.UserRepository;
 
@@ -32,7 +33,7 @@ public class UserService {
    * @throws UsernameNotFoundException
    */
   public User getUser(String emailOrUserName) throws UsernameNotFoundException {
-    User user = userRepository.findByEmailOrUsername(emailOrUserName, emailOrUserName);
+    User user = userRepository.findByEmailOrUsernameIgnoreCase(emailOrUserName, emailOrUserName);
     
     if (user == null) {
       throw new UsernameNotFoundException("Bad credentials: wrong username/email or password.");
@@ -43,7 +44,11 @@ public class UserService {
 
   public void save(User user) throws UserAlreadyExistException {
     if (emailExists(user.getEmail())) {
-      throw new UserAlreadyExistException("Email already exist: " + user.getEmail());
+      throw new UserAlreadyExistException("Email already exists: " + user.getEmail());
+    }
+
+    if (usernameExists(user.getUsername())) {
+      throw new UsernameAlreadyExistException("Username already exists: " + user.getUsername());
     }
 
     user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -62,5 +67,7 @@ public class UserService {
   private boolean emailExists(String email) {
     return userRepository.findByEmail(email) != null;
   }
+
+  private boolean usernameExists(String username) { return userRepository.findByUsernameIgnoreCase(username) != null; }
 
 }

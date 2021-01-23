@@ -6,6 +6,7 @@ import java.util.Map;
 import com.yongcheng.mlist.exceptions.TokenInvalidException;
 import com.yongcheng.mlist.exceptions.TokenNotFoundException;
 import com.yongcheng.mlist.exceptions.UserAlreadyExistException;
+import com.yongcheng.mlist.exceptions.UsernameAlreadyExistException;
 import com.yongcheng.mlist.payloads.ExceptionResponse;
 
 import org.springframework.http.HttpHeaders;
@@ -40,7 +41,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     return new ResponseEntity<Object>(errors, HttpStatus.BAD_REQUEST);
   }
 
-  @ExceptionHandler({ UserAlreadyExistException.class })
+  @ExceptionHandler({ UserAlreadyExistException.class, UsernameAlreadyExistException.class })
   public ResponseEntity<?> handleBadRequest(final RuntimeException ex) {
     final String error      = "Bad Request";
     final String exception  = ex.getClass().getName();

@@ -4,6 +4,8 @@ import moment from 'moment';
 import ReactTooltip from "react-tooltip";
 import AddIcon from '@material-ui/icons/Add';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import { Button, makeStyles } from '@material-ui/core';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import './BookTable.module.scss';
 import styles from './BookTable.module.scss';
@@ -14,7 +16,6 @@ import { bookContextUpdateAction } from '../../../redux/actions/book/context';
 import { setSortConfigAction } from '../../../redux/actions/book/sort';
 import { useQuery, historyPush } from '../common';
 import { initalSortFilterConfigState } from '../../../redux/reducers/common';
-import { Button, makeStyles } from '@material-ui/core';
 import { bookCreateModalOpenAction, bookEditModalOpenAction } from '../../../redux/actions/book/modal';
 import { setFilterConfigAction } from '../../../redux/actions/book/filter';
 
@@ -41,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   alignBottom: {
     verticalAlign: 'bottom',
     marginRight: '3px',
-  }
+  },
 }));
 
 const BookTable: FC<{}> = () => {
@@ -118,39 +119,56 @@ const BookTable: FC<{}> = () => {
         daysLeft = 0;
 
       return (
-        <ContextMenuTrigger 
-          id="book-contextmenu"
-          disable
-          renderTag="tr"
-          key={book.id}
-          attributes={{
-            onClick: () => {
+        <Tooltip title={<img src={book.cover || ""} width="200" height="270" />} placement="left">
+          <tr
+            key={book.id}
+            onClick={() => {
               if (!window.getSelection()?.toString()) {
                 dispatch(bookEditModalOpenAction())
                 dispatch(bookContextUpdateAction(book))
               }
-            },
-            // onContextMenu: () => dispatch(bookContextUpdateAction(book)),
-            [customAttributes.datatip]: "",
-            [customAttributes.datafor]: `${book.id}`,
-          }}
-        >
-          <td>{book.title}</td>
-          <td>{book.lastChapterRead}</td>
-          <td>{book.rating}</td>
-          <td>{lastReadDate}</td>
-          <td>{daysLeft}</td>
-          <>
-            <ReactTooltip 
-              id={`${book.id}`} 
-              place="left" 
-              type="light" 
-              effect="solid"
-            >
-              <img src={book.cover || ""} width="200" height="270" />
-            </ReactTooltip>
-          </>
-        </ContextMenuTrigger>
+            }}
+          >
+            <td>{book.title}</td>
+            <td>{book.lastChapterRead}</td>
+            <td>{book.rating}</td>
+            <td>{lastReadDate}</td>
+            <td>{daysLeft}</td>            
+          </tr>
+        </Tooltip>
+        // <ContextMenuTrigger 
+        //   id="book-contextmenu"
+        //   disable
+        //   renderTag="tr"
+        //   key={book.id}
+        //   attributes={{
+        //     onClick: () => {
+        //       if (!window.getSelection()?.toString()) {
+        //         dispatch(bookEditModalOpenAction())
+        //         dispatch(bookContextUpdateAction(book))
+        //       }
+        //     },
+        //     // onContextMenu: () => dispatch(bookContextUpdateAction(book)),
+        //     [customAttributes.datatip]: "",
+        //     [customAttributes.datafor]: `${book.id}`,
+        //   }}
+        // >
+        //   <td>{book.title}</td>
+        //   <td>{book.lastChapterRead}</td>
+        //   <td>{book.rating}</td>
+        //   <td>{lastReadDate}</td>
+        //   <td>{daysLeft}</td>
+        //   <>
+        //     <ReactTooltip 
+        //       id={`${book.id}`} 
+        //       place="left" 
+        //       type="light" 
+        //       effect="solid"
+        //     >
+        //       <img src={book.cover || ""} width="200" height="270" />
+        //     </ReactTooltip>
+        //   </>
+        // </ContextMenuTrigger>
       );
     });
   };

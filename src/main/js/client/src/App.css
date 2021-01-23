@@ -16,7 +16,14 @@ body {
   display: none;
 }
 
-.__react_component_tooltip {
+/* .__react_component_tooltip {
+  padding: 0!important;
+  background: #212024!important;
+  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+} */
+
+/* Reference: https://material-ui.com/api/tooltip/#css */
+.MuiTooltip-tooltip {
   padding: 0!important;
   background: #212024!important;
   box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);

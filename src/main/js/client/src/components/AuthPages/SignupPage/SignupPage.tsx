@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import SignupForm from './SignupForm';
@@ -12,7 +11,7 @@ const SignupPage: React.FC<{}> = () => {
 
   return (
     <main className={styles.main}>
-      <img className={styles.logo} src={logo} />
+      <img className={styles.logo} alt="Logo" src={logo} />
       <SignupForm
         onSubmit={(values) => dispatch(signupActionCreator(values))}
       />

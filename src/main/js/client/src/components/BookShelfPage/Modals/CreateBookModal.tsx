@@ -25,7 +25,7 @@ const CreateBookModal: FC<{}> = () => {
     document.addEventListener('mousedown', handleClickOutside);
 
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [contentRef]);
+  }, [contentRef, dispatch]);
 
   return (
     <Modal root="create-modal-root">

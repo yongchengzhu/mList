@@ -44,7 +44,7 @@ export const checkTokenActionCreator = thunkActionCreator(({ dispatch }) => {
   return server
     .get('/auth/check', tokenConfig())
     .then(() => {
-      const { sub } = JwtDecode(token);
+      const { sub } = JwtDecode(token) as any;
       // history.push('/bookshelf');
       return dispatch(checkTokenSuccessAction(sub));
     })

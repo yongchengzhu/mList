@@ -14,8 +14,8 @@ export const initialBookState: Book = {
 };
 
 export const initalSortFilterConfigState: SortFilterConfig = {
-  order: 'asc', 
-  key: 'daysToWait', 
-  status: 'reading', 
-  source: new Set()
+  order: 'asc',
+  key: 'daysToWait',
+  status: 'reading',
+  source: new Set(),
 };

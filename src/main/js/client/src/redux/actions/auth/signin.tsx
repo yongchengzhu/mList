@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { ActionCreator } from 'redux';
 import {
   SigninRequestAction,
@@ -10,7 +11,6 @@ import {
 import { SigninFormData } from '../../../models/forms/auth';
 import server from '../../../apis/server';
 import JwtDecode from 'jwt-decode';
-import history from '../../../history';
 import { thunkActionCreator } from '../util';
 
 const signinRequestAction: ActionCreator<SigninRequestAction> = () => ({
@@ -38,7 +38,7 @@ export const signinActionCreator = thunkActionCreator(
       .post('/user/signin', formData)
       .then((response) => {
         const { token } = response.data;
-        const { sub } = JwtDecode(token);
+        const { sub } = JwtDecode(token) as any;
         localStorage.setItem('mList-token', token);
         // history.push('/bookshelf');
         return dispatch(signinCompleteAction(sub));

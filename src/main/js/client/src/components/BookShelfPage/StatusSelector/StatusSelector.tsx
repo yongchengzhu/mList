@@ -61,7 +61,8 @@ const StatusSelector: FC<{}> = () => {
                 history.push('/bookshelf');
                 dispatch(setSortConfigAction({ key: 'daysToWait', order: 'asc' }))
               }}
-              src={logo} 
+              src={logo}
+              alt="Logo"
               width="115" 
               height="115" 
             />

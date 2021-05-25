@@ -110,7 +110,7 @@ const CommonForm: FC<Props> = props => {
         <label htmlFor="kr-radio">KR</label>
         <Field id="jp-radio" name="language" component="input" type="radio" value="jp"/>
         <label htmlFor="jp-radio">JP</label>
-        <a />
+        <a href="/" children=" " />
       </div>      
     </div>
   );

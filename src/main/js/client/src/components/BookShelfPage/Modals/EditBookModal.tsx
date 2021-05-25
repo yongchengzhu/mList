@@ -28,7 +28,7 @@ const EditBookModal: FC<{}> = () => {
     document.addEventListener('mousedown', handleClickOutside);
 
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [contentRef]);
+  }, [contentRef, dispatch]);
 
   return (
     <Modal root="edit-modal-root">

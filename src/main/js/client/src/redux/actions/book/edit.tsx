@@ -3,7 +3,6 @@ import { ActionCreator } from 'redux';
 import { BookEditRequestAction, BOOK_EDIT_REQUEST, BookEditSuccessAction, BOOK_EDIT_SUCCESS, BookEditFailureAction, BOOK_EDIT_FAILURE } from '../../../models/actions/book';
 import { thunkActionCreator, tokenConfig } from '../util';
 import server from '../../../apis/server';
-import { booksFetchActionCreator } from './fetchAll';
 import { Book } from '../../../models/states';
 
 const bookEditRequestAction: ActionCreator<BookEditRequestAction> = () => ({

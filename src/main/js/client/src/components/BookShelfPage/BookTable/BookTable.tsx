@@ -1,7 +1,5 @@
-import React, { FC, useEffect, useRef } from 'react';
-import { ContextMenuTrigger } from "react-contextmenu";
+import React, { FC, useEffect, useMemo, useRef } from 'react';
 import moment from 'moment';
-import ReactTooltip from "react-tooltip";
 import AddIcon from '@material-ui/icons/Add';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { Button, makeStyles } from '@material-ui/core';
@@ -14,15 +12,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState, SortConfigKey, SortConfigOrder, Source, SortConfig, FilterConfig, SortFilterConfig, FilterConfigStatus, Book } from '../../../models/states';
 import { bookContextUpdateAction } from '../../../redux/actions/book/context';
 import { setSortConfigAction } from '../../../redux/actions/book/sort';
-import { useQuery, historyPush } from '../common';
+import { useQuery, historyPush, deepEqual } from '../common';
 import { initalSortFilterConfigState } from '../../../redux/reducers/common';
 import { bookCreateModalOpenAction, bookEditModalOpenAction } from '../../../redux/actions/book/modal';
 import { setFilterConfigAction } from '../../../redux/actions/book/filter';
-
-interface CustomAttributes extends React.HTMLAttributes<HTMLElement> {
-  datatip: string;
-  datafor: string;
-}
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -47,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
 
 const BookTable: FC<{}> = () => {
   let query = useQuery();
+  const prevQuery = useRef(query);
   const classes = useStyles();
   const dispatch = useDispatch();
   const { 
@@ -56,27 +50,29 @@ const BookTable: FC<{}> = () => {
   } = useSelector((state: RootState) => state.book);
 
   useEffect(() => {
-    const queryConfig: SortFilterConfig = initalSortFilterConfigState;
-
-    query.forEach((value, key) => {
-      switch(key) {
-        case 'sortKey':
-          queryConfig.key = value as SortConfigKey;
-          return;
-        case 'sortOrder':
-          queryConfig.order = value as SortConfigOrder;
-          return;
-        case 'language':
-          queryConfig.source.add(value as Source);
-          return;
-        case 'status':
-          queryConfig.status = value as FilterConfigStatus;
-          return;
-      }
-    });
-
-    dispatch(setSortConfigAction(queryConfig));
-  }, []);
+    if (!deepEqual(prevQuery.current, query)) {
+      const queryConfig: SortFilterConfig = initalSortFilterConfigState;
+  
+      query.forEach((value, key) => {
+        switch(key) {
+          case 'sortKey':
+            queryConfig.key = value as SortConfigKey;
+            return;
+          case 'sortOrder':
+            queryConfig.order = value as SortConfigOrder;
+            return;
+          case 'language':
+            queryConfig.source.add(value as Source);
+            return;
+          case 'status':
+            queryConfig.status = value as FilterConfigStatus;
+            return;
+        }
+      });
+  
+      dispatch(setSortConfigAction(queryConfig));
+    }
+  }, [dispatch, query]);
 
   const deleteParam = (key: string, value: string) => {
     const newQuery: any[string] = [];
@@ -94,32 +90,28 @@ const BookTable: FC<{}> = () => {
             .diff(moment(), 'days');
   }
 
-  const sortConfig: SortConfig = { 
+  const sortConfig: SortConfig = useMemo(() => ({ 
     order: sortFilterConfig.order, 
     key: sortFilterConfig.key 
-  };
+  }), [sortFilterConfig.order, sortFilterConfig.key]);
 
-  const filterConfig: FilterConfig = { 
+  const filterConfig: FilterConfig = useMemo(() => ({ 
     status: sortFilterConfig.status, 
     source: sortFilterConfig.source 
-  };
+  }), [sortFilterConfig.status, sortFilterConfig.source]);
 
   const renderTableBody = () => {
-    if (fetchingAll) return <LoadingSpinner />;
+    if (fetchingAll) return <tr><td><LoadingSpinner /></td></tr>;
     return sortedBooks.map((book) => {
       const lastReadDate = moment(book.lastReadDate).format('MM-DD-YYYY');
       // LastReadDate + DaysToWait - TodaysDate
       let daysLeft = calculateDaysLeft(book)
-      const customAttributes: CustomAttributes = {
-        datatip: "data-tip",
-        datafor: "data-for",
-      }
 
       if (daysLeft < 0)
         daysLeft = 0;
 
       return (
-        <Tooltip title={<img src={book.cover || ""} width="200" height="270" />} placement="left">
+        <Tooltip key={book.id} title={<img alt="Cover" src={book.cover || ""} width="200" height="270" />} placement="left">
           <tr
             key={book.id}
             onClick={() => {
@@ -136,39 +128,6 @@ const BookTable: FC<{}> = () => {
             <td>{daysLeft}</td>            
           </tr>
         </Tooltip>
-        // <ContextMenuTrigger 
-        //   id="book-contextmenu"
-        //   disable
-        //   renderTag="tr"
-        //   key={book.id}
-        //   attributes={{
-        //     onClick: () => {
-        //       if (!window.getSelection()?.toString()) {
-        //         dispatch(bookEditModalOpenAction())
-        //         dispatch(bookContextUpdateAction(book))
-        //       }
-        //     },
-        //     // onContextMenu: () => dispatch(bookContextUpdateAction(book)),
-        //     [customAttributes.datatip]: "",
-        //     [customAttributes.datafor]: `${book.id}`,
-        //   }}
-        // >
-        //   <td>{book.title}</td>
-        //   <td>{book.lastChapterRead}</td>
-        //   <td>{book.rating}</td>
-        //   <td>{lastReadDate}</td>
-        //   <td>{daysLeft}</td>
-        //   <>
-        //     <ReactTooltip 
-        //       id={`${book.id}`} 
-        //       place="left" 
-        //       type="light" 
-        //       effect="solid"
-        //     >
-        //       <img src={book.cover || ""} width="200" height="270" />
-        //     </ReactTooltip>
-        //   </>
-        // </ContextMenuTrigger>
       );
     });
   };
@@ -215,7 +174,7 @@ const BookTable: FC<{}> = () => {
     historyPush(query);
   };
 
-  const sortedBooks = React.useMemo(() => {
+  const sortedBooks = useMemo(() => {
     let result = [...books];
     if (sortConfig !== null) {
       result.sort((a, b) => {
@@ -255,7 +214,6 @@ const BookTable: FC<{}> = () => {
     <div className={styles.container}>
       <div className={styles.title}>Book Shelf</div>
       <table className={styles.dummyTable}>
-      {/* <div className={styles.subContainer}> */}
         <thead>
           <tr>
             <th className={styles.dummyHeader}>
@@ -305,6 +263,11 @@ const BookTable: FC<{}> = () => {
                 </div>
               </div>
             </div>
+              <Button
+                variant="contained"
+                className={classes.button}>
+                Test
+              </Button>
               <Button 
                 onClick={() => dispatch(bookCreateModalOpenAction())}
                 variant="contained" 
@@ -315,7 +278,6 @@ const BookTable: FC<{}> = () => {
             </th>
           </tr>
         </thead>
-      {/* </div> */}
       </table>
       <table className={styles.bookTable}>
         <thead>

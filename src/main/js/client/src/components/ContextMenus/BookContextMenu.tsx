@@ -5,10 +5,6 @@ import { useDispatch } from 'react-redux';
 import styles from './BookContextMenu.module.scss';
 import { bookDeleteModalOpenAction, bookEditModalOpenAction } from '../../redux/actions/book/modal';
 
-interface Props {
-  children: React.ReactNode,
-  key: number,
-};
 
 const BookContextMenu:React.FC<{}> = props => {
   const dispatch = useDispatch();

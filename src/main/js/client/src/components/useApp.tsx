@@ -44,7 +44,7 @@ const useApp = () => {
 
   useEffect(() => {
     dispatch(checkTokenActionCreator());
-  }, []);
+  }, [dispatch]);
 
   return [
     renderLoadingCurtain,

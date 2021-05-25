@@ -1,4 +1,4 @@
-import { FC, useRef, MutableRefObject, useEffect } from 'react';
+import { FC, useRef, MutableRefObject, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 
 import styles from './HOC.module.scss';
@@ -10,7 +10,7 @@ interface ModalProps {
 const Modal: FC<ModalProps> = (props) => {
   const containerRef: MutableRefObject<Element | null> = useRef(null);
 
-  const getContainerElement = () => {
+  const getContainerElement = useCallback(() => {
     if (!containerRef.current) {
       containerRef.current = document.createElement('div');
       containerRef.current.setAttribute('class', styles.modal);
@@ -19,16 +19,17 @@ const Modal: FC<ModalProps> = (props) => {
       }
     }
     return containerRef.current;
-  };
+  }, [props.root]);
 
   useEffect(() => {
+    console.log("modal tsx")
     const root = document.querySelector(`#${props.root}`);
     root?.appendChild(getContainerElement());
 
     return () => {
       root?.removeChild(getContainerElement());
     };
-  }, []);
+  }, [getContainerElement, props.root]);
 
   return createPortal(props.children, getContainerElement());
 };

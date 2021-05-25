@@ -7,7 +7,6 @@ import RootRoute from './HOCs/RootRoute';
 import SigninPage from './AuthPages/SigninPage/SigninPage';
 import ConfirmRequestPage from './AuthPages/ConfirmRequestPage/ConfirmRequestPage';
 import history from '../history';
-import Navbar from './Navbar/Navbar';
 import useApp from './useApp';
 
 import '../App.css';
@@ -24,7 +23,6 @@ const App: React.FC<{}> = () => {
 
   return (
     <Router history={history}>
-      {/* <Navbar /> */}
       {renderLoadingCurtain()}
       {renderCreateBookModal()}
       {renderDeleteBookModal()}

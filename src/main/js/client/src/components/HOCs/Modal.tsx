@@ -4,7 +4,7 @@ import { createPortal } from 'react-dom';
 import styles from './HOC.module.scss';
 
 interface ModalProps {
-  root: string,
+  root: string;
 }
 
 const Modal: FC<ModalProps> = (props) => {
@@ -15,14 +15,13 @@ const Modal: FC<ModalProps> = (props) => {
       containerRef.current = document.createElement('div');
       containerRef.current.setAttribute('class', styles.modal);
       if (props.root === 'delete-modal-root') {
-        containerRef.current.setAttribute('style', 'z-index: 1;')
+        containerRef.current.setAttribute('style', 'z-index: 1;');
       }
     }
     return containerRef.current;
   }, [props.root]);
 
   useEffect(() => {
-    console.log("modal tsx")
     const root = document.querySelector(`#${props.root}`);
     root?.appendChild(getContainerElement());
 

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { InjectedFormProps, reduxForm, Field } from 'redux-form';
 import { useSelector } from 'react-redux';
 import { Button } from '@material-ui/core';
@@ -11,12 +11,12 @@ import styles from '../AuthPages.module.scss';
 import { useAuthStyles } from './useAuthStyles';
 import { renderTextField, required } from '../common';
 
-const SigninForm: FC<InjectedFormProps> = (props) => {
+const SigninForm: FC<InjectedFormProps> = ({ handleSubmit }) => {
   const classes = useAuthStyles();
   const { loading, error } = useSelector((state: RootState) => state.auth);
 
   return (
-    <form className={styles.form} onSubmit={props.handleSubmit}>
+    <form className={styles.form} onSubmit={handleSubmit}>
       <div className={styles.title}>Welcome back to mList</div>
       <ErrorMessage error={error} />
       <div className={styles.fields}>
@@ -30,10 +30,10 @@ const SigninForm: FC<InjectedFormProps> = (props) => {
           validate={[required]}
           autoFocus
         />
-        <Field 
-          component={renderTextField} 
-          type="password" 
-          id="password" 
+        <Field
+          component={renderTextField}
+          type="password"
+          id="password"
           name="password"
           className={classes.textField}
           validate={[required]}
@@ -43,8 +43,8 @@ const SigninForm: FC<InjectedFormProps> = (props) => {
       <SubmitButton loading={loading}>Sign In</SubmitButton>
       <div className={styles.links}>
         <div className={styles.sub}>Don't have an account?</div>
-        <Button 
-          className={classes.button} 
+        <Button
+          className={classes.button}
           onClick={() => history.push('/signup')}
         >
           Sign Up

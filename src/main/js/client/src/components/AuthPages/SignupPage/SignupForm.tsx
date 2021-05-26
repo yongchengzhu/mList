@@ -1,49 +1,49 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { reduxForm, InjectedFormProps, Field } from 'redux-form';
 import { useSelector } from 'react-redux';
 
+import { Button } from '@material-ui/core';
 import SubmitButton from '../../HOCs/SubmitButton';
 import { RootState } from '../../../models/states';
 import ErrorMessage from '../../HOCs/ErrorMessage';
 import styles from '../AuthPages.module.scss';
 import { renderTextField, required, passwordsMatch } from '../common';
 import { useAuthStyles } from '../SigninPage/useAuthStyles';
-import { Button } from '@material-ui/core';
 import history from '../../../history';
 
-const SignupForm: FC<InjectedFormProps> = (props) => {
+const SignupForm: FC<InjectedFormProps> = ({ handleSubmit }) => {
   const classes = useAuthStyles();
   const { loading, error } = useSelector((state: RootState) => state.auth);
 
   return (
-    <form className={styles.form} onSubmit={props.handleSubmit}>
+    <form className={styles.form} onSubmit={handleSubmit}>
       <div className={styles.title}>Join mList Right Away</div>
       <ErrorMessage error={error} />
       <div className={styles.fields}>
-        <Field 
+        <Field
           component={renderTextField}
           className={classes.textField}
-          id="email" 
-          type="text" 
-          name="email" 
+          id="email"
+          type="text"
+          name="email"
           label="Email:"
           validate={[required]}
-          autoFocus 
+          autoFocus
         />
-        <Field 
+        <Field
           component={renderTextField}
           className={classes.textField}
-          id="username" 
-          type="username" 
+          id="username"
+          type="username"
           name="username"
           label="Username:"
           validate={[required]}
         />
-        <Field 
+        <Field
           component={renderTextField}
           className={classes.textField}
-          id="password" 
-          type="password" 
+          id="password"
+          type="password"
           name="password"
           label="Password:"
           validate={[required]}
@@ -61,8 +61,8 @@ const SignupForm: FC<InjectedFormProps> = (props) => {
       <SubmitButton loading={loading}>Sign Up</SubmitButton>
       <div className={styles.links}>
         <div className={styles.sub}>Already have an account?</div>
-        <Button 
-          className={classes.button} 
+        <Button
+          className={classes.button}
           onClick={() => history.push('/signin')}
         >
           Sign In

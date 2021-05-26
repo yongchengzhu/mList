@@ -24,7 +24,7 @@ const signupFailureAction: ActionCreator<SignupFailureAction> = (
   error: string
 ) => ({
   type: SIGNUP_FAILURE,
-  error: error,
+  error,
 });
 
 export const signupActionCreator = thunkActionCreator(

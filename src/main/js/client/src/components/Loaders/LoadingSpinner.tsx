@@ -1,9 +1,7 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 
 import styles from './LoadingSpinner.module.scss';
 
-const LoadingSpinner: FC<{}> = () => {
-  return <span className={styles.spinner}></span>;
-};
+const LoadingSpinner: FC<{}> = () => <span className={styles.spinner} />;
 
 export default LoadingSpinner;

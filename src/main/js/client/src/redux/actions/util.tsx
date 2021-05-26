@@ -1,7 +1,7 @@
 import { AxiosRequestConfig } from 'axios';
-import { mListActions } from '../../models/actions';
 import { ActionCreator } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import { mListActions } from '../../models/actions';
 import { mListStates } from '../../models/states';
 
 export const tokenConfig: () => AxiosRequestConfig = () => {
@@ -22,7 +22,9 @@ export type ThunkActionCreator<A extends mListActions, S> = (
   cb: (params: CallbackParams<S, A>, ...args: any[]) => Promise<A>
 ) => ActionCreator<ThunkAction<Promise<A>, S, null, A>>;
 
-export const thunkActionCreator: ThunkActionCreator<mListActions, mListStates> = (
-  cb
-) => (...args: any[]) => (dispatch, getState) =>
-  cb({ dispatch, getState }, ...args);
+export const thunkActionCreator: ThunkActionCreator<mListActions, mListStates> =
+
+    (cb) =>
+    (...args: any[]) =>
+    (dispatch, getState) =>
+      cb({ dispatch, getState }, ...args);

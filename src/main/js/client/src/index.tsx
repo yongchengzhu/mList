@@ -15,12 +15,12 @@ const store: Store = createStore(
       isLoggedIn: !!localStorage.getItem('mList-token'),
     },
   },
-  applyMiddleware(thunk),
+  applyMiddleware(thunk)
 );
 
 ReactDOM.render(
   <Provider store={store}>
     <App />
   </Provider>,
-  document.querySelector('#root'),
+  document.querySelector('#root')
 );

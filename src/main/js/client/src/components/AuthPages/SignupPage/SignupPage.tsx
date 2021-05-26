@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import { useDispatch } from 'react-redux';
 
 import SignupForm from './SignupForm';
@@ -6,7 +6,7 @@ import { signupActionCreator } from '../../../redux/actions/auth/signup';
 import logo from '../../../assets/logo1.png';
 import styles from '../AuthPages.module.scss';
 
-const SignupPage: React.FC<{}> = () => {
+const SignupPage: FC<{}> = () => {
   const dispatch = useDispatch();
 
   return (

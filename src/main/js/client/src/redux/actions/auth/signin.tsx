@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { ActionCreator } from 'redux';
+import JwtDecode from 'jwt-decode';
 import {
   SigninRequestAction,
   SIGNIN_REQUEST,
@@ -10,7 +11,6 @@ import {
 } from '../../../models/actions/auth';
 import { SigninFormData } from '../../../models/forms/auth';
 import server from '../../../apis/server';
-import JwtDecode from 'jwt-decode';
 import { thunkActionCreator } from '../util';
 
 const signinRequestAction: ActionCreator<SigninRequestAction> = () => ({
@@ -18,7 +18,7 @@ const signinRequestAction: ActionCreator<SigninRequestAction> = () => ({
 });
 
 const signinCompleteAction: ActionCreator<SigninCompleteAction> = (
-  sub: string, redirect: () => void
+  sub: string
 ) => ({
   type: SIGNIN_COMPLETE,
   username: sub,
@@ -28,7 +28,7 @@ const signinFailureAction: ActionCreator<SigninFailureAction> = (
   error: string
 ) => ({
   type: SIGNIN_FAILURE,
-  error: error,
+  error,
 });
 
 export const signinActionCreator = thunkActionCreator(
@@ -53,7 +53,7 @@ export const signinActionCreator = thunkActionCreator(
               serverError ||
               'Signin failed. Please try again later.'
           )
-        )
+        );
       });
   }
 );

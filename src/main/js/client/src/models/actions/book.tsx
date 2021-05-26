@@ -1,4 +1,4 @@
-import { Book, SortConfig, FilterConfig } from '../states/';
+import { Book, SortConfig, FilterConfig } from '../states';
 
 export const BOOK_CREATE_REQUEST = 'BOOK_CREATE_REQUEST';
 export const BOOK_CREATE_SUCCESS = 'BOOK_CREATE_SUCCESS';
@@ -28,7 +28,7 @@ export const BOOK_EDIT_SUCCESS = 'BOOK_EDIT_SUCCESS';
 export const BOOK_EDIT_FAILURE = 'BOOK_EDIT_FAILURE';
 
 export const SORT_CONFIG_SET = 'SORT_CONFIG_SET';
-export const FILTER_CONFIG_SET = "FILTER_CONFIG_SET";
+export const FILTER_CONFIG_SET = 'FILTER_CONFIG_SET';
 
 export interface BookCreateRequestAction {
   type: typeof BOOK_CREATE_REQUEST;

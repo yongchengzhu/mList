@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import { Switch, Route, Router } from 'react-router-dom';
 
 import TokenConfirmPage from './AuthPages/TokenConfirmPage/TokenConfirmPage';
@@ -13,12 +13,12 @@ import '../App.css';
 import SignupPage from './AuthPages/SignupPage/SignupPage';
 import PrivateRoute from './HOCs/PrivateRoute';
 
-const App: React.FC<{}> = () => {
+const App: FC<{}> = () => {
   const [
-    renderLoadingCurtain, 
-    renderCreateBookModal, 
-    renderDeleteBookModal, 
-    renderEditBookModal
+    renderLoadingCurtain,
+    renderCreateBookModal,
+    renderDeleteBookModal,
+    renderEditBookModal,
   ] = useApp();
 
   return (
@@ -32,11 +32,10 @@ const App: React.FC<{}> = () => {
         <Route path="/signup" component={SignupPage} />
         <Route path="/confirm-request" component={ConfirmRequestPage} />
         <Route path="/email-confirmation" component={TokenConfirmPage} />
-        {/* <Route path="/bookshelf" component={BookShelfPage} /> */}
         <PrivateRoute path="/bookshelf">
           <BookShelfPage />
         </PrivateRoute>
-        <RootRoute path="/" default="/bookshelf" redirectTo="/signin" />
+        <RootRoute path="/" defaultTo="/bookshelf" redirectTo="/signin" />
       </Switch>
     </Router>
   );

@@ -1,11 +1,16 @@
 package com.yongcheng.mlist.payloads;
 
+import com.yongcheng.mlist.models.Book;
+
+import java.util.List;
+
 public class SocketRequest {
 
     private String from;
-    private String text;
 
-    public String getText() {
+    private List<Book> text;
+
+    public List<Book> getText() {
         return text;
     }
 

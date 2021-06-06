@@ -29,6 +29,7 @@ import {
   bookEditModalOpenAction,
 } from '../../../redux/actions/book/modal';
 import { setFilterConfigAction } from '../../../redux/actions/book/filter';
+import { Client } from '@stomp/stompjs';
 
 const useStyles = makeStyles(() => ({
   button: {
@@ -52,6 +53,12 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+const prepareBrokerURL = (path: string): string => {
+  const url = new URL(path, window.location.href);
+  url.protocol = url.protocol.replace('http', 'ws');
+  return url.href;
+};
+
 const BookTable: FC<{}> = () => {
   let query = useQuery();
   const prevQuery = useRef(query);
@@ -60,6 +67,24 @@ const BookTable: FC<{}> = () => {
   const { fetchingAll, books, sortFilterConfig } = useSelector(
     (state: RootState) => state.book
   );
+  const client = useRef<Client | null>(null);
+
+  useEffect(() => {
+    client.current = new Client();
+    client.current.configure({
+      brokerURL: prepareBrokerURL('/chat'),
+      onConnect: () => {
+        console.log('Connected to Web Socket');
+        client.current?.subscribe('/user/queue/messages', (message: any) => {
+          console.log(`Message received: ${message.body}`);
+        });
+      },
+      debug: (str) => {
+        console.log(new Date(), str);
+      }
+    });
+    client.current.activate();
+  }, []);
 
   useEffect(() => {
     if (!deepEqual(prevQuery.current, query)) {
@@ -85,21 +110,15 @@ const BookTable: FC<{}> = () => {
     }
   }, [dispatch, query]);
 
-  const sortConfig: SortConfig = useMemo(
-    () => ({
-      order: sortFilterConfig.order,
-      key: sortFilterConfig.key,
-    }),
-    [sortFilterConfig.order, sortFilterConfig.key]
-  );
+  const sortConfig: SortConfig = { 
+    order: sortFilterConfig.order, 
+    key: sortFilterConfig.key 
+  };
 
-  const filterConfig: FilterConfig = useMemo(
-    () => ({
-      status: sortFilterConfig.status,
-      source: sortFilterConfig.source,
-    }),
-    [sortFilterConfig.status, sortFilterConfig.source]
-  );
+  const filterConfig: FilterConfig = { 
+    status: sortFilterConfig.status, 
+    source: sortFilterConfig.source 
+  };
 
   const calculateDaysLeft = (book: Book) =>
     moment(book.lastReadDate)
@@ -294,7 +313,19 @@ const BookTable: FC<{}> = () => {
                   </div>
                 </div>
               </div>
-              <Button variant="contained" className={classes.button}>
+              <Button 
+                onClick={() => {
+                  if (client.current !== null && client.current.connected) {
+                    const message = sortedBooks.map(book => ({ title: book.title, lastChapterRead: book.lastChapterRead }))
+                    client.current.publish({
+                      destination: '/app/chat',
+                      body: JSON.stringify({ from: 'meow', text: message }),
+                    })
+                  }
+                }}
+                variant="contained" 
+                className={classes.button}
+              >
                 Test
               </Button>
               <Button

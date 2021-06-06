@@ -1,18 +1,23 @@
 package com.yongcheng.mlist.payloads;
 
+import com.yongcheng.mlist.models.Book;
+
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+
 public class SocketResponse {
 
     private final String from;
-    private final String text;
+    private final ConcurrentHashMap<String, Integer> text;
     private final String time;
 
-    public SocketResponse(String from, String text, String time) {
+    public SocketResponse(String from, ConcurrentHashMap<String, Integer> text, String time) {
         this.from = from;
         this.text = text;
         this.time = time;
     }
 
-    public String getText() {
+    public ConcurrentHashMap<String, Integer> getText() {
         return text;
     }
 

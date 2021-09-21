@@ -8,12 +8,6 @@ import styles from './BookShelfPage.module.scss';
 import { booksFetchActionCreator } from '../../redux/actions/book/fetchAll';
 import { RootState } from '../../models/states';
 
-const prepareBrokerURL = (path: string): string => {
-  const url = new URL(path, window.location.href);
-  url.protocol = url.protocol.replace('http', 'ws');
-  return url.href;
-};
-
 const BookShelfPage: FC<{}> = () => {
   const dispatch = useDispatch();
 

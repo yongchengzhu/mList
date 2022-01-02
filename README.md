@@ -16,11 +16,6 @@
 git remote add heroku git@heroku.com:<heroku-app-name>.git
 ```
 
-## For dumping Heroku Database:
-```
-heroku pg:backups:capture && heroku pg:backups:download
-```
-
 
 ## For restoring Heroku Database locally:
 1. Get the database credentials:

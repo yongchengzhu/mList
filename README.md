@@ -17,7 +17,7 @@ git remote add heroku git@heroku.com:<heroku-app-name>.git
 ```
 
 
-## For restoring Heroku Database locally:
+## For restoring database locally:
 1. Get the database credentials:
     ```
    heroku config:get DATABASE_URL

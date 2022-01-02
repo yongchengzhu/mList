@@ -29,7 +29,6 @@ import {
   bookEditModalOpenAction,
 } from '../../../redux/actions/book/modal';
 import { setFilterConfigAction } from '../../../redux/actions/book/filter';
-import { Client } from '@stomp/stompjs';
 
 const useStyles = makeStyles(() => ({
   button: {
@@ -67,24 +66,6 @@ const BookTable: FC<{}> = () => {
   const { fetchingAll, books, sortFilterConfig } = useSelector(
     (state: RootState) => state.book
   );
-  const client = useRef<Client | null>(null);
-
-  useEffect(() => {
-    client.current = new Client();
-    client.current.configure({
-      brokerURL: prepareBrokerURL('/chat'),
-      onConnect: () => {
-        console.log('Connected to Web Socket');
-        client.current?.subscribe('/user/queue/messages', (message: any) => {
-          console.log(`Message received: ${message.body}`);
-        });
-      },
-      debug: (str) => {
-        console.log(new Date(), str);
-      }
-    });
-    client.current.activate();
-  }, []);
 
   useEffect(() => {
     if (!deepEqual(prevQuery.current, query)) {
@@ -313,21 +294,6 @@ const BookTable: FC<{}> = () => {
                   </div>
                 </div>
               </div>
-              <Button 
-                onClick={() => {
-                  if (client.current !== null && client.current.connected) {
-                    const message = sortedBooks.map(book => ({ title: book.title, lastChapterRead: book.lastChapterRead }))
-                    client.current.publish({
-                      destination: '/app/chat',
-                      body: JSON.stringify({ from: 'meow', text: message }),
-                    })
-                  }
-                }}
-                variant="contained" 
-                className={classes.button}
-              >
-                Test
-              </Button>
               <Button
                 onClick={() => dispatch(bookCreateModalOpenAction())}
                 variant="contained"

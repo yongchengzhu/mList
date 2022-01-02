@@ -31,3 +31,7 @@ build/
 .vscode/
 
 src/main/resources/static/
+.DS_Store
+src/.DS_Store
+src/main/.DS_Store
+src/main/js/.DS_Store

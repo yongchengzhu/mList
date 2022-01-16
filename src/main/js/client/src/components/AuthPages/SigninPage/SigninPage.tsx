@@ -25,7 +25,7 @@ const SigninPage: FC<{}> = () => {
     <main className={styles.main}>
       <img className={styles.logo} alt="Logo" src={logo} />
       <SigninForm
-        onSubmit={(values) => dispatch(signinActionCreator(values))}
+        onSubmit={(values: any) => dispatch(signinActionCreator(values))}
       />
     </main>
   );

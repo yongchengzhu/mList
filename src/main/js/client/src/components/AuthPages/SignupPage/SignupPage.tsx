@@ -13,7 +13,7 @@ const SignupPage: FC<{}> = () => {
     <main className={styles.main}>
       <img className={styles.logo} alt="Logo" src={logo} />
       <SignupForm
-        onSubmit={(values) => dispatch(signupActionCreator(values))}
+        onSubmit={(values: any) => dispatch(signupActionCreator(values))}
       />
     </main>
   );

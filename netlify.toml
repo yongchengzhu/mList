@@ -1,5 +1,5 @@
 [build]
-  base = "/netlify"
+  base = "netlify"
   publish = "build/"
   command = "npm install && cd ../src/main/js/client && npm install && npm run netlify"
 

@@ -40,7 +40,6 @@ export const signinActionCreator = thunkActionCreator(
         const { token } = response.data;
         const { sub } = JwtDecode(token) as any;
         localStorage.setItem('mList-token', token);
-        // history.push('/bookshelf');
         return dispatch(signinCompleteAction(sub));
       })
       .catch((error) => {

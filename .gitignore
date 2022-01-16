@@ -35,3 +35,9 @@ src/main/resources/static/
 src/.DS_Store
 src/main/.DS_Store
 src/main/js/.DS_Store
+
+# Local Netlify folder
+.netlify
+mlist.sql
+node_modules
+.env

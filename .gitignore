@@ -41,3 +41,4 @@ src/main/js/.DS_Store
 mlist.sql
 node_modules
 .env
+package-lock.json

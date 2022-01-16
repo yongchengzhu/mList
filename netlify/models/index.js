@@ -1,6 +1,6 @@
 const { Sequelize } = require('sequelize');
 require('../configs');
-const sequelize = new Sequelize(process.env.DATABASE_URI, { dialect: 'postgres' });
+const sequelize = new Sequelize(process.env.DATABASE_URI);
 
 const User = require('./User')(sequelize);
 const Book = require('./Book')(sequelize);

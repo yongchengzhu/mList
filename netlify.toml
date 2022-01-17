@@ -1,7 +1,7 @@
 [build]
   base = "netlify"
   publish = "build/"
-  command = "npm install && cd ../src/main/js/client && npm install && npm run netlify"
+  command = "npm install && cd ../src/main/js/client && npm install && npm run netlify && npm list -g --depth 0"
 
 [[redirects]]
   from = "/api/book"

@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { User } = require('../models');
+require('pg');
 
 module.exports = headers => {
   const unauthorized = { statusCode: '401', body: 'Unauthorized' };

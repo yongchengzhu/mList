@@ -1,4 +1,5 @@
 const { User, VerificationToken } = require('../../models');
+require('pg');
 
 const handler = async event => {
   if (event.httpMethod === 'PUT')

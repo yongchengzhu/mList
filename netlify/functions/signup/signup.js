@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const { v4: uuidv4 } = require('uuid');
 const nodemailer = require('nodemailer');
 const { User, VerificationToken } = require('../../models');
+require('pg');
 require('../../configs');
 
 const transporter = nodemailer.createTransport({

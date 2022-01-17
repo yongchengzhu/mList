@@ -1,7 +1,6 @@
 const moment = require('moment');
 const authorization = require('../../middlewares/authorization');
 const { Book } = require('../../models');
-require('pg');
 
 const success = book => ({ statusCode: 200, body: JSON.stringify(book)});
 

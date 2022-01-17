@@ -2,7 +2,6 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const { User } = require('../../models');
 const { Sequelize } = require('sequelize');
-require('pg');
 require('../../configs');
 
 const handler = async event => {

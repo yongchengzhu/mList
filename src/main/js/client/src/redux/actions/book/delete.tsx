@@ -1,3 +1,4 @@
+import { ActionCreator } from 'redux';
 import {
   BookDeleteRequestAction,
   BookDeleteSuccessAction,
@@ -6,7 +7,6 @@ import {
   BOOK_DELETE_SUCCESS,
   BOOK_DELETE_FAILURE,
 } from '../../../models/actions/book';
-import { ActionCreator } from 'redux';
 import { thunkActionCreator, tokenConfig } from '../util';
 import server from '../../../apis/server';
 import { bookEditModalCloseAction } from './modal';
@@ -15,9 +15,11 @@ const bookDeleteRequestAction: ActionCreator<BookDeleteRequestAction> = () => ({
   type: BOOK_DELETE_REQUEST,
 });
 
-const bookDeleteSuccessAction: ActionCreator<BookDeleteSuccessAction> = (id: number) => ({
+const bookDeleteSuccessAction: ActionCreator<BookDeleteSuccessAction> = (
+  id: number
+) => ({
   type: BOOK_DELETE_SUCCESS,
-  id: id,
+  id,
 });
 
 const bookDeleteFailureAction: ActionCreator<BookDeleteFailureAction> = (

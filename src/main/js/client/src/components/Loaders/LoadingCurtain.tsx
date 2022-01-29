@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom';
-import React, { FC, useEffect, useRef, MutableRefObject } from 'react';
+import { FC, useEffect, useRef, MutableRefObject } from 'react';
 
 import LoadingSpinner from './LoadingSpinner';
 

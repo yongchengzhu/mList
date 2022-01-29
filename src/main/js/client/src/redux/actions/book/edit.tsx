@@ -1,18 +1,26 @@
 import { ActionCreator } from 'redux';
 
-import { BookEditRequestAction, BOOK_EDIT_REQUEST, BookEditSuccessAction, BOOK_EDIT_SUCCESS, BookEditFailureAction, BOOK_EDIT_FAILURE } from '../../../models/actions/book';
+import {
+  BookEditRequestAction,
+  BOOK_EDIT_REQUEST,
+  BookEditSuccessAction,
+  BOOK_EDIT_SUCCESS,
+  BookEditFailureAction,
+  BOOK_EDIT_FAILURE,
+} from '../../../models/actions/book';
 import { thunkActionCreator, tokenConfig } from '../util';
 import server from '../../../apis/server';
-import { booksFetchActionCreator } from './fetchAll';
 import { Book } from '../../../models/states';
 
 const bookEditRequestAction: ActionCreator<BookEditRequestAction> = () => ({
   type: BOOK_EDIT_REQUEST,
 });
 
-const bookEditSuccessAction: ActionCreator<BookEditSuccessAction> = (book: Book) => ({
+const bookEditSuccessAction: ActionCreator<BookEditSuccessAction> = (
+  book: Book
+) => ({
   type: BOOK_EDIT_SUCCESS,
-  book: book,
+  book,
 });
 
 const bookEditFailureAction: ActionCreator<BookEditFailureAction> = (
@@ -27,9 +35,7 @@ export const bookEditActionCreator = thunkActionCreator(
     dispatch(bookEditRequestAction());
     return server
       .put(`/book/${formData.id}`, formData, tokenConfig())
-      .then(({ data }) => {
-        return dispatch(bookEditSuccessAction(data));
-      })
+      .then(({ data }) => dispatch(bookEditSuccessAction(data)))
       .catch((error) =>
         dispatch(
           bookEditFailureAction(

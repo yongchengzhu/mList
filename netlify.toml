@@ -1,0 +1,37 @@
+[build]
+  base = "netlify"
+  publish = "build/"
+  command = "npm install && ls node_modules && cd ../src/main/js/client && npm install && npm run netlify "
+
+[[redirects]]
+  from = "/api/book"
+  to = "/.netlify/functions/book"
+  status = 307
+
+[[redirects]]
+  from = "/api/book/:id"
+  to = "/.netlify/functions/book/:id"
+  status = 307
+
+[[redirects]]
+  from = "/api/user/confirm"
+  to = "/.netlify/functions/confirm"
+  status = 307
+
+[[redirects]]
+  from = "/api/user/signup"
+  to = "/.netlify/functions/signup"
+  status = 307
+
+[[redirects]]
+  from = "/api/user/signin"
+  to = "/.netlify/functions/signin"
+  status = 307
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[functions]
+  directory = "functions/"

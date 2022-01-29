@@ -1,4 +1,4 @@
-import React, { FC, MutableRefObject, useRef, useEffect } from 'react';
+import { FC, MutableRefObject, useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import moment from 'moment';
 
@@ -19,8 +19,11 @@ const EditBookModal: FC<{}> = () => {
       const deleteModal = document.querySelector('.delete-modal');
       const isSelect = document.querySelector('.MuiList-root');
 
-      if (!contentRef.current?.contains(targetNode as Node) 
-        && !deleteModal && !isSelect) {
+      if (
+        !contentRef.current?.contains(targetNode as Node) &&
+        !deleteModal &&
+        !isSelect
+      ) {
         dispatch(bookEditModalCloseAction());
       }
     };
@@ -28,19 +31,26 @@ const EditBookModal: FC<{}> = () => {
     document.addEventListener('mousedown', handleClickOutside);
 
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [contentRef]);
+  }, [contentRef, dispatch]);
 
   return (
     <Modal root="edit-modal-root">
       <div ref={contentRef} className={styles.container}>
-        <EditBookForm onSubmit={(values: Book | any) => {
-          if (!values['is-read']) {
-            values.lastReadDate = moment(values.lastReadDate).utc().format('DD-MM-YYYY HH:mm:ss');
-          } else {
-            values.lastReadDate = moment().utc().format('DD-MM-YYYY HH:mm:ss');
-          }
-          dispatch(bookEditActionCreator(values));
-        }} />
+        <EditBookForm
+          onSubmit={(values: Book | any) => {
+            const bookInfo = { ...values };
+            if (!values['is-read']) {
+              bookInfo.lastReadDate = moment(values.lastReadDate)
+                .utc()
+                .format('DD-MM-YYYY HH:mm:ss');
+            } else {
+              bookInfo.lastReadDate = moment()
+                .utc()
+                .format('DD-MM-YYYY HH:mm:ss');
+            }
+            dispatch(bookEditActionCreator(bookInfo));
+          }}
+        />
       </div>
     </Modal>
   );

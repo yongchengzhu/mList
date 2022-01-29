@@ -1,4 +1,5 @@
 import { ActionCreator } from 'redux';
+import JwtDecode from 'jwt-decode';
 import {
   CheckTokenRequestAction,
   CHECK_TOKEN_REQUEST,
@@ -9,14 +10,13 @@ import {
 } from '../../../models/actions/auth';
 import server from '../../../apis/server';
 import { tokenConfig, thunkActionCreator } from '../util';
-import JwtDecode from 'jwt-decode';
 import history from '../../../history';
 
 export const checkTokenRequestAction: ActionCreator<CheckTokenRequestAction> = (
   token: string
 ) => ({
   type: CHECK_TOKEN_REQUEST,
-  token: token,
+  token,
 });
 
 export const checkTokenSuccessAction: ActionCreator<CheckTokenSuccessAction> = (
@@ -26,9 +26,10 @@ export const checkTokenSuccessAction: ActionCreator<CheckTokenSuccessAction> = (
   username: sub,
 });
 
-export const checkTokenFailureAction: ActionCreator<CheckTokenFailureAction> = () => ({
-  type: CHECK_TOKEN_FAILURE,
-});
+export const checkTokenFailureAction: ActionCreator<CheckTokenFailureAction> =
+  () => ({
+    type: CHECK_TOKEN_FAILURE,
+  });
 
 export const checkTokenActionCreator = thunkActionCreator(({ dispatch }) => {
   dispatch(checkTokenRequestAction());
@@ -44,7 +45,7 @@ export const checkTokenActionCreator = thunkActionCreator(({ dispatch }) => {
   return server
     .get('/auth/check', tokenConfig())
     .then(() => {
-      const { sub } = JwtDecode(token);
+      const { sub } = JwtDecode(token) as any;
       // history.push('/bookshelf');
       return dispatch(checkTokenSuccessAction(sub));
     })

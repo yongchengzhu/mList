@@ -14,26 +14,32 @@ import {
   BOOK_EDIT_MODAL_CLOSE,
 } from '../../../models/actions/book';
 
-export const bookCreateModalOpenAction: ActionCreator<BookCreateModalOpenAction> = () => ({
-  type: BOOK_CREATE_MODAL_OPEN,
-});
+export const bookCreateModalOpenAction: ActionCreator<BookCreateModalOpenAction> =
+  () => ({
+    type: BOOK_CREATE_MODAL_OPEN,
+  });
 
-export const bookCreateModalCloseAction: ActionCreator<BookCreateModalCloseAction> = () => ({
-  type: BOOK_CREATE_MODAL_CLOSE,
-});
+export const bookCreateModalCloseAction: ActionCreator<BookCreateModalCloseAction> =
+  () => ({
+    type: BOOK_CREATE_MODAL_CLOSE,
+  });
 
-export const bookDeleteModalOpenAction: ActionCreator<BookDeleteModalOpenAction> = () => ({
-  type: BOOK_DELETE_MODAL_OPEN,
-});
+export const bookDeleteModalOpenAction: ActionCreator<BookDeleteModalOpenAction> =
+  () => ({
+    type: BOOK_DELETE_MODAL_OPEN,
+  });
 
-export const bookDeleteModalCloseAction: ActionCreator<BookDeleteModalCloseAction> = () => ({
-  type: BOOK_DELETE_MODAL_CLOSE,
-});
+export const bookDeleteModalCloseAction: ActionCreator<BookDeleteModalCloseAction> =
+  () => ({
+    type: BOOK_DELETE_MODAL_CLOSE,
+  });
 
-export const bookEditModalOpenAction: ActionCreator<BookEditModalOpenAction> = () => ({
-  type: BOOK_EDIT_MODAL_OPEN,
-});
+export const bookEditModalOpenAction: ActionCreator<BookEditModalOpenAction> =
+  () => ({
+    type: BOOK_EDIT_MODAL_OPEN,
+  });
 
-export const bookEditModalCloseAction: ActionCreator<BookEditModalCloseAction> = () => ({
-  type: BOOK_EDIT_MODAL_CLOSE,
-});
+export const bookEditModalCloseAction: ActionCreator<BookEditModalCloseAction> =
+  () => ({
+    type: BOOK_EDIT_MODAL_CLOSE,
+  });

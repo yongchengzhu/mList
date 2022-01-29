@@ -1,5 +1,5 @@
-import { Book } from '../../models/states';
 import { Reducer } from 'redux';
+import { Book } from '../../models/states';
 import { BookActions, BOOK_CONTEXT_UPDATE } from '../../models/actions/book';
 import { initialBookState } from './common';
 

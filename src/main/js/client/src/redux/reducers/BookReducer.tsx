@@ -1,5 +1,5 @@
-import { BookState, Book } from '../../models/states';
 import { Reducer } from 'redux';
+import { BookState, Book } from '../../models/states';
 import {
   BookActions,
   BOOK_CREATE_REQUEST,
@@ -65,10 +65,10 @@ const bookReducer: Reducer<BookState, BookActions> = (
       return { ...state, creating: true, createError: null };
     case BOOK_CREATE_SUCCESS:
       return {
-        ...state, 
-        creating: false, 
-        showCreateModal: false, 
-        books: [...state.books, action.book] 
+        ...state,
+        creating: false,
+        showCreateModal: false,
+        books: [...state.books, action.book],
       };
     case BOOK_CREATE_FAILURE:
       return { ...state, creating: false, createError: action.error };
@@ -85,40 +85,47 @@ const bookReducer: Reducer<BookState, BookActions> = (
       return { ...state, fetchingAll: false };
     case BOOK_DELETE_REQUEST:
       return { ...state, deleting: true };
-    case BOOK_DELETE_SUCCESS:
-      const filteredBooks = state.books.filter(book => book.id !== action.id);
-      return { 
-        ...state, 
-        deleting: false, 
-        showDeleteModal: false, 
-        books: filteredBooks 
+    case BOOK_DELETE_SUCCESS: {
+      const filteredBooks = state.books.filter((book) => book.id !== action.id);
+      return {
+        ...state,
+        deleting: false,
+        showDeleteModal: false,
+        books: filteredBooks,
       };
+    }
     case BOOK_DELETE_FAILURE:
       return { ...state, deleting: false, deleteError: action.error };
     case BOOK_EDIT_REQUEST:
       return { ...state, editing: true, editError: null };
-    case BOOK_EDIT_SUCCESS:
-      let books = [];
-      for (let book of state.books) {
+    case BOOK_EDIT_SUCCESS: {
+      const books: Book[] = [];
+      state.books.forEach((book) => {
         if (book.id === action.book.id) {
           books.push(action.book);
         } else {
           books.push(book);
         }
-      }
-      return { ...state, editing: false, showEditModal: false, books: books };
+      });
+      return {
+        ...state,
+        editing: false,
+        showEditModal: false,
+        books,
+      };
+    }
     case BOOK_EDIT_FAILURE:
       return { ...state, editing: false, editError: action.error };
     case SORT_CONFIG_SET:
-      return { 
-        ...state, 
-        sortFilterConfig: { ...state.sortFilterConfig, ...action.sortConfig } 
-      }
+      return {
+        ...state,
+        sortFilterConfig: { ...state.sortFilterConfig, ...action.sortConfig },
+      };
     case FILTER_CONFIG_SET:
-      return { 
-        ...state, 
-        sortFilterConfig: { ...state.sortFilterConfig, ...action.filterConfig } 
-      }
+      return {
+        ...state,
+        sortFilterConfig: { ...state.sortFilterConfig, ...action.filterConfig },
+      };
     default:
       return state;
   }

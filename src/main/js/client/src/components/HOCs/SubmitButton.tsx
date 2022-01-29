@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { Button, LinearProgress } from '@material-ui/core';
 
 import styles from './HOC.module.scss';
@@ -11,24 +11,24 @@ interface Props {
 
 const SubmitButton: FC<Props> = (props) => {
   const classes = useHOCStyles();
-  const renderSubmitButton = () => {
-    switch (props.loading) {
-      case true:
-        return <div className={styles.progress}><LinearProgress color="secondary" /></div>;
-      case false:
-        // return <div style={{ height: "40px" }}><LinearProgress color="secondary" /></div>;
-        return (
-        <Button
-          type="submit"
-          variant="contained" 
-          className={`${classes.button} ${props.className}`}
-        >
-          {props.children}
-        </Button>);
-    }
-  };
 
-  return renderSubmitButton();
+  const progress = (
+    <div className={styles.progress}>
+      <LinearProgress color="secondary" />
+    </div>
+  );
+
+  const submit = (
+    <Button
+      type="submit"
+      variant="contained"
+      className={`${classes.button} ${props.className}`}
+    >
+      {props.children}
+    </Button>
+  );
+
+  return props.loading ? progress : submit;
 };
 
 export default SubmitButton;

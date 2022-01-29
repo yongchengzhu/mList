@@ -50,7 +50,7 @@ export interface CheckTokenRequestAction {
 
 export interface CheckTokenSuccessAction {
   type: typeof CHECK_TOKEN_SUCCESS;
-  username: string
+  username: string;
 }
 
 export interface CheckTokenFailureAction {

@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, Store, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
@@ -11,12 +10,12 @@ import { initialAuthState } from './redux/reducers/AuthReducer';
 const store: Store = createStore(
   rootReducer,
   {
-    auth: { 
-      ...initialAuthState, 
-      isLoggedIn: localStorage.getItem('mList-token')? true : false 
-    }
+    auth: {
+      ...initialAuthState,
+      isLoggedIn: !!localStorage.getItem('mList-token'),
+    },
   },
-  applyMiddleware(thunk),
+  applyMiddleware(thunk)
 );
 
 ReactDOM.render(

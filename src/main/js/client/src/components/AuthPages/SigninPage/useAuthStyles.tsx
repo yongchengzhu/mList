@@ -52,7 +52,7 @@ export const useAuthStyles = makeStyles({
     '& .MuiTypography-body1': {
       color: '#79787b',
       fontSize: '0.9em',
-    }
+    },
   },
   editLastChapter: {
     width: '260px',

@@ -1,0 +1,60 @@
+{
+    "settings": {
+      "import/resolver": {
+        "node": {
+          "extensions": [".js", ".jsx", ".ts", ".tsx"]
+        }
+      }
+    },
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "plugin:react/recommended",
+        "airbnb",
+        "plugin:prettier/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 12,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react",
+        "@typescript-eslint",
+        "unused-imports"
+    ],
+    "rules": {
+      "import/extensions": "off",
+      "linebreak-style": ["error", "windows"],
+      "react/jsx-filename-extension": [0, { "extensions": [".js", ".jsx"] }],
+      "react/react-in-jsx-scope": "off",
+      "func-names": "off",
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": ["error"],
+      "import/prefer-default-export": "off",
+      "prettier/prettier": [
+        "error", 
+        {
+          "singleQuote": true,
+          "endOfLine": "crlf",
+          "printWidth": 80
+        }
+      ],
+      "import/no-extraneous-dependencies": "off",
+      "react/prop-types": "off",
+      "react/jsx-props-no-spreading": "off",
+      "jsx-a11y/no-noninteractive-element-interactions": "off",
+      "jsx-a11y/click-events-have-key-events": "off",
+      "jsx-a11y/label-has-associated-control": "off",
+      "import/no-mutable-exports": "off",
+      "react/no-children-prop": "off",
+      "jsx-a11y/control-has-associated-label": "off",
+      "default-case": "off",
+      "react/no-unescaped-entities": "off"
+    }
+}

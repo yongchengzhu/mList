@@ -1,4 +1,4 @@
-import React, { FC, useRef, useEffect, MutableRefObject } from 'react';
+import { FC, useRef, useEffect, MutableRefObject } from 'react';
 import { useDispatch } from 'react-redux';
 import moment from 'moment';
 
@@ -25,15 +25,20 @@ const CreateBookModal: FC<{}> = () => {
     document.addEventListener('mousedown', handleClickOutside);
 
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [contentRef]);
+  }, [contentRef, dispatch]);
 
   return (
     <Modal root="create-modal-root">
       <div ref={contentRef} className={styles.container}>
-        <CreateBookForm onSubmit={(values: Book) => {
-          values.lastReadDate = moment().utc().format('DD-MM-YYYY HH:mm:ss');
-          dispatch(bookCreateActionCreator(values));
-        }} />
+        <CreateBookForm
+          onSubmit={(values: Book) => {
+            const bookInfo = { ...values };
+            bookInfo.lastReadDate = moment()
+              .utc()
+              .format('DD-MM-YYYY HH:mm:ss');
+            dispatch(bookCreateActionCreator(bookInfo));
+          }}
+        />
       </div>
     </Modal>
   );

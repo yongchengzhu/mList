@@ -1,6 +1,7 @@
-import React, { useEffect, MutableRefObject, useRef } from 'react';
-import Modal from '../../HOCs/Modal';
+import { useEffect, MutableRefObject, useRef, FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Button } from '@material-ui/core';
+import Modal from '../../HOCs/Modal';
 import { bookDeleteModalCloseAction } from '../../../redux/actions/book/modal';
 
 import modalStyles from './CreateEditDeleteBookModal.module.scss';
@@ -9,15 +10,13 @@ import commonStyles from './CommonForm.module.scss';
 import { RootState } from '../../../models/states';
 import DeleteButton from '../../HOCs/DeleteButton';
 import ErrorMessage from '../../HOCs/ErrorMessage';
-import { Button } from '@material-ui/core';
 import { useFormStyles } from './common';
 
-const DeleteBookModal:React.FC<{}> = () => {
+const DeleteBookModal: FC<{}> = () => {
   const classes = useFormStyles();
-  const { 
-    deleting: loading,
-    deleteError: error
-  } = useSelector((state: RootState) => state.book);
+  const { deleting: loading, deleteError: error } = useSelector(
+    (state: RootState) => state.book
+  );
   const book = useSelector((state: RootState) => state.context);
   const dispatch = useDispatch();
   const contentRef: MutableRefObject<HTMLDivElement | null> = useRef(null);
@@ -34,7 +33,7 @@ const DeleteBookModal:React.FC<{}> = () => {
     document.addEventListener('mousedown', handleClickOutside);
 
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [contentRef]);
+  }, [contentRef, dispatch]);
 
   return (
     <Modal root="delete-modal-root">
@@ -43,7 +42,11 @@ const DeleteBookModal:React.FC<{}> = () => {
           <div className={commonStyles.title}>Delete Book</div>
           <ErrorMessage error={error} />
           <div>
-            <p>Are you sure you want to delete <span className={commonStyles.bookTitle}>{book.title}</span> from your bookself?</p>
+            <p>
+              Are you sure you want to delete
+              <span className={commonStyles.bookTitle}>{book.title}</span> from
+              your bookself?
+            </p>
           </div>
         </div>
         <div className={formStyles.modalFooter}>

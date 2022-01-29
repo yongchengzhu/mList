@@ -1,12 +1,18 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
+import { Field } from 'redux-form';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import { useDispatch } from 'react-redux';
 import ErrorMessage from '../../HOCs/ErrorMessage';
 
 import styles from './CommonForm.module.scss';
-import { Field } from 'redux-form';
-import { renderTextField, required, rating, renderSelect, renderToggleSwitch } from '../../AuthPages/common';
+import {
+  renderTextField,
+  required,
+  rating,
+  renderSelect,
+  renderToggleSwitch,
+} from '../../AuthPages/common';
 import { useAuthStyles } from '../../AuthPages/SigninPage/useAuthStyles';
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-import { useDispatch } from 'react-redux';
 import { bookDeleteModalOpenAction } from '../../../redux/actions/book/modal';
 
 interface Props {
@@ -15,23 +21,24 @@ interface Props {
   edit?: boolean;
 }
 
-const CommonForm: FC<Props> = props => {
+const CommonForm: FC<Props> = ({ children, edit, error }) => {
   const classes = useAuthStyles();
   const dispatch = useDispatch();
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <div className={styles.title}>{props.children}</div>
-        {props.edit && (
-            <DeleteOutlineIcon 
-              className={styles.deleteIcon}
-              onClick  ={() => { dispatch(bookDeleteModalOpenAction()) }}
-            />
-          )
-        }
+        <div className={styles.title}>{children}</div>
+        {edit && (
+          <DeleteOutlineIcon
+            className={styles.deleteIcon}
+            onClick={() => {
+              dispatch(bookDeleteModalOpenAction());
+            }}
+          />
+        )}
       </div>
-      <ErrorMessage error={props.error} />
+      <ErrorMessage error={error} />
 
       <Field
         component={renderTextField}
@@ -59,26 +66,24 @@ const CommonForm: FC<Props> = props => {
         type="text"
         id="last-chapter-read"
         name="lastChapterRead"
-        className={!props.edit? classes.textField : classes.editLastChapter}
+        className={!edit ? classes.textField : classes.editLastChapter}
         label="Last Chapter Read"
       />
-      {
-        props.edit && (
-          <Field 
-            name="is-read" 
-            id="is-read" 
-            component={renderToggleSwitch} 
-            type="checkbox"
-            className={classes.formControlLabel}
-          />
-        )
-      }
+      {edit && (
+        <Field
+          name="is-read"
+          id="is-read"
+          component={renderToggleSwitch}
+          type="checkbox"
+          className={classes.formControlLabel}
+        />
+      )}
 
       <div className={styles.flexContainer}>
-        <Field 
-          defaultValue="reading" 
-          component={renderSelect} 
-          id="status" 
+        <Field
+          defaultValue="reading"
+          component={renderSelect}
+          id="status"
           name="status"
           className={classes.formControl}
         />
@@ -104,14 +109,32 @@ const CommonForm: FC<Props> = props => {
       />
 
       <div className="switch-toggle switch-candy">
-        <Field id="cn-radio" name="language" component="input" type="radio" value="cn"/>
+        <Field
+          id="cn-radio"
+          name="language"
+          component="input"
+          type="radio"
+          value="cn"
+        />
         <label htmlFor="cn-radio">CN</label>
-        <Field id="kr-radio" name="language" component="input" type="radio" value="kr"/>
+        <Field
+          id="kr-radio"
+          name="language"
+          component="input"
+          type="radio"
+          value="kr"
+        />
         <label htmlFor="kr-radio">KR</label>
-        <Field id="jp-radio" name="language" component="input" type="radio" value="jp"/>
+        <Field
+          id="jp-radio"
+          name="language"
+          component="input"
+          type="radio"
+          value="jp"
+        />
         <label htmlFor="jp-radio">JP</label>
-        <a />
-      </div>      
+        <a href="/" children=" " />
+      </div>
     </div>
   );
 };

@@ -1,26 +1,23 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { Route, Redirect } from 'react-router';
-import { RootRouteProps } from '../../models/props';
 import { useSelector } from 'react-redux';
+import { LocationDescriptor } from 'history';
 import { RootState } from '../../models/states';
 
-const RootRoute: FC<RootRouteProps> = (props) => {
+export interface RootRouteProps {
+  path: string;
+  redirectTo: LocationDescriptor;
+  defaultTo: LocationDescriptor;
+}
+
+const RootRoute: FC<RootRouteProps> = ({ path, redirectTo, defaultTo }) => {
   const isLoggedIn: boolean = useSelector(
     (state: RootState) => state.auth.isLoggedIn
   );
 
-  const ConditionalRedirect: FC<{}> = () => {
-    switch (isLoggedIn) {
-      case true:
-        return <Redirect to={props.default} />;
-      case false:
-        return <Redirect to={props.redirectTo} />;
-    }
-  };
-
   return (
-    <Route path="/">
-      <ConditionalRedirect />
+    <Route path={path}>
+      <Redirect to={isLoggedIn ? defaultTo : redirectTo} />;
     </Route>
   );
 };

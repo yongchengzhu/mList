@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../models/states';
 import LoadingCurtain from './Loaders/LoadingCurtain';
@@ -26,31 +26,25 @@ const useApp = () => {
     (state: RootState) => state.book.showEditModal
   );
 
-  const renderLoadingCurtain = () => {
-    return checking ? <LoadingCurtain /> : null;
-  };
+  const renderLoadingCurtain = () => (checking ? <LoadingCurtain /> : null);
 
-  const renderCreateBookModal = () => {
-    return creatingBook? <CreateBookModal /> : null;
-  }
+  const renderCreateBookModal = () =>
+    creatingBook ? <CreateBookModal /> : null;
 
-  const renderDeleteBookModal = () => {
-    return deletingBook? <DeleteBookModal /> : null;
-  }
+  const renderDeleteBookModal = () =>
+    deletingBook ? <DeleteBookModal /> : null;
 
-  const renderEditBookModal = () => {
-    return editingBook? <EditBookModal /> : null;
-  }
+  const renderEditBookModal = () => (editingBook ? <EditBookModal /> : null);
 
   useEffect(() => {
     dispatch(checkTokenActionCreator());
-  }, []);
+  }, [dispatch]);
 
   return [
     renderLoadingCurtain,
     renderCreateBookModal,
     renderDeleteBookModal,
-    renderEditBookModal
+    renderEditBookModal,
   ];
 };
 

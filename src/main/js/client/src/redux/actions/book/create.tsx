@@ -16,9 +16,11 @@ const bookCreateRequestAction: ActionCreator<BookCreateRequestAction> = () => ({
   type: BOOK_CREATE_REQUEST,
 });
 
-const bookCreateSuccessAction: ActionCreator<BookCreateSuccessAction> = (book: Book) => ({
+const bookCreateSuccessAction: ActionCreator<BookCreateSuccessAction> = (
+  book: Book
+) => ({
   type: BOOK_CREATE_SUCCESS,
-  book: book,
+  book,
 });
 
 const bookCreateFailureAction: ActionCreator<BookCreateFailureAction> = (
@@ -33,9 +35,7 @@ export const bookCreateActionCreator = thunkActionCreator(
     dispatch(bookCreateRequestAction());
     return server
       .post('/book', formData, tokenConfig())
-      .then(({ data }) => {
-        return dispatch(bookCreateSuccessAction(data));
-      })
+      .then(({ data }) => dispatch(bookCreateSuccessAction(data)))
       .catch((error) => {
         const serverError = error.response.data
           ? 'Whoops, looks like something went wrong!'
@@ -46,7 +46,7 @@ export const bookCreateActionCreator = thunkActionCreator(
               serverError ||
               'Book creation failed. Please try again later.'
           )
-        )
+        );
       });
   }
 );

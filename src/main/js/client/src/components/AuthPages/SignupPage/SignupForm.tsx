@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { FC } from 'react';
 import { reduxForm, InjectedFormProps, Field } from 'redux-form';
 import { useSelector } from 'react-redux';

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { FC } from 'react';
 import { Field } from 'redux-form';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';

@@ -1,6 +1,7 @@
+// @ts-nocheck
 import { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import SigninForm from './SigninForm';
 
 import { signinActionCreator } from '../../../redux/actions/auth/signin';
@@ -11,13 +12,13 @@ import { RootState } from '../../../models/states';
 const SigninPage: FC<{}> = () => {
   const dispatch = useDispatch();
   const auth = useSelector((state: RootState) => state.auth.isLoggedIn);
-  const history = useHistory();
+  const history = useNavigate();
   const location: any = useLocation();
   const { from } = location.state || { from: { pathname: '/bookshelf' } };
 
   useEffect(() => {
     if (auth) {
-      history.replace(from);
+      history(from);
     }
   }, [auth, from, history]);
 

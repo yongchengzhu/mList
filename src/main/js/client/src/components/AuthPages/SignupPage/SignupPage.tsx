@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { FC } from 'react';
 import { useDispatch } from 'react-redux';
 

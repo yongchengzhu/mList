@@ -103,7 +103,8 @@ const BookTable: FC<{}> = () => {
 
   const calculateDaysLeft = (book: Book) =>
     moment(book.lastReadDate)
-      .add(book.daysToWait + 1, 'days')
+      .add(book.daysToWait, 'days')
+      .add(1, 'days')
       .diff(moment(), 'days');
 
   const sortedBooks = useMemo(() => {
